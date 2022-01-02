@@ -15,8 +15,15 @@
     ~/.config/kitty/kitty.conf: kitty.conf
     ~/.xinitrc: xinitrc
     ~/.zshrc: zshrc
+    ~/.config/nvim: nvim
 
 - shell:
     - [curl -sSL https://install.python-poetry.org | python3 -, Install poetry]
     - [sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended, Install ohmyzsh]
     - [git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions, Install zsh-autosuggestions]
+    - [sh -c curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim', Install Plug]
+    - command: chsh -s $(which zsh)
+      description: Switch to using zsh
+      stdin: true
+      stdout: true
+      stderr: true
