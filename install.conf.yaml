@@ -1,0 +1,22 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+
+- clean:
+    - "~"
+    - .config/kitty/
+
+- link:
+    ~/.tmux.conf: tmux.conf
+    ~/.aliases: aliases
+    ~/.gitconfig: gitconfig
+    ~/.zprofile: zprofile
+    ~/.config/kitty/kitty.conf: kitty.conf
+    ~/.xinitrc: xinitrc
+    ~/.zshrc: zshrc
+
+- shell:
+    - [curl -sSL https://install.python-poetry.org | python3 -, Install poetry]
+    - [sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended, Install ohmyzsh]
+    - [git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions, Install zsh-autosuggestions]

@@ -1,0 +1,10 @@
+[user]
+	email = bjorn.snoen@gmail.com
+	name = Bjørn Snoen
+[push]
+	default = simple
+[core]
+	editor = vim
+	excludesfile = /home/bjorn/.gitignore
+[pull]
+	rebase = false
