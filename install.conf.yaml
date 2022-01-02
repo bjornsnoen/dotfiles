@@ -7,6 +7,18 @@
     - "~"
     - .config/kitty/
 
+- ifarch:
+    - shell:
+        - command: sudo pacman -S zsh neovim kitty kitty-terminfo
+          description: Install packages
+          stdin: true
+          stdout: true
+          stderr: true
+
+- shell:
+    - [rm -rf ~/.zshrc, Remove old zshrc]
+    - [rm -rf ~/.zprofile, Remove old zprofile]
+
 - link:
     ~/.tmux.conf: tmux.conf
     ~/.aliases: aliases
@@ -22,8 +34,9 @@
     - [sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended, Install ohmyzsh]
     - [git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions, Install zsh-autosuggestions]
     - [sh -c curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim', Install Plug]
-    - command: chsh -s $(which zsh)
+    - command: "if [[ $(echo $SHELL) != $(which zsh) ]]; then chsh -s $(which zsh); fi"
       description: Switch to using zsh
       stdin: true
       stdout: true
       stderr: true
+
