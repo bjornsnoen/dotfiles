@@ -8,12 +8,12 @@
     - ~/.config/kitty/
 
 - ifarch:
-    - shell:
-        - command: sudo pacman -S --needed zsh neovim kitty kitty-terminfo
-          description: Install packages
-          stdin: true
-          stdout: true
-          stderr: true
+    - yaourt:
+        - zsh
+        - neovim
+        - kitty
+        - kitty-terminfo
+        - asdf-vm
 
 - link:
     ~/.tmux.conf: tmux.conf

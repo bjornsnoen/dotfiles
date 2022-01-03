@@ -496,17 +496,6 @@ local tasklist_buttons = gears.table.join(
         awful.rules.rules = {
             -- All clients will match this rule.
             -- {
-            {
-                rule = {
-                    class = "jetbrains-.*",
-                }, properties = { focus = true, buttons = clientbuttons_jetbrains }
-            },
-            {
-                rule = {
-                class = "jetbrains-.*",
-                name = "win.*"
-                }, properties = { titlebars_enabled = false, focusable = false, focus = true, floating = true, placement = awful.placement.restore }
-            },
             { rule = { },
                 properties = { border_width = beautiful.border_width,
                     border_color = beautiful.border_normal,
@@ -549,7 +538,21 @@ local tasklist_buttons = gears.table.join(
             { rule_any = {type = { "normal", "dialog" }
                 }, properties = { titlebars_enabled = true }
             },
-
+            {
+                rule = {
+                    class = "jetbrains-.*",
+                }, properties = { focus = true, buttons = clientbuttons_jetbrains }
+            },
+            {
+                rule = {
+                class = "jetbrains-.*",
+                name = "win.*"
+                }, properties = { titlebars_enabled = false, focusable = false, focus = true, floating = true, placement = awful.placement.restore }
+            },
+            {
+                rule = { class = "kitty" },
+                properties = { titlebars_enabled = false }
+            },
             -- Set Firefox to always map on the tag named "2" on screen 1.
             -- { rule = { class = "Firefox" },
             --   properties = { screen = 1, tag = "2" } },

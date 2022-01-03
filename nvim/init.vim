@@ -19,7 +19,11 @@ source ~/.config/nvim/plugins/vim-fugitive.vim
 source ~/.config/nvim/plugins/editorconfig.vim
 source ~/.config/nvim/plugins/nerdtree.vim
 source ~/.config/nvim/plugins/floaterm.vim
+source ~/.config/nvim/plugins/solarized.vim
+source ~/.config/nvim/plugins/coc.vim
 call plug#end()
+
+doautocmd User PlugLoaded
 
 
 let g:airline_theme = 'solarized_flood'
