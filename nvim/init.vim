@@ -23,6 +23,7 @@ source ~/.config/nvim/plugins/floaterm.vim
 source ~/.config/nvim/plugins/solarized.vim
 source ~/.config/nvim/plugins/coc.vim
 source ~/.config/nvim/plugins/fzf.vim
+source ~/.config/nvim/plugins/vimspector.vim
 call plug#end()
 
 doautocmd User PlugLoaded

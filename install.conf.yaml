@@ -21,7 +21,7 @@
     ~/.aliases: aliases
     ~/.gitconfig: gitconfig
     ~/.zprofile: zprofile
-    ~/.config/kitty/kitty.conf: kitty.conf
+    ~/.config/kitty: kitty
     ~/.xinitrc: xinitrc
     ~/.zshrc: zshrc
     ~/.config/nvim: nvim
