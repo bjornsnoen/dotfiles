@@ -15,6 +15,7 @@
         - kitty-terminfo
         - ripgrep
         - asdf-vm
+        - light-locker
 
 - link:
     ~/.tmux.conf: tmux.conf
