@@ -346,9 +346,7 @@ local tasklist_buttons = gears.table.join(
             -- Menubar
             awful.key({ modkey }, "p", function() menubar.show() end,
                 {description = "show the menubar", group = "launcher"}),
-            awful.key({  }, "XF86LaunchA", function() awful.util.spawn("i3lock -i /home/tw/bjorn/Documents/trollweb.png -c 000000") end),
-            awful.key({  }, "XF86Tools", function() awful.util.spawn("i3lock -i /home/tw/bjorn/Documents/trollweb.png -c 000000") end),
-            awful.key({  }, "Pause", function() awful.util.spawn("i3lock -i /home/tw/bjorn/Documents/trollweb.png -c 000000") end),
+            awful.key({  }, "Pause", function() awful.util.spawn("dm-tool lock") end),
             awful.key({  }, "Print", function() awful.util.spawn_with_shell("sleep 0.5 && scrot --select") end),
             awful.key({ }, "XF86KbdBrightnessUp", function() awful.util.spawn("light -s sysfs/leds/samsung::kbd_backlight -A 12.5") end),
             awful.key({ }, "XF86KbdBrightnessDown", function() awful.util.spawn("light -s sysfs/leds/samsung::kbd_backlight -U 12.5") end),
