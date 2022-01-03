@@ -37,3 +37,9 @@ endif
 " format on enter, <cr> could be remapped by other vim plugin
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gi <Plug>(coc-references)
+
+xmap <leader><F6> <Plug>(coc-codeaction-selected)
+nmap <leader><F6> <Plug>(coc-codeaction)

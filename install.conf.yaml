@@ -13,6 +13,7 @@
         - neovim
         - kitty
         - kitty-terminfo
+        - ripgrep
         - asdf-vm
 
 - link:

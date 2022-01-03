@@ -5,12 +5,13 @@ set shiftwidth=4
 set tabstop=4
 set number
 set splitright
-
-vnoremap <leader>p "_dP
+set termguicolors
 
 nmap <leader>ve :edit ~/.config/nvim/init.vim<cr>
 nmap <leader>vc :edit ~/.config/nvim/coc-settings.json<cr>
 nmap <leader>vr :source ~/.config/nvim/init.vim<cr>
+nmap <leader>q :bufdo bdelete<cr>
+map gf :edit <cfile><cr>
 
 
 call plug#begin(stdpath('data') . '/plugged')
@@ -21,6 +22,7 @@ source ~/.config/nvim/plugins/nerdtree.vim
 source ~/.config/nvim/plugins/floaterm.vim
 source ~/.config/nvim/plugins/solarized.vim
 source ~/.config/nvim/plugins/coc.vim
+source ~/.config/nvim/plugins/fzf.vim
 call plug#end()
 
 doautocmd User PlugLoaded
