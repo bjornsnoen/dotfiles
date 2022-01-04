@@ -3,7 +3,7 @@ Plug 'puremourning/vimspector'
 let g:vimspector_enable_mappings = 'HUMAN'
 
 nnoremap <Leader><F9> :call vimspector#ClearBreakpoints()<CR>
-nnoremap <Leader>dc :VimspectorReset<CR>
+nnoremap <Leader>dq :VimspectorReset<CR>
 
 " for normal mode - the word under the cursor
 nmap <Leader>di <Plug>VimspectorBalloonEval

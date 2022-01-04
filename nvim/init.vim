@@ -7,8 +7,8 @@ set number
 set splitright
 set termguicolors
 
-nmap <leader>ve :edit ~/.config/nvim/init.vim<cr>
-nmap <leader>vc :edit ~/.config/nvim/coc-settings.json<cr>
+nmap <leader>ve :vsp ~/.config/nvim/init.vim<cr>
+nmap <leader>vc :vsp ~/.config/nvim/coc-settings.json<cr>
 nmap <leader>vr :source ~/.config/nvim/init.vim<cr>
 nmap <leader>q :bufdo bdelete<cr>
 map gf :edit <cfile><cr>
@@ -24,6 +24,7 @@ source ~/.config/nvim/plugins/solarized.vim
 source ~/.config/nvim/plugins/coc.vim
 source ~/.config/nvim/plugins/fzf.vim
 source ~/.config/nvim/plugins/vimspector.vim
+source ~/.config/nvim/plugins/commentary.vim
 call plug#end()
 
 doautocmd User PlugLoaded
