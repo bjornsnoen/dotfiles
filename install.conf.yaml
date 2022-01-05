@@ -16,6 +16,7 @@
         - ripgrep
         - asdf-vm
         - light-locker
+        - playerctl
 
 - link:
     ~/.tmux.conf: tmux.conf

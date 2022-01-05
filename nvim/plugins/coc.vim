@@ -1,5 +1,22 @@
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+
+let g:coc_global_extensions = [
+    \ 'coc-css',
+    \ 'coc-diagnostic',
+    \ 'coc-eslint',
+    \ 'coc-git',
+    \ 'coc-html',
+    \ 'coc-json',
+    \ 'coc-pairs',
+    \ 'coc-tsserver',
+    \ 'coc-pyright',
+    \ 'coc-prettier',
+\ ]
+
+nmap <Leader>[ <Plug>(coc-diagnostic-prev)
+nmap <Leader>] <Plug>(coc-diagnostic-next)
+
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
