@@ -10,5 +10,10 @@
     "json",
     "jsonc",
     "python"
-  ]
+  ],
+  "python.formatting.provider": "black",
+  "pyright.organizeimports.provider": "isort",
+  "python.sortImports.path": "~/.local/bin/isort",
+  "python.sortImports.args": ["--profile=black"],
+  "coc.preferences.willSaveHandlerTimeout": 1000
 }

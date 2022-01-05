@@ -58,5 +58,11 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gi <Plug>(coc-references)
 
-xmap <leader><F6> <Plug>(coc-codeaction-selected)
-nmap <leader><F6> <Plug>(coc-codeaction)
+xmap <leader>ca <Plug>(coc-codeaction-selected)
+nmap <leader>ca <Plug>(coc-codeaction)
+
+
+augroup CocOverrides
+    au!
+    autocmd BufWritePre *.py silent! :call CocAction('runCommand', 'python.sortImports')
+augroup end
