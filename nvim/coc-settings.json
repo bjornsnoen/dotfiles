@@ -11,6 +11,8 @@
     "jsonc",
     "python"
   ],
+  "javascript.showUnused": false,
+  "typescript.showUnused": false,
   "python.formatting.provider": "black",
   "pyright.organizeimports.provider": "isort",
   "python.sortImports.path": "~/.local/bin/isort",

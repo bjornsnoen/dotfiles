@@ -28,6 +28,7 @@ source ~/.config/nvim/plugins/commentary.vim
 source ~/.config/nvim/plugins/lastpage.vim
 source ~/.config/nvim/plugins/zoom.vim
 source ~/.config/nvim/plugins/polyglot.vim
+source ~/.config/nvim/plugins/incsearch.vim
 call plug#end()
 
 doautocmd User PlugLoaded

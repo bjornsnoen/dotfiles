@@ -7,7 +7,7 @@ export PATH=$HOME/.npm-global/bin:$PATH
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 export PATH="./vendor/bin:$PATH"
 export PATH=$HOME/go/bin:$PATH
-export EDITOR="vim"
+export EDITOR="nvim"
 export XMLLINT_INDENT="    "
 export PIPENV_VERBOSITY=-1
 
@@ -124,3 +124,4 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 export DOCKER_BUILDKIT=1
 #export DOCKER_HOST=unix:///run/user/1000/docker.sock
 
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
