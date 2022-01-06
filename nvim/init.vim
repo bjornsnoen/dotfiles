@@ -18,20 +18,20 @@ map gf :edit <cfile><cr>
 call plug#begin(stdpath('data') . '/plugged')
 
 source ~/.config/nvim/plugins/airline.vim
-source ~/.config/nvim/plugins/vim-fugitive.vim
-source ~/.config/nvim/plugins/editorconfig.vim
-source ~/.config/nvim/plugins/nerdtree.vim
-source ~/.config/nvim/plugins/floaterm.vim
-source ~/.config/nvim/plugins/solarized.vim
-source ~/.config/nvim/plugins/coc.vim
-source ~/.config/nvim/plugins/fzf.vim
-source ~/.config/nvim/plugins/vimspector.vim
-source ~/.config/nvim/plugins/commentary.vim
-source ~/.config/nvim/plugins/lastpage.vim
-source ~/.config/nvim/plugins/zoom.vim
-source ~/.config/nvim/plugins/polyglot.vim
-source ~/.config/nvim/plugins/incsearch.vim
 source ~/.config/nvim/plugins/clipboard.vim
+source ~/.config/nvim/plugins/coc.vim
+source ~/.config/nvim/plugins/commentary.vim
+source ~/.config/nvim/plugins/editorconfig.vim
+source ~/.config/nvim/plugins/floaterm.vim
+source ~/.config/nvim/plugins/fzf.vim
+source ~/.config/nvim/plugins/incsearch.vim
+source ~/.config/nvim/plugins/lastpage.vim
+source ~/.config/nvim/plugins/nerdtree.vim
+source ~/.config/nvim/plugins/polyglot.vim
+source ~/.config/nvim/plugins/solarized.vim
+source ~/.config/nvim/plugins/vim-fugitive.vim
+source ~/.config/nvim/plugins/vimspector.vim
+source ~/.config/nvim/plugins/zoom.vim
 
 call plug#end()
 
