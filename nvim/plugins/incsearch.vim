@@ -1,6 +1,7 @@
 Plug 'haya14busa/incsearch.vim'
 
 set hlsearch
+noh " remove highlights that might be hanging about
 let g:incsearch#auto_nohlsearch = 1
 
 map /  <Plug>(incsearch-forward)
