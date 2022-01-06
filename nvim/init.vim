@@ -32,8 +32,3 @@ source ~/.config/nvim/plugins/incsearch.vim
 call plug#end()
 
 doautocmd User PlugLoaded
-
-
-let g:airline_theme = 'solarized_flood'
-let g:airline_powerline_fonts = 1
-let g:airline_skip_empty_sections = 1
