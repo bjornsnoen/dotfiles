@@ -8,11 +8,12 @@ set splitright
 set termguicolors
 set mouse=va
 
-nmap <leader>ve :vsp ~/.config/nvim/init.vim<cr>
-nmap <leader>vc :vsp ~/.config/nvim/coc-settings.json<cr>
-nmap <leader>vr :source ~/.config/nvim/init.vim<cr>
-nmap <leader>q :bufdo bdelete<cr>
-map gf :edit <cfile><cr>
+nmap <Leader>ve :vsp ~/.config/nvim/init.vim<CR>
+" Using this keymap for .vimspector.json, remap before uncomment
+" nmap <Leader>vc :vsp ~/.config/nvim/coc-settings.json<CR>
+nmap <Leader>vr :source ~/.config/nvim/init.vim<CR>
+nmap <Leader>q :bufdo bdelete<CR>
+map gf :edit <cfile><CR>
 
 
 call plug#begin(stdpath('data') . '/plugged')
