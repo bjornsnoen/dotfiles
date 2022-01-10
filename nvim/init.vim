@@ -14,6 +14,7 @@ nmap <Leader>ve :vsp ~/.config/nvim/init.vim<CR>
 nmap <Leader>vr :source ~/.config/nvim/init.vim<CR>
 nmap <Leader>q :bufdo bdelete<CR>
 map gf :edit <cfile><CR>
+cmap w!! w !sudo tee %<CR>
 
 
 call plug#begin(stdpath('data') . '/plugged')
