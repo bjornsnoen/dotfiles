@@ -12,10 +12,13 @@ let g:coc_global_extensions = [
     \ 'coc-tsserver',
     \ 'coc-pyright',
     \ 'coc-prettier',
+    \ 'coc-phpls',
 \ ]
 
 nmap <Leader>[ <Plug>(coc-diagnostic-prev)
 nmap <Leader>] <Plug>(coc-diagnostic-next)
+nmap <Leader>cf <Plug>(coc-format)
+nmap <F18> <Plug>(coc-rename)
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c

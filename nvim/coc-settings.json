@@ -16,6 +16,15 @@
   "python.formatting.provider": "black",
   "pyright.organizeimports.provider": "isort",
   "python.sortImports.path": "~/.local/bin/isort",
-  "python.sortImports.args": ["--profile=black"],
-  "coc.preferences.willSaveHandlerTimeout": 1000
+  "python.sortImports.args": [
+    "--profile=black"
+  ],
+  "coc.preferences.willSaveHandlerTimeout": 1000,
+  "prettier.disableLanguages": [
+    "html"
+  ],
+  "prettier.requireConfig": true,
+  "prettier.onlyUseLocalVersion": true,
+  "git.signPriority": 5,
+  "php-cs-fixer.rules": "@PSR12,ordered_imports,no_unused_imports"
 }

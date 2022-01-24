@@ -12,9 +12,11 @@ nmap <Leader>ve :vsp ~/.config/nvim/init.vim<CR>
 " Using this keymap for .vimspector.json, remap before uncomment
 " nmap <Leader>vc :vsp ~/.config/nvim/coc-settings.json<CR>
 nmap <Leader>vr :source ~/.config/nvim/init.vim<CR>
-nmap <Leader>q :bufdo bdelete<CR>
 map gf :edit <cfile><CR>
-cmap w!! w !sudo tee %<CR>
+cmap w! w !sudo tee %<CR>
+nmap tn :bn<CR>
+nmap tp :bp<CR>
+nmap <Leader>wq :w<CR>\|:bdelete<CR>
 
 
 call plug#begin(stdpath('data') . '/plugged')
@@ -34,6 +36,8 @@ source ~/.config/nvim/plugins/polyglot.vim
 source ~/.config/nvim/plugins/solarized.vim
 source ~/.config/nvim/plugins/vimspector.vim
 source ~/.config/nvim/plugins/zoom.vim
+source ~/.config/nvim/plugins/bufonly.vim
+" source ~/.config/nvim/plugins/omnisharp.vim
 
 call plug#end()
 

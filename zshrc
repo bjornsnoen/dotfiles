@@ -10,6 +10,8 @@ export PATH=$HOME/go/bin:$PATH
 export EDITOR="nvim"
 export XMLLINT_INDENT="    "
 export PIPENV_VERBOSITY=-1
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,

@@ -16,3 +16,11 @@ nmap <Leader><F12> <Plug>VimspectorDownFrame
 
 " Will get fucky if you fucked with the cwd, so don't
 nmap <Leader>vc :e .vimspector.json<CR>
+
+let g:vimspector_sign_priority = {
+  \    'vimspectorBP':         10,
+  \    'vimspectorBPCond':     9,
+  \    'vimspectorBPLog':      8,
+  \    'vimspectorBPDisabled': 7,
+  \    'vimspectorPC':         999,
+  \ }

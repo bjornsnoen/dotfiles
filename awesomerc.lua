@@ -16,11 +16,6 @@ local rotate = require('screenrotation')
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-clientbuttons_jetbrains = gears.table.join(
-    awful.button({ modkey }, 1, awful.mouse.client.move),
-    awful.button({ modkey }, 3, awful.mouse.client.resize)
-)
-
 local volume_control = require("volume-control")
 volumecfg = volume_control({})
 -- {{{ Error handling
@@ -536,17 +531,17 @@ local tasklist_buttons = gears.table.join(
             { rule_any = {type = { "normal", "dialog" }
                 }, properties = { titlebars_enabled = true }
             },
-            {
-                rule = {
-                    class = "jetbrains-.*",
-                }, properties = { focus = true, buttons = clientbuttons_jetbrains }
-            },
-            {
-                rule = {
-                class = "jetbrains-.*",
-                name = "win.*"
-                }, properties = { titlebars_enabled = false, focusable = false, focus = true, floating = true, placement = awful.placement.restore }
-            },
+            -- {
+            --     rule = {
+            --         class = "jetbrains-.*",
+            --     }, properties = { focus = true }
+            -- },
+            -- {
+            --     rule = {
+            --     class = "jetbrains-.*",
+            --     name = "win.*"
+            --     }, properties = { titlebars_enabled = false, focusable = false, focus = true, floating = true, placement = awful.placement.restore }
+            -- },
             {
                 rule = { class = "kitty" },
                 properties = { titlebars_enabled = false }
