@@ -17,6 +17,7 @@
         - asdf-vm
         - light-locker
         - playerctl
+        - composer
 
 - link:
     ~/.tmux.conf: tmux.conf
@@ -28,6 +29,8 @@
     ~/.zshrc: zshrc
     ~/.config/nvim: nvim
     ~/.config/awesome/rc.lua: awesomerc.lua
+    ~/.config/composer/composer.json: composer.json
+    ~/.config/ripgreprc: ripgreprc
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
@@ -44,4 +47,6 @@
       stdin: true
       stdout: true
       stderr: true
+    - [composer global install, "Install global composer modules"]
+    - [~/.config/composer/vendor/bin/myweek, Install myweek hooks]
 

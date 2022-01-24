@@ -12,6 +12,7 @@ export XMLLINT_INDENT="    "
 export PIPENV_VERBOSITY=-1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+export RIPGREP_CONFIG_PATH=$HOME/.config/ripgreprc
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,

@@ -1,0 +1,11 @@
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:bjornsnoen/myweek.git"
+        }
+    ],
+    "require": {
+        "bjornsnoen/myweek": "dev-master"
+    }
+}

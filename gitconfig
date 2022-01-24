@@ -8,3 +8,5 @@
 	excludesfile = ~/.gitignore
 [pull]
 	rebase = false
+[init]
+	templatedir = /home/bjorn/.git-templates
