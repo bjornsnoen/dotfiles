@@ -6,6 +6,9 @@
 - clean:
     - "~"
     - ~/.config/kitty/
+    - ~/.config/awesome/
+    - ~/.config/direnv/
+    - ~/.config/nvim/
 
 - ifarch:
     - yaourt:
@@ -30,10 +33,10 @@
     ~/.xinitrc: xinitrc
     ~/.zshrc: zshrc
     ~/.config/nvim: nvim
-    ~/.config/awesome/rc.lua: awesomerc.lua
     ~/.config/composer/composer.json: composer.json
     ~/.config/ripgreprc: ripgreprc
     ~/.config/direnv: direnv
+    ~/.config/awesome: awesome
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
