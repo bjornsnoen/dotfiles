@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 alias cleawr="echo rawr"
 alias cd="cd -P"
 alias sniff="phpcs --standard='PSR12'"
@@ -18,6 +19,15 @@ alias git-remove-untracked='git fetch --prune && git branch -r | awk "{print \$1
 
 release_branch() {
     git checkout -b release/$(date +%Y).w$(date +%V).r$1
+}
+
+reinit() {
+    for gitdir in $(find . -maxdepth 2 -name .git | awk -F"." '{ print "." $2 }')
+    do
+        pushd $gitdir
+        git init
+        popd
+    done
 }
 
 alias ec2list="aws ec2 describe-instances --query \"Reservations[*].Instances[*].{Instance:InstanceId,Name:Tags[?Key=='Name']|[0].Value}\" --output table"

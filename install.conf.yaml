@@ -18,6 +18,8 @@
         - light-locker
         - playerctl
         - composer
+        - flameshot
+        - direnv
 
 - link:
     ~/.tmux.conf: tmux.conf
@@ -31,6 +33,7 @@
     ~/.config/awesome/rc.lua: awesomerc.lua
     ~/.config/composer/composer.json: composer.json
     ~/.config/ripgreprc: ripgreprc
+    ~/.config/direnv: direnv
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

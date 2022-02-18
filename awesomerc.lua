@@ -6,6 +6,7 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
+beautiful.systray_icon_spacing = 5
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
@@ -58,6 +59,9 @@ editor_cmd = terminal .. " -e " .. editor
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
+
+local net_widgets = require("net_widgets")
+local net_wireless = net_widgets.wireless({interface="wlan0", position="tr"})
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -126,6 +130,8 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
+local month_calendar = awful.widget.calendar_popup.month({week_numbers = true})
+month_calendar:attach( mytextclock, "tr" )
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -221,14 +227,20 @@ local tasklist_buttons = gears.table.join(
                     s.mypromptbox,
                 },
                 s.mytasklist, -- Middle widget
-                { -- Right widgets
-                    layout = wibox.layout.fixed.horizontal,
-                    require("battery-widget") {},
-                    volumecfg.widget,
-                    mykeyboardlayout,
-                    wibox.widget.systray(),
-                    mytextclock,
-                    s.mylayoutbox,
+                {
+                    layout = wibox.container.margin,
+                    top = 3,
+                    bottom = 3,
+                    { -- Right widgets
+                        layout = wibox.layout.fixed.horizontal,
+                        require("battery-widget") {},
+                        volumecfg.widget,
+                        mykeyboardlayout,
+                        net_wireless,
+                        wibox.widget.systray(),
+                        mytextclock,
+                        s.mylayoutbox,
+                    },
                 },
             }
         end)
@@ -342,7 +354,6 @@ local tasklist_buttons = gears.table.join(
             awful.key({ modkey }, "p", function() menubar.show() end,
                 {description = "show the menubar", group = "launcher"}),
             awful.key({  }, "Pause", function() awful.util.spawn("systemctl suspend-then-hibernate") end),
-            awful.key({  }, "Print", function() awful.util.spawn_with_shell("sleep 0.5 && scrot --select") end),
             awful.key({ }, "XF86KbdBrightnessUp", function() awful.util.spawn("light -s sysfs/leds/samsung::kbd_backlight -A 12.5") end),
             awful.key({ }, "XF86KbdBrightnessDown", function() awful.util.spawn("light -s sysfs/leds/samsung::kbd_backlight -U 12.5") end),
             -- Volume Keys
@@ -373,10 +384,10 @@ local tasklist_buttons = gears.table.join(
                 awful.util.spawn("light -A 10")
             end),
             -- Screenshot
-            awful.key({ }, "Print", function ()
+            awful.key({ "Shift" }, "Print", function ()
                 awful.util.spawn("flameshot full -p /home/bjorn/Pictures/Screenshots -c")
             end),
-            awful.key({ "Shift" }, "Print", function ()
+            awful.key({ }, "Print", function ()
                 awful.util.spawn("flameshot gui -p /home/bjorn/Pictures/Screenshots")
             end)
         )
