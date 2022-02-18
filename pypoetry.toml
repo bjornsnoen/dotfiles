@@ -1,0 +1,7 @@
+[repositories]
+[repositories.brbcoffee]
+url = "https://pypi.brbcoffee.com/simple/"
+
+[virtualenvs]
+[virtualenvs.options]
+system-site-packages = true

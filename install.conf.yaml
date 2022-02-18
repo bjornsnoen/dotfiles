@@ -37,10 +37,11 @@
     ~/.config/ripgreprc: ripgreprc
     ~/.config/direnv: direnv
     ~/.config/awesome: awesome
+    ~/.config/pypoetry/config.toml: pypoetry.toml
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
-    - [curl -sSL https://install.python-poetry.org | python3 -, Install poetry]
+    - [curl -sSL https://install.python-poetry.org | python3 - -p, Install poetry]
     - ["if [ ! -d ~/.oh-my-zsh ]; then sh -c '$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)' '' --unattended; fi", Install ohmyzsh]
     - [git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions || true, Install zsh-autosuggestions]
     - [git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || true, Install tpm]
