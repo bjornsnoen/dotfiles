@@ -390,7 +390,7 @@ local tasklist_buttons = gears.table.join(
                 awful.util.spawn("flameshot full -p /home/bjorn/Pictures/Screenshots -c")
             end),
             awful.key({ }, "Print", function ()
-                awful.util.spawn("flameshot gui -p /home/bjorn/Pictures/Screenshots")
+                awful.util.spawn("flameshot gui")
             end)
         )
 

@@ -21,7 +21,8 @@
   ],
   "coc.preferences.willSaveHandlerTimeout": 1000,
   "prettier.disableLanguages": [
-    "html"
+    "html",
+    "python"
   ],
   "prettier.requireConfig": true,
   "prettier.onlyUseLocalVersion": true,
@@ -29,24 +30,5 @@
   "php-cs-fixer.rules": "@PSR12,ordered_imports,no_unused_imports",
   "yaml.schemas": {
     "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json": "**/docker-compose*.yml"
-  },
-  "languageserver": {
-    // "pylance": {
-    //   "enable": true,
-    //   "filetypes": [
-    //     "python"
-    //   ],
-    //   "command": "pylsp",
-    //   "args": [
-    //     "-v"
-    //   ],
-    //   "initializationOptions": {},
-    //   "settings": {
-    //     "pylsp.plugins.rope_completion.eager": true,
-    //     "pylsp.plugins.pycodestyle.maxLineLength": 88,
-    //     "pylsp.plugins.jedi_completion.resolve_at_most": 100,
-    //     "pylsp.plugins.jedi_completion.eager": true
-    //   }
-    // }
   }
 }

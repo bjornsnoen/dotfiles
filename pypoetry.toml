@@ -1,6 +1,6 @@
 [repositories]
 [repositories.brbcoffee]
-url = "https://pypi.brbcoffee.com/simple/"
+url = "https://pypi.brbcoffee.com/"
 
 [virtualenvs]
 [virtualenvs.options]
