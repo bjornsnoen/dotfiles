@@ -86,4 +86,5 @@ augroup CocOverrides
     au!
     autocmd BufWritePre *.py silent! :call CocAction('runCommand', 'python.sortImports')
     autocmd BufNewFile,BufRead *.dockerfile setfiletype dockerfile
+    autocmd BufNewFile,BufRead .prettierrc setfiletype json
 augroup end

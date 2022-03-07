@@ -12,18 +12,20 @@ nmap <Leader>ve :vsp ~/.config/nvim/init.vim<CR>
 " Using this keymap for .vimspector.json, remap before uncomment
 " nmap <Leader>vc :vsp ~/.config/nvim/coc-settings.json<CR>
 nmap <Leader>vr :source ~/.config/nvim/init.vim<CR>
+nmap <Leader>vc :e ~/.config/nvim/coc-settings.json<CR>
 map gf :edit <cfile><CR>
-cmap w! w !sudo tee %<CR>
+cmap w! :SudaWrite<CR>
 nmap tn :bn<CR>
 nmap tp :bp<CR>
 nmap <Leader>wq :w<CR>\|:bdelete<CR>
 nmap <Leader>o :only<CR>
-
+nmap zx zfat
 
 call plug#begin(stdpath('data') . '/plugged')
 
 source ~/.config/nvim/plugins/abolish.vim
 source ~/.config/nvim/plugins/airline.vim
+source ~/.config/nvim/plugins/bufonly.vim
 source ~/.config/nvim/plugins/clipboard.vim
 source ~/.config/nvim/plugins/coc.vim
 source ~/.config/nvim/plugins/commentary.vim
@@ -33,15 +35,16 @@ source ~/.config/nvim/plugins/fugitive.vim
 source ~/.config/nvim/plugins/fzf.vim
 source ~/.config/nvim/plugins/incsearch.vim
 source ~/.config/nvim/plugins/lastpage.vim
+source ~/.config/nvim/plugins/markdown.vim
+source ~/.config/nvim/plugins/matchit.vim
 source ~/.config/nvim/plugins/nerdtree.vim
 source ~/.config/nvim/plugins/polyglot.vim
 source ~/.config/nvim/plugins/solarized.vim
+source ~/.config/nvim/plugins/suda.vim
+source ~/.config/nvim/plugins/tabularize.vim
 source ~/.config/nvim/plugins/vimspector.vim
 source ~/.config/nvim/plugins/vimspectorpy.vim
 source ~/.config/nvim/plugins/zoom.vim
-source ~/.config/nvim/plugins/bufonly.vim
-source ~/.config/nvim/plugins/tabularize.vim
-source ~/.config/nvim/plugins/markdown.vim
 " source ~/.config/nvim/plugins/omnisharp.vim
 
 call plug#end()

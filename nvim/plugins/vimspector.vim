@@ -14,8 +14,6 @@ xmap <Leader>di <Plug>VimspectorBalloonEval
 nmap <Leader><F11> <Plug>VimspectorUpFrame
 nmap <Leader><F12> <Plug>VimspectorDownFrame
 
-" Will get fucky if you fucked with the cwd, so don't
-nmap <Leader>vc :e .vimspector.json<CR>
 
 let g:vimspector_sign_priority = {
   \    'vimspectorBP':         10,
