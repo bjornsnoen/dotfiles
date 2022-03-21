@@ -29,6 +29,7 @@ source ~/.config/nvim/plugins/bufonly.vim
 source ~/.config/nvim/plugins/clipboard.vim
 source ~/.config/nvim/plugins/coc.vim
 source ~/.config/nvim/plugins/commentary.vim
+source ~/.config/nvim/plugins/css-colors.vim
 source ~/.config/nvim/plugins/editorconfig.vim
 source ~/.config/nvim/plugins/floaterm.vim
 source ~/.config/nvim/plugins/fugitive.vim
@@ -44,6 +45,7 @@ source ~/.config/nvim/plugins/suda.vim
 source ~/.config/nvim/plugins/tabularize.vim
 source ~/.config/nvim/plugins/vimspector.vim
 source ~/.config/nvim/plugins/vimspectorpy.vim
+source ~/.config/nvim/plugins/vimtest.vim
 source ~/.config/nvim/plugins/zoom.vim
 " source ~/.config/nvim/plugins/omnisharp.vim
 

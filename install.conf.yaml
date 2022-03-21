@@ -38,6 +38,7 @@
     ~/.config/direnv: direnv
     ~/.config/awesome: awesome
     ~/.config/pypoetry/config.toml: pypoetry.toml
+    ~/.config/libvirt/libvirt.conf: libvirt.conf
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
