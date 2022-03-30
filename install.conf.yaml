@@ -40,13 +40,24 @@
     ~/.config/pypoetry/config.toml: pypoetry.toml
     ~/.config/libvirt/libvirt.conf: libvirt.conf
 
+- pip:
+    file: requirements.txt
+    binary: ~/.asdf/shims/pip
+    user: true
+    stdout: true
+    stderr: true
+
+- pipx:
+    file: requirements-pipx.txt
+    stdout: true
+    stderr: true
+
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
     - [curl -sSL https://install.python-poetry.org | python3 - -p, Install poetry]
     - ["if [ ! -d ~/.oh-my-zsh ]; then sh -c '$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)' '' --unattended; fi", Install ohmyzsh]
     - [git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions || true, Install zsh-autosuggestions]
     - [git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || true, Install tpm]
-    - [pip install --user black isort, "Install black and isort globally"]
     - ["tmux new-session -d && tmux run '~/.tmux/plugins/tpm/scripts/install_plugins.sh' || true && tmux kill-session -t $(tmux ls -F '#{session_name}' | tail -n 1)", Install tmux plugins]
     - [curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim, Install Plug]
     - [nvim -f +'PlugInstall --sync' +'qa', Install vim plugins]

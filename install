@@ -17,4 +17,5 @@ git submodule update --init --recursive "${DOTBOT_DIR}"
     -c "${CONFIG}" \
     --plugin-dir "${BASEDIR}/dotbot-ifplatform" \
     --plugin-dir "${BASEDIR}/dotbot-yaourt" \
+    --plugin-dir "${BASEDIR}/dotbot-pip" \
     "${@}"

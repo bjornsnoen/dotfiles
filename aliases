@@ -15,7 +15,7 @@ alias available="lux -l 0 -g 255 color"
 alias dnd="lux -l 0 -r 255 color"
 alias dcp="docker compose"
 
-alias git-remove-untracked='git fetch --prune && git branch -r | awk "{print \$1}" | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk "{print \$1}" | xargs git branch -d'
+alias git-remove-untracked='git fetch --prune && git branch -r | awk "{print \$1}" | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk "{print \$1}" | xargs git branch -D'
 
 release_branch() {
     git checkout -b release/$(date +%Y).w$(date +%V).r$1
