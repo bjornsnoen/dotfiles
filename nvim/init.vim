@@ -20,6 +20,7 @@ nmap tp :bp<CR>
 nmap <Leader>wq :w<CR>\|:bdelete<CR>
 nmap <Leader>o :only<CR>
 nmap zx zfat
+nmap // :noh<CR>
 
 call plug#begin(stdpath('data') . '/plugged')
 
@@ -36,18 +37,19 @@ source ~/.config/nvim/plugins/fugitive.vim
 source ~/.config/nvim/plugins/fzf.vim
 source ~/.config/nvim/plugins/incsearch.vim
 source ~/.config/nvim/plugins/lastpage.vim
-source ~/.config/nvim/plugins/markdown.vim
+" source ~/.config/nvim/plugins/markdown.vim
 source ~/.config/nvim/plugins/matchit.vim
+source ~/.config/nvim/plugins/multicursor.vim
 source ~/.config/nvim/plugins/nerdtree.vim
 source ~/.config/nvim/plugins/polyglot.vim
 source ~/.config/nvim/plugins/solarized.vim
 source ~/.config/nvim/plugins/suda.vim
+source ~/.config/nvim/plugins/surround.vim
 source ~/.config/nvim/plugins/tabularize.vim
 source ~/.config/nvim/plugins/vimspector.vim
 source ~/.config/nvim/plugins/vimspectorpy.vim
 source ~/.config/nvim/plugins/vimtest.vim
 source ~/.config/nvim/plugins/zoom.vim
-" source ~/.config/nvim/plugins/omnisharp.vim
 
 call plug#end()
 

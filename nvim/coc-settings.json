@@ -25,10 +25,17 @@
     "python"
   ],
   "prettier.requireConfig": true,
-  "prettier.onlyUseLocalVersion": true,
+  "prettier.onlyUseLocalVersion": false,
   "git.signPriority": 5,
   "php-cs-fixer.rules": "@PSR12,ordered_imports,no_unused_imports",
   "yaml.schemas": {
     "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json": "**/docker-compose*.yml"
+  },
+  "languageserver": {
+    "csharp-ls": {
+      "command": "csharp-ls",
+      "filetypes": ["cs"],
+      "rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
+    }
   }
 }
