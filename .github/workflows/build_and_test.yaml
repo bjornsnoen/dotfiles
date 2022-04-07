@@ -24,4 +24,5 @@ jobs:
           load: true
           context: .
       - name: Test
-        run: docker run --rm -it test
+        run: |
+          docker run --rm -t test
