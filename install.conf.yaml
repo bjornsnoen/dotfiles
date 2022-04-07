@@ -11,19 +11,38 @@
     - ~/.config/nvim/
 
 - ifarch:
-    - yaourt:
-        - zsh
-        - neovim
-        - kitty
-        - kitty-terminfo
-        - ripgrep
+    - shell:
+        - [git clone "https://aur.archlinux.org/yay.git", "Clone yay"]
+        - [cd yay && makepkg -si --noconfirm, "Install yay"]
+        - [rm -rf yay, "Remove yay git clone"]
+    - yay:
         - asdf-vm
-        - light-locker
-        - playerctl
         - composer
-        - flameshot
         - direnv
         - dotnet-sdk
+        - flameshot
+        - kitty
+        - kitty-terminfo
+        - light-locker
+        - neovim
+        - playerctl
+        - ripgrep
+        - tmux
+        - zsh
+        - python-pip
+
+- asdf:
+  - asdf_path: /opt/asdf-vm/asdf.sh
+  - plugin: python
+    versions:
+      - latest
+    global: system
+  - plugin: nodejs
+  - plugin: poetry
+    versions:
+      - latest
+      - 1.2.0b1
+    global: 1.2.0b1
 
 - link:
     ~/.tmux.conf: tmux.conf
@@ -50,20 +69,20 @@
 
 - pipx:
     file: requirements-pipx.txt
+    binary: ~/.local/bin/pipx
     stdout: true
     stderr: true
 
 - shell:
-    - [git submodule update --init --recursive, Installing submodules]
     - [curl -sSL https://install.python-poetry.org | python3 - -p, Install poetry]
-    - ["if [ ! -d ~/.oh-my-zsh ]; then sh -c '$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)' '' --unattended; fi", Install ohmyzsh]
+    - ["if [ ! -d ~/.oh-my-zsh ]; then sh -c \"$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\" \"\" --unattended; fi", Install ohmyzsh]
     - [git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions || true, Install zsh-autosuggestions]
     - [git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || true, Install tpm]
     - ["tmux new-session -d && tmux run '~/.tmux/plugins/tpm/scripts/install_plugins.sh' || true && tmux kill-session -t $(tmux ls -F '#{session_name}' | tail -n 1)", Install tmux plugins]
     - [curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim, Install Plug]
     - [dotnet tool install --global csharp-ls, "Install csharp-ls for coc csharp server"]
     - [nvim -f +'PlugInstall --sync' +'qa', Install vim plugins]
-    - command: "if [[ $(echo $SHELL) != $(which zsh) ]]; then chsh -s $(which zsh); fi"
+    - command: "if [[ \"$(echo $SHELL)\" != \"$(cat /etc/shells | grep zsh | tail -n 1)\" ]]; then chsh -s $(cat /etc/shells | grep zsh | tail -n 1); fi"
       description: Switch to using zsh
       stdin: true
       stdout: true

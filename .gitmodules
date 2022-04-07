@@ -5,9 +5,6 @@
 [submodule "dotbot-ifplatform"]
 	path = dotbot-ifplatform
 	url = https://github.com/ssbanerje/dotbot-ifplatform.git
-[submodule "dotbot-yaourt"]
-	path = dotbot-yaourt
-	url = git@github.com:bjornsnoen/dotbot-yaourt
 [submodule "awesome/battery-widget"]
 	path = awesome/battery-widget
 	url = https://github.com/deficient/battery-widget.git
@@ -22,4 +19,10 @@
 	url = https://github.com/deficient/volume-control.git
 [submodule "dotbot-pip"]
 	path = dotbot-pip
-	url = https://github.com/sobolevn/dotbot-pip.git
+	url = git@github.com:bjornsnoen/dotbot-pip.git
+[submodule "dotbot-yay"]
+	path = dotbot-yay
+	url = https://github.com/oxson/dotbot-yay
+[submodule "dotbot-asdf"]
+	path = dotbot-asdf
+	url = git@github.com:bjornsnoen/dotbot-asdf.git
