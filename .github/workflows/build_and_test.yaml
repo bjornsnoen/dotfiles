@@ -22,5 +22,6 @@ jobs:
           push: false
           tags: test
           load: true
+          context: .
       - name: Test
         run: docker run --rm test
