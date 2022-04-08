@@ -19,7 +19,7 @@
 	url = https://github.com/deficient/volume-control.git
 [submodule "dotbot-pip"]
 	path = dotbot-pip
-	url = https://github.com/bjornsnoen/dotbot-pip.git
+	url = https://github.com/sobolevn/dotbot-pip.git
 [submodule "dotbot-yay"]
 	path = dotbot-yay
 	url = https://github.com/oxson/dotbot-yay
