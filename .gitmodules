@@ -25,4 +25,4 @@
 	url = https://github.com/oxson/dotbot-yay
 [submodule "dotbot-asdf"]
 	path = dotbot-asdf
-	url = https://github.com/bjornsnoen/dotbot-asdf.git
+	url = git@github.com:bjornsnoen/dotbot-asdf.git

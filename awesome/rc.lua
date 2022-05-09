@@ -355,7 +355,7 @@ local tasklist_buttons = gears.table.join(
             -- Menubar
             awful.key({ modkey }, "p", function() menubar.show() end,
                 {description = "show the menubar", group = "launcher"}),
-            awful.key({  }, "Pause", function() awful.util.spawn("systemctl suspend-then-hibernate") end),
+            awful.key({  }, "Pause", function() awful.util.spawn("light-locker-command -l") end),
             awful.key({ }, "XF86KbdBrightnessUp", function() awful.util.spawn("light -s sysfs/leds/samsung::kbd_backlight -A 12.5") end),
             awful.key({ }, "XF86KbdBrightnessDown", function() awful.util.spawn("light -s sysfs/leds/samsung::kbd_backlight -U 12.5") end),
             -- Volume Keys

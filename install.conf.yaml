@@ -30,6 +30,8 @@
         - tmux
         - zsh
         - python-pip
+        - thefuck
+        - hushboard-git
 
 - asdf:
   - asdf_path: /opt/asdf-vm/asdf.sh
@@ -59,6 +61,7 @@
     ~/.config/awesome: awesome
     ~/.config/pypoetry/config.toml: pypoetry.toml
     ~/.config/libvirt/libvirt.conf: libvirt.conf
+    ~/.ackrc: ackrc
 
 - pip:
     file: requirements.txt
@@ -75,7 +78,7 @@
 
 - shell:
     - [curl -sSL https://install.python-poetry.org | python3 - -p, Install poetry]
-    - ["if [ ! -d ~/.oh-my-zsh ]; then sh -c \"$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\" \"\" --unattended; fi", Install ohmyzsh]
+    - ["if [ ! -d ~/.oh-my-zsh ]; then sh -c \"$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\" \"\" --unattended --keep-zshrc; fi", Install ohmyzsh]
     - [git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions || true, Install zsh-autosuggestions]
     - [git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || true, Install tpm]
     - ["tmux new-session -d && tmux run '~/.tmux/plugins/tpm/scripts/install_plugins.sh' || true && tmux kill-session -t $(tmux ls -F '#{session_name}' | tail -n 1)", Install tmux plugins]

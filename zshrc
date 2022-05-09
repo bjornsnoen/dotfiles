@@ -97,3 +97,7 @@ PS1='$(show_virtual_env)'$PS1
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 eval "$(direnv hook zsh)"
+
+# tabtab source for yarn package
+# uninstall by removing these lines or running `tabtab uninstall yarn`
+[[ -f /home/bjorn/.config/yarn/global/node_modules/tabtab/.completions/yarn.zsh ]] && . /home/bjorn/.config/yarn/global/node_modules/tabtab/.completions/yarn.zsh

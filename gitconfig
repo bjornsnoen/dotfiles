@@ -1,8 +1,8 @@
 [user]
-	email = bjorn.snoen@gmail.com
+	email = bjorn@fink.no
 	name = Bjørn Snoen
 [push]
-	default = simple
+	default = current
 [core]
 	editor = vim
 	excludesfile = ~/.gitignore
@@ -10,3 +10,5 @@
 	rebase = false
 [init]
 	templatedir = /home/bjorn/.git-templates
+[author]
+	email = bjorn@fink.no

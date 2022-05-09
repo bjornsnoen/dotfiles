@@ -41,6 +41,7 @@ source ~/.config/nvim/plugins/lastpage.vim
 source ~/.config/nvim/plugins/matchit.vim
 source ~/.config/nvim/plugins/multicursor.vim
 source ~/.config/nvim/plugins/nerdtree.vim
+source ~/.config/nvim/plugins/persistent-undo.vim
 source ~/.config/nvim/plugins/polyglot.vim
 source ~/.config/nvim/plugins/solarized.vim
 source ~/.config/nvim/plugins/suda.vim
