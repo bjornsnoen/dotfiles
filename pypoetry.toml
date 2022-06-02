@@ -3,5 +3,6 @@
 url = "https://pypi.brbcoffee.com/"
 
 [virtualenvs]
+in-project = true
 [virtualenvs.options]
 system-site-packages = true

@@ -2,6 +2,7 @@ Plug 'puremourning/vimspector'
 
 let g:vimspector_enable_mappings = 'HUMAN'
 let g:vimspector_install_gadgets = [ 'debugpy', 'debugger-for-chrome', 'vscode-node-debug2' ]
+let g:vimspector_base_dir='/home/bjorn/.local/share/nvim/plugged/vimspector'
 
 nnoremap <Leader><F9> :call vimspector#ClearBreakpoints()<CR>
 nnoremap <Leader>dq :VimspectorReset<CR>

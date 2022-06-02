@@ -62,6 +62,7 @@
     ~/.config/pypoetry/config.toml: pypoetry.toml
     ~/.config/libvirt/libvirt.conf: libvirt.conf
     ~/.ackrc: ackrc
+    ~/.gitignore: gitignore
 
 - pip:
     file: requirements.txt

@@ -16,7 +16,9 @@ let g:coc_global_extensions = [
     \ 'coc-docker',
     \ 'coc-yaml',
     \ 'coc-xml',
-    \ 'coc-pyright'
+    \ 'coc-pyright',
+    \ 'coc-php-cs-fixer',
+    \ 'coc-sumneko-lua'
 \ ]
 
 nmap <Leader>[ <Plug>(coc-diagnostic-prev)

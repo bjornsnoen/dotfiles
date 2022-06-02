@@ -37,5 +37,16 @@
       "filetypes": ["cs"],
       "rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
     }
-  }
+  },
+  "Lua.telemetry.enable": true,
+  "sumneko-lua.enableNvimLuaDev": true,
+  "Lua.format.enable": true,
+  "Lua.format.defaultConfig": {
+    "indent_style": "space",
+    "indent_size": 4
+  },
+  "Lua.diagnostics.neededFileStatus": {
+    "codestyle-check": "Opened"
+  },
+  "Lua.diagnostics.globals": ["awesome", "client", "screen", "root"]
 }
