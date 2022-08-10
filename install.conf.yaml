@@ -16,6 +16,7 @@
         - [cd yay && makepkg -si --noconfirm, "Install yay"]
         - [rm -rf yay, "Remove yay git clone"]
     - yay:
+        - ulauncher
         - asdf-vm
         - composer
         - direnv
@@ -32,6 +33,7 @@
         - python-pip
         - thefuck
         - hushboard-git
+        - polybar
 
 - asdf:
   - asdf_path: /opt/asdf-vm/asdf.sh
@@ -63,6 +65,9 @@
     ~/.config/libvirt/libvirt.conf: libvirt.conf
     ~/.ackrc: ackrc
     ~/.gitignore: gitignore
+    ~/.config/ulauncher: ulauncher
+    ~/.config/polybar: polybar
+    ~/.config/autorandr/postswitch: autorandr/postswitch
 
 - pip:
     file: requirements.txt

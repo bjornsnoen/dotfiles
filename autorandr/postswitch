@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+sleep 1
+~/.config/polybar/launch.sh & disown

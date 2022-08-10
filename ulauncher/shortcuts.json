@@ -1,0 +1,92 @@
+{
+    "gsearch": {
+        "id": "01592071-bfc0-4ec3-a35c-6f9551417296",
+        "name": "Google Search",
+        "keyword": "g",
+        "cmd": "https://google.com/search?q=%s",
+        "icon": "/usr/share/ulauncher/media/google-search-icon.png",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1657900258.8655934
+    },
+    "wikipedia": {
+        "id": "91669c18-6a0d-4d3a-bdc9-7213b0bf023d",
+        "name": "Wikipedia",
+        "keyword": "wiki",
+        "cmd": "https://en.wikipedia.org/wiki/%s",
+        "icon": "/usr/share/ulauncher/media/wikipedia-icon.png",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1657900258.865668
+    },
+    "magic": {
+        "id": "ea9deea1-c247-47ac-8730-9d251114bcfc",
+        "name": "Magic",
+        "keyword": "magic",
+        "cmd": "#!/usr/bin/env sh\n\nlutris lutris:rungame/magic-the-gathering-arena",
+        "icon": "~/Pictures/Icons/arena.png",
+        "is_default_search": false,
+        "run_without_argument": true,
+        "added": 1657919217.0628102
+    },
+    "e8c055fc-7bcc-4b9e-8537-70f629f65e3c": {
+        "id": "e8c055fc-7bcc-4b9e-8537-70f629f65e3c",
+        "name": "Shutdown",
+        "keyword": "shutdown",
+        "cmd": "#!/usr/bin/env bash\nshutdown now",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": true,
+        "added": 1657919899.527856
+    },
+    "eda65891-91e9-401a-b394-960c51c8cfd7": {
+        "id": "eda65891-91e9-401a-b394-960c51c8cfd7",
+        "name": "Sleep",
+        "keyword": "sleep",
+        "cmd": "#!/usr/bin/env bash\nsystemctl suspend-then-hibernate",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": true,
+        "added": 1657992756.596385
+    },
+    "99bceaa3-a6f6-426e-af69-0184a3f51483": {
+        "id": "99bceaa3-a6f6-426e-af69-0184a3f51483",
+        "name": "xkill",
+        "keyword": "xkill",
+        "cmd": "#!/usr/bin/env sh\nxkill",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": true,
+        "added": 1658139580.845701
+    },
+    "4fc59d1b-0a2f-4716-8a07-9d472806cbb3": {
+        "id": "4fc59d1b-0a2f-4716-8a07-9d472806cbb3",
+        "name": "lbcam",
+        "keyword": "lbcam",
+        "cmd": "#!/usr/bin/env sh\n\ngst-launch-1.0 v4l2src device=/dev/video0 ! video/x-h264, width=1920, height=1080, interlace-mode=interlaced ! h264parse ! avdec_h264 ! videocrop top=250 left=500 right=400 bottom=200 ! videoconvert ! v4l2sink device=/dev/video6\n",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": true,
+        "added": 1658393619.5289922
+    },
+    "e28e9551-992e-4497-ad19-72fee1f9839c": {
+        "id": "e28e9551-992e-4497-ad19-72fee1f9839c",
+        "name": "lbcam off",
+        "keyword": "lbcam",
+        "cmd": "#!/usr/bin/env sh\n\npgrep gst-launch | xargs kill",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": true,
+        "added": 1658393724.741957
+    },
+    "ccd2f7e2-43d8-42e6-b6e1-c6cb9caf54a7": {
+        "id": "ccd2f7e2-43d8-42e6-b6e1-c6cb9caf54a7",
+        "name": "reddit",
+        "keyword": "reddit",
+        "cmd": "#!/usr/bin/env sh\nxdg-open https://www.troddit.com/hot/",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": true,
+        "added": 1658410532.8331428
+    }
+}
