@@ -34,6 +34,8 @@
         - thefuck
         - hushboard-git
         - polybar
+        - noto-fonts-emoji
+        - ttf-roboto
 
 - asdf:
   - asdf_path: /opt/asdf-vm/asdf.sh
@@ -68,6 +70,7 @@
     ~/.config/ulauncher: ulauncher
     ~/.config/polybar: polybar
     ~/.config/autorandr/postswitch: autorandr/postswitch
+    ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
 
 - pip:
     file: requirements.txt
