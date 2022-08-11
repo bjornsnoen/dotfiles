@@ -1,5 +1,7 @@
 local gears = require('gears')
 local awful = require('awful')
+local xresources = require('beautiful.xresources')
+local dpi = xresources.apply_dpi
 
 require('awful.autofocus')
 -- Widget and layout library
@@ -51,6 +53,9 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. 'default/theme.lua')
 local theme = beautiful.get()
+theme.border_width = dpi(0)
+theme.useless_gap = dpi(1)
+theme.gap_single_client = false
 theme.wallpaper = os.getenv('HOME') .. '/Pictures/Wallpapers/current.png'
 
 -- This is used later as the default terminal and editor to run.
