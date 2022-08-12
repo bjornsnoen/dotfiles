@@ -63,7 +63,7 @@
         "id": "4fc59d1b-0a2f-4716-8a07-9d472806cbb3",
         "name": "lbcam",
         "keyword": "lbcam",
-        "cmd": "#!/usr/bin/env sh\n\ngst-launch-1.0 v4l2src device=/dev/video0 ! video/x-h264, width=1920, height=1080, interlace-mode=interlaced ! h264parse ! avdec_h264 ! videocrop top=250 left=500 right=400 bottom=200 ! videoconvert ! v4l2sink device=/dev/video6\n",
+        "cmd": "#!/usr/bin/env sh\n\nsource=$(gst-device-monitor-1.0 Video/Source:video/x-h264 2>&1 | tail -n 2 | head -n 1 | awk -F'=' '{print $2}' | awk '{print $1}')\nsink=$(gst-device-monitor-1.0 Video/Sink:video/x-h264 2>&1 | tail -n 2 | head -n 1 | awk -F'=' '{print $2}' | awk '{print $1}')\n\ngst-launch-1.0 v4l2src device=$source ! video/x-h264, width=1920, height=1080, interlace-mode=interlaced ! h264parse ! avdec_h264 ! videocrop top=250 left=500 right=400 bottom=200 ! videoconvert ! v4l2sink device=$sink\n",
         "icon": null,
         "is_default_search": false,
         "run_without_argument": true,
