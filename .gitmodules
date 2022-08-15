@@ -22,7 +22,7 @@
 	url = https://github.com/sobolevn/dotbot-pip.git
 [submodule "dotbot-yay"]
 	path = dotbot-yay
-	url = https://github.com/oxson/dotbot-yay
+	url = git@github.com:bjornsnoen/dotbot-yay.git
 [submodule "dotbot-asdf"]
 	path = dotbot-asdf
 	url = git@github.com:bjornsnoen/dotbot-asdf.git

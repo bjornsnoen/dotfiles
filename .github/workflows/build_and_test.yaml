@@ -23,6 +23,7 @@ jobs:
           tags: test
           load: true
           context: .
+          target: build
       - name: Test
         run: |
           docker run --rm -t test
