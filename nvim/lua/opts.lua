@@ -7,6 +7,7 @@ vim.opt.number = true
 vim.opt.splitright = true
 vim.opt.termguicolors = true
 vim.opt.mouse = "va"
+vim.wo.relativenumber = true
 
 vim.cmd [[
 let g:clipboard = {

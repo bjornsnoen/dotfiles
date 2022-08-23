@@ -13,6 +13,13 @@ return {
         vim.keymap.set('n', '<Leader>dq', function()
             dap.disconnect()
             dapui.close()
+
+            for _, buffer in ipairs(vim.api.nvim_list_bufs()) do
+                local name = vim.api.nvim_buf_get_name(buffer)
+                if name:match(".*%[dap%-repl%]") then
+                    vim.api.nvim_buf_delete(buffer, { force = true })
+                end
+            end
         end)
     end
 }
