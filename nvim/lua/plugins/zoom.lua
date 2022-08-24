@@ -1,7 +1,7 @@
 return {
     'dhruvasagar/vim-zoom',
     config = function()
-        vim.cmd [[
+        vim.cmd([[
             augroup PlugZoom
                 autocmd!
                 function! AirlineInit()
@@ -10,6 +10,6 @@ return {
                 autocmd User AirlineAfterInit call AirlineInit()
             augroup end
 
-        ]]
-    end
+        ]])
+    end,
 }

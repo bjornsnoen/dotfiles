@@ -1,12 +1,12 @@
 return {
     {
-        'junegunn/fzf'
+        'junegunn/fzf',
     },
     {
         'junegunn/fzf.vim',
         config = function()
             vim.g.fzf_layout = { up = '~90%', window = { width = 0.8, height = 0.8, yoffset = 0.5, xoffset = 0.5 } }
-            vim.cmd [[
+            vim.cmd([[
                 let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
                 " Customise the Files command to use rg which respects .gitignore files
                 command! -bang -nargs=? -complete=dir Files
@@ -37,14 +37,10 @@ return {
                 endfunction
                 
                 command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
-            ]]
+            ]])
             vim.keymap.set('n', '<Leader>f', ':Files<CR>')
             vim.keymap.set('n', '<Leader>F', ':AllFiles<CR>')
             vim.keymap.set('n', '<Leader>r', ':Rg<CR>')
-        end
-    }
+        end,
+    },
 }
-
-
-
-

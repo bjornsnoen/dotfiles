@@ -6,11 +6,11 @@ return {
         -- Toggle comment for visual selection, with reselect
         -- vim.keymap.set('x', '<Leader>/', "gcgv")
 
-        vim.cmd [[
+        vim.cmd([[
         " Toggle comment for line under cursor
         nmap <Leader>/ gcc
         " Toggle comment for visual selection, with reselect
         xmap <Leader>/ gcgv
-        ]]
-    end
+        ]])
+    end,
 }
