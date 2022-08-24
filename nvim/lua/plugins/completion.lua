@@ -1,7 +1,6 @@
 return {
     'hrsh7th/nvim-cmp',
     requires = {
-        'neovim/nvim-lspconfig',
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-path',
@@ -10,6 +9,7 @@ return {
         'hrsh7th/cmp-nvim-lsp-signature-help',
         'hrsh7th/vim-vsnip',
         'rafamadriz/friendly-snippets',
+        'onsails/lspkind.nvim',
     },
     config = function()
         vim.o.completeopt = 'menu,menuone,noselect'
@@ -47,14 +47,18 @@ return {
             }, {
                 { name = 'buffer' },
             }),
+            formatting = {
+                format = require('lspkind').cmp_format({
+                    mode = 'symbol_text',
+                    menu = {
+                        buffer = '[Buffer]',
+                        nvim_lsp = '[LSP]',
+                        vsnip = '[Snip]',
+                        nvim_lua = '[Lua]',
+                        latex_symbols = '[Latex]',
+                    },
+                }),
+            },
         })
-        -- Setup lspconfig.
-        local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-        -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-        for _, server in ipairs({ 'pyright', 'tsserver', 'sumneko_lua' }) do
-            require('lspconfig')[server].setup({
-                capabilities = capabilities,
-            })
-        end
     end,
 }

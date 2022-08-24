@@ -13,7 +13,16 @@ return {
         },
         config = function()
             require('mason-lspconfig').setup({
-                ensure_installed = { 'tsserver', 'pyright', 'sumneko_lua', 'eslint_d', 'prettierd', 'black', 'isort' },
+                ensure_installed = {
+                    'tsserver',
+                    'pyright',
+                    'sumneko_lua',
+                    'eslint_d',
+                    'prettierd',
+                    'black',
+                    'isort',
+                    'json-lsp',
+                },
             })
         end,
     },

@@ -1,8 +1,11 @@
 return {
     'neovim/nvim-lspconfig',
+    requires = {
+        'hrsh7th/cmp-nvim-lsp',
+        'b0o/schemastore.nvim',
+    },
     config = function()
         local opts = { noremap = true, silent = true }
-        vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
         vim.keymap.set('n', '<Leader>[', vim.diagnostic.goto_prev, opts)
         vim.keymap.set('n', '<Leader>]', vim.diagnostic.goto_next, opts)
         -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
@@ -28,41 +31,54 @@ return {
             client.resolved_capabilities.document_formatting = false
         end
 
-        local lsp = require('lspconfig')
         local lsp_flags = {
             -- This is the default in Nvim 0.7+
             debounce_text_changes = 150,
         }
 
-        for _, server in ipairs({ 'pyright', 'tsserver' }) do
-            lsp[server].setup({
-                on_attach = on_attach,
-                flags = lsp_flags,
-            })
-        end
-        lsp['sumneko_lua'].setup({
-            on_attach = on_attach,
-            flags = lsp_flags,
-            settings = {
-                Lua = {
-                    diagnostics = {
-                        globals = { 'vim' },
-                    },
-                    format = {
-                        enable = true,
-                        defaultConfig = {
-                            indent_style = 'space',
-                            indent_size = 4,
+        local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+        for _, server in ipairs({ 'pyright', 'tsserver', 'sumneko_lua', 'jsonls' }) do
+            local settings
+            if server == 'sumneko_lua' then
+                settings = {
+                    Lua = {
+                        diagnostics = {
+                            globals = { 'vim' },
+                        },
+                        format = {
+                            enable = true,
+                            defaultConfig = {
+                                indent_style = 'space',
+                                indent_size = 4,
+                            },
+                        },
+                        workspace = {
+                            library = vim.api.nvim_get_runtime_file('', true),
+                            maxPreload = 2000,
+                            preloadFileSize = 1000,
                         },
                     },
-                    workspace = {
-                        library = vim.api.nvim_get_runtime_file('', true),
-                        maxPreload = 2000,
-                        preloadFileSize = 1000,
+                }
+            elseif server == 'jsonls' then
+                settings = {
+                    json = {
+                        schemas = require('schemastore').json.schemas(),
+                        validate = { enable = true },
                     },
-                },
-            },
-        })
+                }
+            else
+                settings = {}
+            end
+
+            require('lspconfig')[server].setup({
+                on_attach = on_attach,
+                flags = lsp_flags,
+                capabilities = capabilities,
+                settings = settings,
+            })
+        end
+
         vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()]])
     end,
 }
