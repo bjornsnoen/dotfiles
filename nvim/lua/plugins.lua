@@ -3,6 +3,7 @@ local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 ---@diagnostic disable-next-line: missing-parameter
 if fn.empty(fn.glob(install_path)) > 0 then
+    ---@diagnostic disable-next-line: lowercase-global
     packer_bootstrap = fn.system({
         'git',
         'clone',
@@ -19,9 +20,11 @@ return require('packer').startup(function(use)
     -- My plugins here
     use(require 'plugins/abolish')
     use(require 'plugins/airline')
+    use(require 'plugins/autopairs')
     use(require 'plugins/bufonly')
-    use(require 'plugins/coc')
+    -- use(require 'plugins/coc')
     use(require 'plugins/commentary')
+    use(require 'plugins/completion')
     use(require 'plugins/css-colors')
     use(require 'plugins/debug')
     use(require 'plugins/debug-ui')
@@ -32,11 +35,17 @@ return require('packer').startup(function(use)
     use(require 'plugins/incsearch')
     use(require 'plugins/js-debug')
     use(require 'plugins/lastpage')
+    use(require 'plugins/lsp')
+    use(require 'plugins/lsputils')
+    use(require 'plugins/mason')
     use(require 'plugins/matchit')
     use(require 'plugins/multicursor')
     use(require 'plugins/nerdtree')
     use(require 'plugins/neotest')
+    use(require 'plugins/null-ls')
+    -- use(require 'plugins/prettierrc')
     use(require 'plugins/rainbow')
+    use(require 'plugins/sleuth')
     use(require 'plugins/solarized')
     use(require 'plugins/suda')
     use(require 'plugins/surround')
