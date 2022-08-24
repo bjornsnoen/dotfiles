@@ -2,21 +2,21 @@ return {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     config = function()
-        require('nvim-treesitter.configs').setup {
+        require('nvim-treesitter.configs').setup({
             ensure_installed = {
-                "javascript",
-                "typescript",
-                "python",
-                "lua",
-                "bash",
-                "css",
-                "go",
-                "html",
-                "markdown",
-                "json",
-                "php",
-                "scss",
-                "vim"
+                'javascript',
+                'typescript',
+                'python',
+                'lua',
+                'bash',
+                'css',
+                'go',
+                'html',
+                'markdown',
+                'json',
+                'php',
+                'scss',
+                'vim',
             },
             highlight = {
                 enable = true,
@@ -26,6 +26,6 @@ return {
                 -- Instead of true it can also be a list of languages
                 additional_vim_regex_highlighting = false,
             },
-        }
-    end
+        })
+    end,
 }
