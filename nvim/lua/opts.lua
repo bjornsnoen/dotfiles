@@ -1,4 +1,4 @@
-vim.g.mapleader = " "
+vim.g.mapleader = ' '
 
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
@@ -6,10 +6,9 @@ vim.opt.tabstop = 4
 vim.opt.number = true
 vim.opt.splitright = true
 vim.opt.termguicolors = true
-vim.opt.mouse = "va"
-vim.wo.relativenumber = true
+vim.opt.mouse = 'va'
 
-vim.cmd [[
+vim.cmd([[
 let g:clipboard = {
      \   'name': 'myClipboard',
      \   'copy': {
@@ -27,9 +26,9 @@ augroup ClipboardEvents
     autocmd!
     autocmd TextYankPost * let @+ = getreg(v:event.regname)
 augroup end
-]]
+]])
 
-vim.cmd [[
+vim.cmd([[
 " guard for distributions lacking the 'persistent_undo' feature.
 if has('persistent_undo')
     " define a path to store persistent undo files.
@@ -44,4 +43,8 @@ if has('persistent_undo')
     " finally, enable undo persistence.
     set undofile
 endif
-]]
+]])
+
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldenable = false

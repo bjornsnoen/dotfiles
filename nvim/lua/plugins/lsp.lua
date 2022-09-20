@@ -38,7 +38,15 @@ return {
 
         local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-        for _, server in ipairs({ 'pyright', 'tsserver', 'sumneko_lua', 'jsonls' }) do
+        for _, server in ipairs({
+            'pyright',
+            'tsserver',
+            'sumneko_lua',
+            'jsonls',
+            'yamlls',
+            'taplo',
+            'eslint',
+        }) do
             local settings
             if server == 'sumneko_lua' then
                 settings = {

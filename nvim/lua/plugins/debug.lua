@@ -1,20 +1,12 @@
 return {
     'mfussenegger/nvim-dap',
     config = function()
-        vim.keymap.set('n', '<F5>', function()
-            require('dap').continue()
-        end)
-        vim.keymap.set('n', '<F9>', function()
-            require('dap').toggle_breakpoint()
-        end)
-        vim.keymap.set('n', '<F10>', function()
-            require('dap').step_over()
-        end)
-        vim.keymap.set('n', '<F11>', function()
-            require('dap').step_into()
-        end)
-        vim.keymap.set('n', '<F12>', function()
-            require('dap').step_out()
-        end)
+        local dap = require('dap')
+        vim.keymap.set('n', '<F5>', dap.continue)
+        vim.keymap.set('n', '<F29>', dap.run_last)
+        vim.keymap.set('n', '<F9>', dap.toggle_breakpoint)
+        vim.keymap.set('n', '<F10>', dap.step_over)
+        vim.keymap.set('n', '<F11>', dap.step_into)
+        vim.keymap.set('n', '<F12>', dap.step_out)
     end,
 }

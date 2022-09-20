@@ -17,6 +17,7 @@ return {
                 'php',
                 'scss',
                 'vim',
+                'tsx',
             },
             highlight = {
                 enable = true,
