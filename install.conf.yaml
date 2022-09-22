@@ -37,19 +37,6 @@
         - noto-fonts-emoji
         - ttf-roboto
 
-- asdf:
-  - asdf_path: /opt/asdf-vm/asdf.sh
-  - plugin: python
-    versions:
-      - latest
-    global: system
-  - plugin: nodejs
-  - plugin: poetry
-    versions:
-      - latest
-      - 1.2.0b1
-    global: 1.2.0b1
-
 - link:
     ~/.tmux.conf: tmux.conf
     ~/.aliases: aliases
@@ -74,6 +61,19 @@
 
     ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
 
+- asdf:
+    - asdf_path: /opt/asdf-vm/asdf.sh
+    - plugin: python
+      versions:
+        - latest
+      global: system
+    - plugin: nodejs
+    - plugin: poetry
+      versions:
+        - latest
+        - 1.2.0b1
+      global: 1.2.0b1
+
 - pip:
     file: requirements.txt
     binary: ~/.asdf/shims/pip
@@ -88,19 +88,38 @@
     stderr: true
 
 - shell:
-    - [curl -sSL https://install.python-poetry.org | python3 - -p, Install poetry]
-    - ["if [ ! -d ~/.oh-my-zsh ]; then sh -c \"$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\" \"\" --unattended --keep-zshrc; fi", Install ohmyzsh]
-    - [git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions || true, Install zsh-autosuggestions]
-    - [git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || true, Install tpm]
-    - ["tmux new-session -d && tmux run '~/.tmux/plugins/tpm/scripts/install_plugins.sh' || true && tmux kill-session -t $(tmux ls -F '#{session_name}' | tail -n 1)", Install tmux plugins]
-    - [curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim, Install Plug]
-    - [dotnet tool install --global csharp-ls, "Install csharp-ls for coc csharp server"]
-    - [nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync', Install vim plugins]
-    - command: "if [[ \"$(echo $SHELL)\" != \"$(cat /etc/shells | grep zsh | tail -n 1)\" ]]; then chsh -s $(cat /etc/shells | grep zsh | tail -n 1); fi"
+    - [
+        curl -sSL https://install.python-poetry.org | python3 - -p,
+        Install poetry,
+      ]
+    - [
+        'if [ ! -d ~/.oh-my-zsh ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc; fi',
+        Install ohmyzsh,
+      ]
+    - [
+        git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions || true,
+        Install zsh-autosuggestions,
+      ]
+    - [
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || true,
+        Install tpm,
+      ]
+    - [
+        "tmux new-session -d && tmux run '~/.tmux/plugins/tpm/scripts/install_plugins.sh' || true && tmux kill-session -t $(tmux ls -F '#{session_name}' | tail -n 1)",
+        Install tmux plugins,
+      ]
+    - [
+        dotnet tool install --global csharp-ls,
+        "Install csharp-ls for coc csharp server",
+      ]
+    - [
+        nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync',
+        Install vim plugins,
+      ]
+    - command: 'if [[ "$(echo $SHELL)" != "$(cat /etc/shells | grep zsh | tail -n 1)" ]]; then chsh -s $(cat /etc/shells | grep zsh | tail -n 1); fi'
       description: Switch to using zsh
       stdin: true
       stdout: true
       stderr: true
     - [composer global install, "Install global composer modules"]
     - [~/.config/composer/vendor/bin/myweek, Install myweek hooks]
-
