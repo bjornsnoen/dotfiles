@@ -7,6 +7,7 @@ vim.opt.number = true
 vim.opt.splitright = true
 vim.opt.termguicolors = true
 vim.opt.mouse = 'va'
+vim.o.updatetime = 250
 
 vim.cmd([[
 let g:clipboard = {

@@ -3,11 +3,16 @@ return {
     requires = {
         'hrsh7th/cmp-nvim-lsp',
         'b0o/schemastore.nvim',
+        'ray-x/lsp_signature.nvim',
     },
     config = function()
         local opts = { noremap = true, silent = true }
-        vim.keymap.set('n', '<Leader>[', vim.diagnostic.goto_prev, opts)
-        vim.keymap.set('n', '<Leader>]', vim.diagnostic.goto_next, opts)
+        vim.keymap.set('n', '<Leader>[', function()
+            vim.diagnostic.goto_prev({ float = false })
+        end, opts)
+        vim.keymap.set('n', '<Leader>]', function()
+            vim.diagnostic.goto_next({ float = false })
+        end, opts)
         -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
         local on_attach = function(client, bufnr)
@@ -29,6 +34,32 @@ return {
 
             -- Disable formatting so we can handle it in null-ls
             client.resolved_capabilities.document_formatting = false
+
+            -- Diagnostics float on hold
+            vim.api.nvim_create_autocmd('CursorHold', {
+                buffer = bufnr,
+                callback = function()
+                    local diagnostics_opts = {
+                        focusable = false,
+                        close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
+                        border = 'rounded',
+                        source = 'always',
+                        prefix = ' ',
+                        scope = 'cursor',
+                    }
+                    vim.diagnostic.open_float(nil, diagnostics_opts)
+                end,
+            })
+            vim.diagnostic.config({ virtual_text = false })
+
+            -- Signature helper
+            local signature_setup = {
+                bind = true,
+                handler_opts = {
+                    border = 'rounded',
+                },
+            }
+            require('lsp_signature').on_attach(signature_setup, bufnr)
         end
 
         local lsp_flags = {
