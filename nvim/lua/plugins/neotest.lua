@@ -41,5 +41,8 @@ return {
 
         vim.keymap.set('n', '<Leader>t', neotest.run.run_last)
         vim.keymap.set('n', '<C-t>', neotest.summary.toggle)
+        vim.keymap.set('n', 'to', function()
+            neotest.output.open({ enter = true })
+        end)
     end,
 }

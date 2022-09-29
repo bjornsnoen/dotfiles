@@ -3,7 +3,7 @@ return {
     requires = {
         'hrsh7th/cmp-nvim-lsp',
         'b0o/schemastore.nvim',
-        'ray-x/lsp_signature.nvim',
+        -- 'ray-x/lsp_signature.nvim',
     },
     config = function()
         local opts = { noremap = true, silent = true }
@@ -52,14 +52,14 @@ return {
             })
             vim.diagnostic.config({ virtual_text = false })
 
-            -- Signature helper
-            local signature_setup = {
-                bind = true,
-                handler_opts = {
-                    border = 'rounded',
-                },
-            }
-            require('lsp_signature').on_attach(signature_setup, bufnr)
+            -- -- Signature helper
+            -- local signature_setup = {
+            --     bind = true,
+            --     handler_opts = {
+            --         border = 'rounded',
+            --     },
+            -- }
+            -- require('lsp_signature').on_attach(signature_setup, bufnr)
         end
 
         local lsp_flags = {
