@@ -58,6 +58,7 @@
     ~/.config/polybar: polybar
     ~/.config/autorandr/postswitch: autorandr/postswitch
     ~/.config/fontconfig: fontconfig
+    ~/.config/picom/picom.conf: picom.conf
 
     ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
 
