@@ -36,6 +36,7 @@
         - polybar
         - noto-fonts-emoji
         - ttf-roboto
+        - ttf-font-awesome
 
 - link:
     ~/.tmux.conf: tmux.conf
