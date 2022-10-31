@@ -21,6 +21,7 @@ return {
                     'yamlls',
                     'taplo',
                     'eslint',
+                    'omnisharp',
                 },
             })
         end,

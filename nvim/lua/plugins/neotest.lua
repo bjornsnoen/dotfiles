@@ -5,6 +5,7 @@ return {
         'nvim-treesitter/nvim-treesitter',
         'antoinemadec/FixCursorHold.nvim',
         'haydenmeade/neotest-jest',
+        'nvim-neotest/neotest-python',
     },
     config = function()
         local neotest = require('neotest')
@@ -15,6 +16,9 @@ return {
                     cwd = function(_)
                         return vim.fn.getcwd()
                     end,
+                }),
+                require('neotest-python')({
+                    dap = { justMyCode = false },
                 }),
             },
         })

@@ -22,18 +22,14 @@ return {
             -- Mappings.
             -- See `:help vim.lsp.*` for documentation on any of the below functions
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
-            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-            vim.keymap.set('n', 'gi', function()
-                vim.lsp.buf.references({ includeDeclaration = false })
-            end, bufopts)
             vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
             vim.keymap.set('n', '<F18>', vim.lsp.buf.rename, bufopts)
             vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
             vim.keymap.set('x', '<space>ca', vim.lsp.buf.code_action, bufopts)
 
             -- Disable formatting so we can handle it in null-ls
-            client.resolved_capabilities.document_formatting = false
+            client.server_capabilities.documentFormattingProvider = false
 
             -- Diagnostics float on hold
             vim.api.nvim_create_autocmd('CursorHold', {
@@ -67,7 +63,7 @@ return {
             debounce_text_changes = 150,
         }
 
-        local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
         for _, server in ipairs({
             'pyright',
@@ -77,6 +73,7 @@ return {
             'yamlls',
             'taplo',
             'eslint',
+            'omnisharp',
         }) do
             local settings
             if server == 'sumneko_lua' then
@@ -106,6 +103,8 @@ return {
                         validate = { enable = true },
                     },
                 }
+            elseif server == 'omnisharp' then
+                settings = {}
             else
                 settings = {}
             end
@@ -118,7 +117,7 @@ return {
             })
         end
 
-        vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()]])
+        vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
         vim.cmd([[autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll]])
     end,
 }
