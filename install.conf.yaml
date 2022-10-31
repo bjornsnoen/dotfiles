@@ -36,6 +36,8 @@
         - polybar
         - noto-fonts-emoji
         - ttf-roboto
+        - yad
+        - xdotool
 
 - link:
     ~/.tmux.conf: tmux.conf
