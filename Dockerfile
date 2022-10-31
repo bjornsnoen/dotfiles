@@ -11,7 +11,7 @@ USER bjorn
 COPY --chown=bjorn:bjorn ./ /home/bjorn/.dotfiles
 WORKDIR /home/bjorn/.dotfiles
 
-CMD ["sh", "-c", "echo docker | ./install"]
+CMD ["sh", "-c", "sudo pacman -Syy && echo docker | ./install"]
 
 
 FROM build as debug
