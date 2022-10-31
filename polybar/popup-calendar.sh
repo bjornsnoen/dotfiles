@@ -31,9 +31,11 @@ case "$1" in
         : $((pos_y = BAR_HEIGHT + BORDER_SIZE))
     fi
 
-    yad --calendar --undecorated --fixed --close-on-unfocus --no-buttons \
+    LC_TIME="en_GB.UTF-8" yad --calendar --undecorated --fixed --close-on-unfocus --no-buttons \
         --mouse \
-        --title="yad-calendar" --borders=0 >/dev/null &
+        --show-weeks \
+        --title="yad-calendar" \
+        --borders=0 >/dev/null &
     ;;
 *)
     echo "$DATE"
