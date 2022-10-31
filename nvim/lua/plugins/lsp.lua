@@ -80,7 +80,7 @@ return {
                 settings = {
                     Lua = {
                         diagnostics = {
-                            globals = { 'vim' },
+                            globals = { 'vim', 'awesome' },
                         },
                         format = {
                             enable = true,
