@@ -39,6 +39,7 @@
         - yad
         - xdotool
         - ttf-font-awesome
+        - cbatticon
 
 - link:
     ~/.tmux.conf: tmux.conf

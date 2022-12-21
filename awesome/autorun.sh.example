@@ -7,3 +7,21 @@ function run {
     fi
 }
 
+# Force autorandr detection on login
+run autorandr -c
+
+# battery tray icon with low-battery threshold = 10
+run cbatticon -l 10
+
+# Compositor
+run picom
+
+# Auth agent for when you want to be able to do sudo things without writing sudo
+run /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
+
+# Self-explanatory you'd think
+run light-locker
+run udiskie -A -s
+run systemctl --user restart ulauncher.service
+run blueberry-tray
+run nm-applet
