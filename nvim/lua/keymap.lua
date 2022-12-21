@@ -19,6 +19,7 @@ vim.keymap.set('n', 'tn', ':bn<CR>')
 vim.keymap.set('n', 'tp', ':bp<CR>')
 vim.keymap.set('n', '<Leader>wq', ':w<CR>|:bdelete<CR>')
 vim.keymap.set('n', '<Leader>o', ':only<CR>')
+vim.keymap.set('n', '<leader>l', ':LspRestart<CR>')
 
 vim.keymap.set('n', '//', function()
     local r, _ = unpack(vim.api.nvim_win_get_cursor(0))

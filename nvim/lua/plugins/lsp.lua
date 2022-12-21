@@ -3,6 +3,7 @@ return {
     requires = {
         'hrsh7th/cmp-nvim-lsp',
         'b0o/schemastore.nvim',
+        'jose-elias-alvarez/typescript.nvim',
         -- 'ray-x/lsp_signature.nvim',
     },
     config = function()
@@ -109,12 +110,29 @@ return {
                 settings = {}
             end
 
-            require('lspconfig')[server].setup({
-                on_attach = on_attach,
-                flags = lsp_flags,
-                capabilities = capabilities,
-                settings = settings,
-            })
+            if server == 'tsserver' then
+                -- This one insists on running lspconfig setup itself
+                require('typescript').setup({
+                    disable_commands = false,
+                    debug = true,
+                    go_to_source_definition = {
+                        fallback = true, -- fall back to standard LSP definition on failure
+                    },
+                    server = { -- pass options to lspconfig's setup method
+                        on_attach = on_attach,
+                        flags = lsp_flags,
+                        capabilities = capabilities,
+                        settings = settings,
+                    },
+                })
+            else
+                require('lspconfig')[server].setup({
+                    on_attach = on_attach,
+                    flags = lsp_flags,
+                    capabilities = capabilities,
+                    settings = settings,
+                })
+            end
         end
 
         vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])

@@ -16,6 +16,7 @@ return {
                         ['<C-k>'] = actions.move_selection_previous,
                     },
                 },
+                file_ignore_patterns = { '.git/' },
             },
             pickers = {
                 live_grep = {
