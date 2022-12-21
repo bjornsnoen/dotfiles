@@ -12,3 +12,5 @@
 	templatedir = /home/bjorn/.git-templates
 [author]
 	email = bjorn@fink.no
+[commit]
+	gpgsign = true
