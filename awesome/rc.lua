@@ -91,21 +91,21 @@ awful.layout.layouts = {
 }
 -- }}}
 
--- {{{ Helper functions
-local function client_menu_toggle_fn()
-    local instance = nil
+-- -- {{{ Helper functions
+-- local function client_menu_toggle_fn()
+--     local instance = nil
 
-    return function()
-        if instance and instance.wibox.visible then
-            instance:hide()
-            instance = nil
-        else
-            instance = awful.menu.clients({ theme = { width = 250 } })
-        end
-    end
-end
+--     return function()
+--         if instance and instance.wibox.visible then
+--             instance:hide()
+--             instance = nil
+--         else
+--             instance = awful.menu.clients({ theme = { width = 250 } })
+--         end
+--     end
+-- end
 
--- }}}
+-- -- }}}
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
@@ -161,7 +161,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     awful.tag({ '1', '2', '3', '4', '5', '6', '7', '8', '9' }, s, awful.layout.layouts[2])
-    s.padding = { top = "20" }
+    s.padding = { top = '20' }
 end)
 -- }}}
 
@@ -461,18 +461,20 @@ awful.rules.rules = {
         rule_any = { type = { 'normal', 'dialog' } },
         properties = { titlebars_enabled = true },
     },
+    -- Hide titlebars on these apps
     {
-        rule = { class = 'kitty' },
+        rule_any = { class = { 'kitty', 'Ulauncher', 'Evolution', 'Yad' } },
         properties = { titlebars_enabled = false },
-    },
-    {
-        rule = { class = 'Ulauncher' },
-        properties = { titlebars_enabled = false, border_width = 0 },
     },
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
 }
+
+local tag_rules = require('lua/app_tag_rules')(screen:count())
+for _, rule in ipairs(tag_rules) do
+    table.insert(awful.rules.rules, rule)
+end
 -- }}}
 
 -- {{{ Signals
@@ -544,5 +546,5 @@ client.connect_signal('unfocus', function(c)
     c.border_color = beautiful.border_normal
 end)
 -- }}}
-awful.spawn.with_shell("~/.config/polybar/launch.sh")
+awful.spawn.with_shell('~/.config/polybar/launch.sh')
 awful.spawn.with_shell('~/.config/awesome/autorun.sh')
