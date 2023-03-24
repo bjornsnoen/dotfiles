@@ -8,7 +8,6 @@ return {
     {
         'williamboman/mason-lspconfig.nvim',
         requires = {
-            'neovim/nvim-lspconfig',
             'williamboman/mason.nvim',
         },
         config = function()
@@ -16,7 +15,7 @@ return {
                 ensure_installed = {
                     'tsserver',
                     'pyright',
-                    'sumneko_lua',
+                    'lua_ls',
                     'jsonls',
                     'yamlls',
                     'taplo',

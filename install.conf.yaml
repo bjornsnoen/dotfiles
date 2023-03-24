@@ -40,6 +40,7 @@
         - xdotool
         - ttf-font-awesome
         - cbatticon
+        - fzf
 
 - link:
     ~/.tmux.conf: tmux.conf

@@ -4,7 +4,6 @@ return {
         'hrsh7th/cmp-nvim-lsp',
         'b0o/schemastore.nvim',
         'jose-elias-alvarez/typescript.nvim',
-        -- 'ray-x/lsp_signature.nvim',
     },
     config = function()
         local opts = { noremap = true, silent = true }
@@ -14,23 +13,28 @@ return {
         vim.keymap.set('n', '<Leader>]', function()
             vim.diagnostic.goto_next({ float = false })
         end, opts)
-        -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
+        local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+
+        local lsp_formatting = function(bufnr)
+            vim.lsp.buf.format({
+                filter = function(client)
+                    -- apply whatever logic you want (in this example, we'll only use null-ls)
+                    return client.name == 'null-ls'
+                end,
+                bufnr = bufnr,
+            })
+        end
 
         local on_attach = function(client, bufnr)
-            -- Enable completion triggered by <c-x><c-o>
             vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-            -- Mappings.
-            -- See `:help vim.lsp.*` for documentation on any of the below functions
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
             vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
             vim.keymap.set('n', '<F18>', vim.lsp.buf.rename, bufopts)
             vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
             vim.keymap.set('x', '<space>ca', vim.lsp.buf.code_action, bufopts)
-
-            -- Disable formatting so we can handle it in null-ls
-            client.server_capabilities.documentFormattingProvider = false
 
             -- Diagnostics float on hold
             vim.api.nvim_create_autocmd('CursorHold', {
@@ -49,14 +53,14 @@ return {
             })
             vim.diagnostic.config({ virtual_text = false })
 
-            -- -- Signature helper
-            -- local signature_setup = {
-            --     bind = true,
-            --     handler_opts = {
-            --         border = 'rounded',
-            --     },
-            -- }
-            -- require('lsp_signature').on_attach(signature_setup, bufnr)
+            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+            vim.api.nvim_create_autocmd('BufWritePre', {
+                group = augroup,
+                buffer = bufnr,
+                callback = function()
+                    lsp_formatting(bufnr)
+                end,
+            })
         end
 
         local lsp_flags = {
@@ -69,7 +73,7 @@ return {
         for _, server in ipairs({
             'pyright',
             'tsserver',
-            'sumneko_lua',
+            'lua_ls',
             'jsonls',
             'yamlls',
             'taplo',
@@ -77,7 +81,7 @@ return {
             'omnisharp',
         }) do
             local settings
-            if server == 'sumneko_lua' then
+            if server == 'lua_ls' then
                 settings = {
                     Lua = {
                         diagnostics = {
@@ -94,6 +98,7 @@ return {
                             library = vim.api.nvim_get_runtime_file('', true),
                             maxPreload = 2000,
                             preloadFileSize = 1000,
+                            checkThirdParty = false,
                         },
                     },
                 }
@@ -106,6 +111,12 @@ return {
                 }
             elseif server == 'omnisharp' then
                 settings = {}
+            elseif server == 'yamlls' then
+                settings = {
+                    yaml = {
+                        keyOrdering = false,
+                    },
+                }
             else
                 settings = {}
             end
@@ -135,7 +146,6 @@ return {
             end
         end
 
-        vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
         vim.cmd([[autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll]])
     end,
 }

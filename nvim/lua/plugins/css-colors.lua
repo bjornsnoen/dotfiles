@@ -1,1 +1,10 @@
-return 'ap/vim-css-color'
+return {
+    'NvChad/nvim-colorizer.lua',
+    config = function()
+        require('colorizer').setup({
+            user_default_options = {
+                rgb_fn = true,
+            },
+        })
+    end,
+}

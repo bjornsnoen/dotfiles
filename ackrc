@@ -1,2 +1,3 @@
 --color
 --ignore-dir=.venv/
+--ignore-dir=.next/

@@ -1,7 +1,7 @@
 return {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
-    requires = { { 'nvim-lua/plenary.nvim' } },
+    requires = { { 'nvim-lua/plenary.nvim' }, { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' } },
     config = function()
         local telescope = require('telescope')
         local actions = require('telescope.actions')
@@ -26,6 +26,7 @@ return {
                 },
             },
         })
+        telescope.load_extension('fzf')
         local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<Leader>f', function()
             builtin.find_files({ hidden = true })
