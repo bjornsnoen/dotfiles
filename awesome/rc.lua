@@ -463,7 +463,7 @@ awful.rules.rules = {
     },
     -- Hide titlebars on these apps
     {
-        rule_any = { class = { 'kitty', 'Ulauncher', 'Evolution', 'Yad' } },
+        rule_any = { class = { 'kitty', 'Ulauncher', 'Evolution', 'Yad', 'Brave-browser' } },
         properties = { titlebars_enabled = false },
     },
     -- Set Firefox to always map on the tag named "2" on screen 1.
