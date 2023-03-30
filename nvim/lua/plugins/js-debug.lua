@@ -7,7 +7,8 @@ return {
         {
             'microsoft/vscode-js-debug',
             opt = true,
-            run = 'npm install --legacy-peer-deps && npm run compile && git checkout package-lock.json',
+            run = 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
+            tag = 'v1.74.1',
         },
     },
     run = 'npm install --legacy-peer-deps && npm run compile',

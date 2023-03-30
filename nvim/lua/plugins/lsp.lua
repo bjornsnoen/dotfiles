@@ -33,8 +33,8 @@ return {
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
             vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
             vim.keymap.set('n', '<F18>', vim.lsp.buf.rename, bufopts)
-            vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-            vim.keymap.set('x', '<space>ca', vim.lsp.buf.code_action, bufopts)
+            vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
+            vim.keymap.set('x', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
 
             -- Diagnostics float on hold
             vim.api.nvim_create_autocmd('CursorHold', {
