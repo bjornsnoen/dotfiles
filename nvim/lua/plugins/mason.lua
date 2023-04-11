@@ -21,6 +21,7 @@ return {
                     'taplo',
                     'eslint',
                     'omnisharp',
+                    'tailwindcss',
                 },
             })
         end,

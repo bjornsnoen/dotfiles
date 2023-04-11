@@ -79,6 +79,7 @@ return {
             'taplo',
             'eslint',
             'omnisharp',
+            'tailwindcss',
         }) do
             local settings
             if server == 'lua_ls' then
