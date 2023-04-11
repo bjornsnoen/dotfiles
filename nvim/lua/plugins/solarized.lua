@@ -1,7 +1,6 @@
 return {
     'dracula/vim',
-    as = 'dracula',
-    config = function()
+    init = function()
         vim.cmd([[
             augroup DraculaOverrides
                 autocmd!

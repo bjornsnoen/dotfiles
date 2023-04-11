@@ -1,6 +1,6 @@
 return {
     'RishabhRD/nvim-lsputils',
-    requires = {
+    dependencies = {
         'neovim/nvim-lspconfig',
         'RishabhRD/popfix',
     },

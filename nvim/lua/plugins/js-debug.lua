@@ -1,17 +1,15 @@
 return {
     'mxsdev/nvim-dap-vscode-js',
-    requires = {
+    dependencies = {
         {
             'mfussenegger/nvim-dap',
         },
         {
             'microsoft/vscode-js-debug',
-            opt = true,
-            run = 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
+            build = 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
             tag = 'v1.74.1',
         },
     },
-    run = 'npm install --legacy-peer-deps && npm run compile',
     config = function()
         ---@diagnostic disable-next-line: param-type-mismatch
         require('dap-vscode-js').setup({

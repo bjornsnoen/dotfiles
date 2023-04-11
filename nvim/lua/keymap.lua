@@ -10,7 +10,6 @@ vim.keymap.set('n', '<leader>vr', function()
     end
 
     dofile(vim.env.MYVIMRC)
-    require('packer').compile()
     vim.notify('Nvim configuration reloaded!', vim.log.levels.INFO)
 end)
 

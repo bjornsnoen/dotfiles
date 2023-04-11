@@ -1,4 +1,4 @@
 require('opts')
-require('plugins')
 require('keymap')
+require('pluginloader')
 -- require('commands')

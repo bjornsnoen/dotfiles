@@ -1,47 +1,41 @@
 return {
     {
         'williamboman/mason.nvim',
-        config = function()
-            require('mason').setup()
-        end,
+        config = true,
     },
     {
         'williamboman/mason-lspconfig.nvim',
-        requires = {
+        dependencies = {
             'williamboman/mason.nvim',
         },
-        config = function()
-            require('mason-lspconfig').setup({
-                ensure_installed = {
-                    'tsserver',
-                    'pyright',
-                    'lua_ls',
-                    'jsonls',
-                    'yamlls',
-                    'taplo',
-                    'eslint',
-                    'omnisharp',
-                    'tailwindcss',
-                },
-            })
-        end,
+        opts = {
+            ensure_installed = {
+                'tsserver',
+                'pyright',
+                'lua_ls',
+                'jsonls',
+                'yamlls',
+                'taplo',
+                'eslint',
+                'omnisharp',
+                'tailwindcss',
+            },
+        },
     },
     {
         'WhoIsSethDaniel/mason-tool-installer.nvim',
-        requires = {
+        dependencies = {
             'williamboman/mason.nvim',
         },
-        config = function()
-            require('mason-tool-installer').setup({
-                ensure_installed = {
-                    'prettierd',
-                    'black',
-                    'isort',
-                    'cspell',
-                    'stylua',
-                    'debugpy',
-                },
-            })
-        end,
+        opts = {
+            ensure_installed = {
+                'prettierd',
+                'black',
+                'isort',
+                'cspell',
+                'stylua',
+                'debugpy',
+            },
+        },
     },
 }

@@ -1,6 +1,7 @@
 return {
     'voldikss/vim-floaterm',
-    config = function()
+    lazy = false,
+    init = function()
         vim.g.floaterm_keymap_toggle = '<F1>'
         vim.g.floaterm_keymap_next = '<F3>'
         vim.g.floaterm_keymap_prev = '<F2>'

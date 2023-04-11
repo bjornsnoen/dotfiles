@@ -1,6 +1,6 @@
 return {
     'neovim/nvim-lspconfig',
-    requires = {
+    dependencies = {
         'hrsh7th/cmp-nvim-lsp',
         'b0o/schemastore.nvim',
         'jose-elias-alvarez/typescript.nvim',

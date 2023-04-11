@@ -1,6 +1,6 @@
 return {
     'jose-elias-alvarez/null-ls.nvim',
-    requires = {
+    dependencies = {
         'nvim-lua/plenary.nvim',
         'lewis6991/gitsigns.nvim',
         'ThePrimeagen/refactoring.nvim',
