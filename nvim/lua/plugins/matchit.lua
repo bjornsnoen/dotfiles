@@ -1,1 +1,1 @@
-return 'chrisbra/matchit'
+return { 'chrisbra/matchit' }

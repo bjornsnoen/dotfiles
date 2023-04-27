@@ -80,6 +80,7 @@ return {
             'eslint',
             'omnisharp',
             'tailwindcss',
+            'cssls',
         }) do
             local settings
             if server == 'lua_ls' then

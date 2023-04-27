@@ -1,1 +1,1 @@
-return 'editorconfig/editorconfig-vim'
+return { 'editorconfig/editorconfig-vim' }
