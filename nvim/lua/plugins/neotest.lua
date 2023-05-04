@@ -6,13 +6,20 @@ return {
         'antoinemadec/FixCursorHold.nvim',
         'haydenmeade/neotest-jest',
         'nvim-neotest/neotest-python',
+        'marilari88/neotest-vitest',
     },
-    config = function()
+    init = function()
         local neotest = require('neotest')
         neotest.setup({
             adapters = {
                 require('neotest-jest')({
                     jestCommand = 'npm test --',
+                    cwd = function(_)
+                        return vim.fn.getcwd()
+                    end,
+                }),
+                require('neotest-vitest')({
+                    vitestCommand = 'npm test --',
                     cwd = function(_)
                         return vim.fn.getcwd()
                     end,

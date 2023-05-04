@@ -39,6 +39,20 @@ return {
                     console = 'integratedTerminal',
                     internalConsoleOptions = 'neverOpen',
                 },
+                {
+                    type = 'pwa-node',
+                    request = 'launch',
+                    name = 'Debug Vite Tests',
+                    -- trace = true, -- include debugger info
+                    runtimeExecutable = 'node',
+                    runtimeArgs = {
+                        './node_modules/.bin/vitest',
+                    },
+                    rootPath = '${workspaceFolder}',
+                    cwd = '${workspaceFolder}',
+                    console = 'integratedTerminal',
+                    internalConsoleOptions = 'neverOpen',
+                },
             }
         end
         require('dap.ext.vscode').load_launchjs(nil, {
