@@ -11,6 +11,9 @@ return {
     init = function()
         local neotest = require('neotest')
         neotest.setup({
+            quickfix = {
+                enabled = false,
+            },
             adapters = {
                 require('neotest-jest')({
                     jestCommand = 'npm test --',

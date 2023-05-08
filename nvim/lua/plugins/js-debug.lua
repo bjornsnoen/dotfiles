@@ -11,9 +11,11 @@ return {
         },
     },
     config = function()
-        ---@diagnostic disable-next-line: param-type-mismatch
+        local vscodeJsDebugPath = vim.fn.stdpath('data') .. '/lazy/vscode-js-debug'
+
         require('dap-vscode-js').setup({
             adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+            debugger_path = vscodeJsDebugPath,
         })
         for _, language in ipairs({ 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' }) do
             require('dap').configurations[language] = {
