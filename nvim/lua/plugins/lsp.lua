@@ -147,7 +147,5 @@ return {
                 })
             end
         end
-
-        vim.cmd([[autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll]])
     end,
 }

@@ -34,3 +34,6 @@ alias ec2list="aws ec2 describe-instances --query \"Reservations[*].Instances[*]
 
 alias drm="docker run --rm -it"
 alias vim=nvim
+alias p=pnpm
+# Quickly cd to dotfiles directory
+alias dotf="cd $(dirname $(readlink ~/.zshrc))"

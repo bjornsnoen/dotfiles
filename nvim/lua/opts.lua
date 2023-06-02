@@ -7,7 +7,17 @@ vim.opt.number = true
 vim.opt.splitright = true
 vim.opt.termguicolors = true
 vim.opt.mouse = 'va'
-vim.o.updatetime = 250
+vim.opt.scrolloff = 999
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldenable = false
+
+vim.opt.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal'
+vim.opt.updatetime = 250
+
+-- Enables local nvim configs
+vim.opt.exrc = true
+vim.opt.secure = true
 
 vim.cmd([[
 let g:clipboard = {
@@ -45,8 +55,3 @@ if has('persistent_undo')
     set undofile
 endif
 ]])
-
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldenable = false
-vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal'

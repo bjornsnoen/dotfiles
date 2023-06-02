@@ -7,3 +7,4 @@
 .chrome-vscode-debug-profile/
 __pycache__/
 docs/notes/
+.nvim.lua
