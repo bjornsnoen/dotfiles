@@ -16,9 +16,8 @@
         - [cd yay && makepkg -si --noconfirm, "Install yay"]
         - [rm -rf yay, "Remove yay git clone"]
     - yay:
-        - ulauncher
+        - catapult
         - asdf-vm
-        - composer
         - direnv
         - dotnet-sdk
         - flameshot
@@ -33,7 +32,6 @@
         - python-pip
         - thefuck
         - hushboard-git
-        - polybar
         - noto-fonts-emoji
         - ttf-roboto
         - yad
@@ -41,6 +39,12 @@
         - ttf-font-awesome
         - cbatticon
         - fzf
+
+        - dunst
+        - mate-polkit
+        - waybar
+        - hyprland-nvidia-git
+        - otf-font-awesome
 
 - link:
     ~/.tmux.conf: tmux.conf
@@ -64,6 +68,8 @@
     ~/.config/autorandr/postswitch: autorandr/postswitch
     ~/.config/fontconfig: fontconfig
     ~/.config/picom/picom.conf: picom.conf
+    ~/.config/hypr: hypr
+    ~/.config/waybar: waybar
 
     ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
 
@@ -127,5 +133,3 @@
       stdin: true
       stdout: true
       stderr: true
-    - [composer global install, "Install global composer modules"]
-    - [~/.config/composer/vendor/bin/myweek, Install myweek hooks]
