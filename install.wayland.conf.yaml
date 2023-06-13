@@ -9,6 +9,14 @@
         - waybar
         - hyprland-nvidia-git
         - otf-font-awesome
+        - gdm
+        - albert
+        - gsettings
+        - swayidle
+        - swaylock
+        - qt6-wayland
+        - xdg-desktop-portal-hyprland
+        - wlogout
 
 - link:
     ~/.config/hypr: hypr
@@ -16,3 +24,13 @@
     ~/.config/libinput-gestures.conf: wayland/libinput-gestures.conf
     ~/.config/electron-flags.conf: wayland/electron-flags.conf
     ~/.config/brave-flags.conf: wayland/electron-flags.conf
+
+- shell:
+    - [
+        git clone https://github.com/bulletmark/libinput-gestures.git ~/src/libinput-gestures || true,
+        Clone libinput-gestures,
+      ]
+    - [
+        cd ~/src/libinput-gestures && sudo ./libinput-gestures-setup install && ./libinput-gestures-setup autostart start,
+        Install libinput-gestures,
+      ]

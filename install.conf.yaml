@@ -16,7 +16,6 @@
         - [cd yay && makepkg -si --noconfirm, "Install yay"]
         - [rm -rf yay, "Remove yay git clone"]
     - yay:
-        - catapult
         - asdf-vm
         - direnv
         - dotnet-sdk
