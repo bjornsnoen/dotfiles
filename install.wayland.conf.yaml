@@ -15,3 +15,4 @@
     ~/.config/waybar: waybar
     ~/.config/libinput-gestures.conf: wayland/libinput-gestures.conf
     ~/.config/electron-flags.conf: wayland/electron-flags.conf
+    ~/.config/brave-flags.conf: wayland/electron-flags.conf
