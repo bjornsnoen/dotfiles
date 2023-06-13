@@ -1,0 +1,17 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+
+- ifarch:
+    - yay:
+        - dunst
+        - waybar
+        - hyprland-nvidia-git
+        - otf-font-awesome
+
+- link:
+    ~/.config/hypr: hypr
+    ~/.config/waybar: waybar
+    ~/.config/libinput-gestures.conf: wayland/libinput-gestures.conf
+    ~/.config/electron-flags.conf: wayland/electron-flags.conf
