@@ -29,3 +29,6 @@ vim.keymap.set('n', '//', function()
         vim.cmd(':normal zA')
     end
 end)
+
+vim.keymap.set('n', 'cn', ':cn<CR>')
+vim.keymap.set('n', '<Leader>m', ':make<CR>')

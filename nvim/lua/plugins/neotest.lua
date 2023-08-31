@@ -7,6 +7,7 @@ return {
         'haydenmeade/neotest-jest',
         'nvim-neotest/neotest-python',
         'marilari88/neotest-vitest',
+        { 'thenbe/neotest-playwright', branch = 'master' },
     },
     init = function()
         local neotest = require('neotest')
@@ -29,6 +30,19 @@ return {
                 }),
                 require('neotest-python')({
                     dap = { justMyCode = false },
+                }),
+                require('neotest-playwright').adapter({
+                    options = {
+                        persist_project_selection = true,
+                        enable_dynamic_test_discovery = true,
+                        cwd = function(_)
+                            return vim.fn.getcwd()
+                        end,
+                        env = {
+                            NEXT_PUBLIC_THEME = 'antonsport',
+                            NEXT_PUBLIC_SITE_URL = 'http://antonsport.localhost',
+                        },
+                    },
                 }),
             },
         })

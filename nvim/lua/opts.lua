@@ -23,8 +23,8 @@ vim.cmd([[
 let g:clipboard = {
      \   'name': 'myClipboard',
      \   'copy': {
-     \      '+': ['gpaste-client', 'add'],
-     \      '*': ['gpaste-client', 'add'],
+     \      '+': ['wl-copy'],
+     \      '*': ['wl-copy'],
      \    },
      \   'paste': {
      \      '+': '+',
