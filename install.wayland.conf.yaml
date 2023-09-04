@@ -17,6 +17,9 @@
         - qt6-wayland
         - xdg-desktop-portal-hyprland
         - wlogout
+        - pciutils
+        - blueberry-tray
+        - wl-clipboard
 
 - link:
     ~/.config/hypr: hypr
