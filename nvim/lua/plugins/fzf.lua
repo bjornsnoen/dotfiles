@@ -1,10 +1,18 @@
 return {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
-    dependencies = { { 'nvim-lua/plenary.nvim' }, { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' } },
+    dependencies = {
+        { 'nvim-lua/plenary.nvim' },
+        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+        {
+            'nvim-lua/popup.nvim',
+        },
+        { 'nvim-telescope/telescope-media-files.nvim' },
+    },
     config = function()
         local telescope = require('telescope')
         local actions = require('telescope.actions')
+
         telescope.setup({
             defaults = {
                 path_display = { 'smart' },
@@ -25,12 +33,22 @@ return {
                     end,
                 },
             },
+            extensions = {
+                media_files = {
+                    filetypes = { 'png', 'webp', 'jpg', 'jpeg', 'gif' },
+                    find_cmd = 'rg',
+                },
+            },
         })
+
         telescope.load_extension('fzf')
+        telescope.load_extension('media_files')
+
         local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<Leader>f', function()
             builtin.find_files({ hidden = true })
         end, {})
+
         vim.keymap.set('n', '<Leader>r', builtin.live_grep, {})
         vim.keymap.set('n', '<Leader>g', builtin.git_branches, {})
         vim.keymap.set('n', '<Leader>G', builtin.git_status, {})
