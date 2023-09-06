@@ -1,0 +1,20 @@
+- ifubuntu:
+    - shell: # Remove snapd
+        - "apt remove --purge --assume-yes snapd gnome-software-plugin-snap"
+        - "apt-mark hold snapd"
+        - "apt autoremove --assume-yes"
+        - "add-apt-repository ppa:mozillateam/ppa"
+
+    - apt:
+        - gcc
+        - python3-venv
+        - python3-pip
+        - python-is-python3
+        - nodejs
+        - npm
+        - firefox
+        - zsh
+        - ack
+        - direnv
+        - curl
+        - tmux

@@ -8,7 +8,6 @@
         - dunst
         - waybar
         - hyprland-nvidia-git
-        - otf-font-awesome
         - gdm
         - albert
         - gsettings

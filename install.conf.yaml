@@ -11,12 +11,15 @@
     - ~/.config/nvim/
 
 - ifarch:
+    - git:
+        "~/yay":
+          url: https://aur.archlinux.org/yay.git
+
     - shell:
-        - [git clone "https://aur.archlinux.org/yay.git", "Clone yay"]
-        - [cd yay && makepkg -si --noconfirm, "Install yay"]
-        - [rm -rf yay, "Remove yay git clone"]
+        - [cd ~/yay && makepkg -si --noconfirm, "Install yay"]
+        - [rm -rf ~/yay, "Remove yay git clone"]
+
     - yay:
-        - asdf-vm
         - direnv
         - dotnet-sdk
         - flameshot
@@ -31,18 +34,15 @@
         - python-pip
         - thefuck
         - hushboard-git
-        - noto-fonts-emoji
-        - ttf-roboto
         - yad
         - xdotool
-        - ttf-font-awesome
         - cbatticon
         - fzf
-
-        - dunst
         - mate-polkit
-        - waybar
-        - hyprland-nvidia-git
+
+        - noto-fonts-emoji
+        - ttf-roboto
+        - ttf-font-awesome
         - otf-font-awesome
 
 - link:
@@ -72,25 +72,24 @@
 
     ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
 
+- git:
+    "~/.asdf":
+      url: https://github.com/asdf-vm/asdf.git
+      branch: v0.12.0
+
 - asdf:
-    - asdf_path: /opt/asdf-vm/asdf.sh
+    - asdf_path: ~/.asdf/asdf.sh
     - plugin: python
       versions:
         - latest
       global: system
     - plugin: nodejs
-    - plugin: poetry
       versions:
         - latest
         - 1.2.0b1
       global: 1.2.0b1
 
-- pip:
-    file: requirements.txt
-    binary: ~/.asdf/shims/pip
-    user: true
-    stdout: true
-    stderr: true
+- shell: ["pip install --user pipx --break-system-packages", "Install pipx"]
 
 - pipx:
     file: requirements-pipx.txt
@@ -100,33 +99,26 @@
 
 - shell:
     - [
-        curl -sSL https://install.python-poetry.org | python3 - -p,
-        Install poetry,
-      ]
-    - [
         'if [ ! -d ~/.oh-my-zsh ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc; fi',
         Install ohmyzsh,
       ]
+
+- git:
+    "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions":
+      url: https://github.com/zsh-users/zsh-autosuggestions
+    "~/.tmux/plugins/tpm":
+      url: https://github.com/tmux-plugins/tpm
+
+- shell:
     - [
-        git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions || true,
-        Install zsh-autosuggestions,
-      ]
-    - [
-        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || true,
-        Install tpm,
+        curl -sSL https://install.python-poetry.org | python3 - -p,
+        Install poetry,
       ]
     - [
         "tmux new-session -d && tmux run '~/.tmux/plugins/tpm/scripts/install_plugins.sh' || true && tmux kill-session -t $(tmux ls -F '#{session_name}' | tail -n 1)",
         Install tmux plugins,
       ]
-    - [
-        dotnet tool install --global csharp-ls,
-        "Install csharp-ls for coc csharp server",
-      ]
-    - [
-        nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync',
-        Install vim plugins,
-      ]
+    - [nvim --headless '+Lazy! sync' +qa, Install vim plugins]
     - command: 'if [[ "$(echo $SHELL)" != "$(cat /etc/shells | grep zsh | tail -n 1)" ]]; then chsh -s $(cat /etc/shells | grep zsh | tail -n 1); fi'
       description: Switch to using zsh
       stdin: true

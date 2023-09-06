@@ -70,7 +70,7 @@ HIST_STAMPS="yyyy-mm-dd"
 plugins=(git tmux docker docker-compose fzf thefuck composer zsh-autosuggestions ssh-agent gpg-agent)
 
 source $HOME/.aliases
-source /opt/asdf-vm/asdf.sh
+source ~/.asdf/asdf.sh
 fpath+=~/.zfunc
 
 source $ZSH/oh-my-zsh.sh
