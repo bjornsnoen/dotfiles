@@ -70,6 +70,7 @@
         "format-icons": ["", "", ""]
     },
     "backlight": {
+        "scroll-step": 5,
         "device": "nvidia_0",
         "format": "{percent}% {icon}",
         "format-icons": ["", "", "", "", "", "", "", "", ""]
