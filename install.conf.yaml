@@ -76,6 +76,8 @@
     "~/.asdf":
       url: https://github.com/asdf-vm/asdf.git
       branch: v0.12.0
+    "~/.tmux/plugins/tpm":
+      url: https://github.com/tmux-plugins/tpm
 
 - asdf:
     - asdf_path: ~/.asdf/asdf.sh
@@ -86,8 +88,6 @@
     - plugin: nodejs
       versions:
         - latest
-        - 1.2.0b1
-      global: 1.2.0b1
 
 - shell: ["pip install --user pipx --break-system-packages", "Install pipx"]
 
@@ -97,22 +97,10 @@
     stdout: true
     stderr: true
 
-- shell:
+- shell: # Finalize installs
     - [
         'if [ ! -d ~/.oh-my-zsh ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc; fi',
         Install ohmyzsh,
-      ]
-
-- git:
-    "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions":
-      url: https://github.com/zsh-users/zsh-autosuggestions
-    "~/.tmux/plugins/tpm":
-      url: https://github.com/tmux-plugins/tpm
-
-- shell:
-    - [
-        curl -sSL https://install.python-poetry.org | python3 - -p,
-        Install poetry,
       ]
     - [
         "tmux new-session -d && tmux run '~/.tmux/plugins/tpm/scripts/install_plugins.sh' || true && tmux kill-session -t $(tmux ls -F '#{session_name}' | tail -n 1)",
@@ -124,3 +112,7 @@
       stdin: true
       stdout: true
       stderr: true
+
+- git: # Has to be after oh-my-zsh install
+    "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions":
+      url: https://github.com/zsh-users/zsh-autosuggestions
