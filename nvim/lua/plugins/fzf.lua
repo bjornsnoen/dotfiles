@@ -38,6 +38,12 @@ return {
                     filetypes = { 'png', 'webp', 'jpg', 'jpeg', 'gif' },
                     find_cmd = 'rg',
                 },
+                fzf = {
+                    fuzzy = true,
+                    override_generic_sorter = true,
+                    override_file_sorter = true,
+                    case_mode = 'smart_case',
+                },
             },
         })
 
@@ -50,11 +56,41 @@ return {
         end, {})
 
         vim.keymap.set('n', '<Leader>r', builtin.live_grep, {})
-        vim.keymap.set('n', '<Leader>g', builtin.git_branches, {})
-        vim.keymap.set('n', '<Leader>G', builtin.git_status, {})
-        vim.keymap.set('n', 'gi', function()
+        vim.keymap.set('n', 'gb', builtin.git_branches, {})
+        vim.keymap.set('n', 'gu', function()
             builtin.lsp_references({ include_declaration = false, show_line = false })
         end, {})
+        vim.keymap.set('n', 'gi', builtin.lsp_implementations, {})
         vim.keymap.set('n', 'gd', builtin.lsp_definitions, {})
+
+        local function getVisualSelection()
+            vim.cmd('noau normal! "vy"')
+            local text = vim.fn.getreg('v')
+            vim.fn.setreg('v', {})
+
+            text = string.gsub(text, '\n', '')
+            if #text > 0 then
+                return text
+            else
+                return ''
+            end
+        end
+
+        local function grepVisualSelection()
+            local search_for = getVisualSelection()
+            if search_for ~= '' then
+                builtin.live_grep({ default_text = search_for })
+            end
+        end
+
+        vim.keymap.set('v', '<Leader>r', grepVisualSelection, { noremap = true, silent = true })
+        vim.keymap.set('n', '<Leader>R', function()
+            vim.cmd('normal vE')
+            grepVisualSelection()
+        end)
+        vim.keymap.set('n', '<Leader>R', function()
+            vim.cmd('normal vE')
+            grepVisualSelection()
+        end)
     end,
 }

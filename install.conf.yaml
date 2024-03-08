@@ -69,6 +69,9 @@
     ~/.config/picom/picom.conf: picom.conf
     ~/.config/hypr: hypr
     ~/.config/waybar: waybar
+    ~/.config/sway: sway
+    ~/.config/dunst/dunstrc: dunstrc
+    ~/.config/wireplumber/bluetooth.lua.d/51-bluez-config.lua: wireplumber/51-bluez-config.lua
 
     ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
 

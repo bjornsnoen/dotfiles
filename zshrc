@@ -5,6 +5,7 @@ export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 export PATH="./vendor/bin:$PATH"
 export PATH="node_modules/.bin:$PATH"
 export PATH=$HOME/go/bin:$PATH
+export PATH=/usr/bin/vendor_perl:$PATH
 export EDITOR="nvim"
 export XMLLINT_INDENT="    "
 export PIPENV_VERBOSITY=-1
@@ -67,7 +68,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux docker docker-compose fzf thefuck composer zsh-autosuggestions ssh-agent gpg-agent)
+plugins=(tmux docker docker-compose fzf thefuck composer zsh-autosuggestions ssh-agent gpg-agent)
 
 source $HOME/.aliases
 source ~/.asdf/asdf.sh
@@ -97,5 +98,3 @@ PS1='$(show_virtual_env)'$PS1
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 eval "$(direnv hook zsh)"
-
-[[ -f .envrc ]] && direnv reload

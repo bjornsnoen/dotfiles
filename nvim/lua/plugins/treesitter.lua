@@ -18,6 +18,7 @@ return {
                 'scss',
                 'vim',
                 'tsx',
+                'svelte',
             },
             highlight = {
                 enable = true,

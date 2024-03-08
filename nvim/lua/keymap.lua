@@ -32,3 +32,5 @@ end)
 
 vim.keymap.set('n', 'cn', ':cn<CR>')
 vim.keymap.set('n', '<Leader>m', ':make<CR>')
+vim.keymap.set('n', '<Leader>ee', ':e .env<CR>')
+vim.keymap.set('n', '<Leader>er', ':e .envrc<CR>')

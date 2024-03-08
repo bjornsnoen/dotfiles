@@ -8,3 +8,7 @@
 __pycache__/
 docs/notes/
 .nvim.lua
+.rgignore
+.watchman-cookie-*
+.vercel/
+.phpactor.json

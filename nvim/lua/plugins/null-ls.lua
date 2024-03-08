@@ -37,6 +37,7 @@ return {
                         'markdown.mdx',
                         'graphql',
                         'handlebars',
+                        'svelte',
                     },
                 }),
                 null_ls.builtins.code_actions.refactoring,

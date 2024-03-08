@@ -265,7 +265,7 @@ local globalkeys = gears.table.join(
         menubar.show()
     end, { description = 'show the menubar', group = 'launcher' }),
     awful.key({}, 'Pause', function()
-        awful.util.spawn('light-locker-command -l')
+        awful.util.spawn('dm-tool lock')
     end),
     awful.key({}, 'XF86KbdBrightnessUp', function()
         awful.util.spawn('brightnessctl s +10%')

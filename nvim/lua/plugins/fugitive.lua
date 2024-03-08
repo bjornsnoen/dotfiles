@@ -8,7 +8,6 @@ return {
         vim.keymap.set('n', '<Leader>gcf', ':Git checkout %<CR>')
         vim.keymap.set('n', '<Leader>gP', ':Git -c push.default=current push<CR>')
         vim.keymap.set('n', '<Leader>gp', ':Git pull --ff-only<CR>')
-        vim.keymap.set('n', '<Leader>gb', ':G checkout -b ')
         vim.keymap.set('n', '<Leader>gd', ':Git difftool %<CR>')
         vim.keymap.set('n', '<Leader>gD', ':Git difftool --cached %<CR>')
         vim.keymap.set('n', '<Leader>gm', ':Git mergetool<CR>')

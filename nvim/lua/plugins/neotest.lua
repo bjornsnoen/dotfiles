@@ -6,6 +6,7 @@ return {
         'antoinemadec/FixCursorHold.nvim',
         'haydenmeade/neotest-jest',
         'nvim-neotest/neotest-python',
+        'olimorris/neotest-phpunit',
         'marilari88/neotest-vitest',
         { 'thenbe/neotest-playwright', branch = 'master' },
     },
@@ -44,6 +45,7 @@ return {
                         },
                     },
                 }),
+                require('neotest-phpunit'),
             },
         })
         vim.keymap.set('n', 'tt', neotest.run.run)

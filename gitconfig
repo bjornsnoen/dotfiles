@@ -1,5 +1,5 @@
 [user]
-	email = bjorn@brbcoffee.com
+	email = bjorn@snoen.io
 	name = Bjørn Polat-Snoen
 [push]
 	default = current
@@ -12,6 +12,6 @@
 [init]
 	templatedir = /home/bjorn/.git-templates
 [author]
-	email = bjorn@brbcoffee.com
+	email = bjorn@snoen.io
 [commit]
 	gpgsign = true

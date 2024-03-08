@@ -1,12 +1,40 @@
+local servers = {
+    'tsserver',
+    'pyright',
+    'lua_ls',
+    'jsonls',
+    'yamlls',
+    'taplo',
+    'eslint',
+    'omnisharp_mono',
+    'tailwindcss',
+    'svelte',
+    'phpactor',
+    'cssls',
+    'terraformls',
+    'rust_analyzer',
+}
+
 return {
     'neovim/nvim-lspconfig',
     dependencies = {
+        {
+            'williamboman/mason-lspconfig.nvim',
+            dependencies = {
+                'williamboman/mason.nvim',
+            },
+        },
         'hrsh7th/cmp-nvim-lsp',
         'b0o/schemastore.nvim',
         'jose-elias-alvarez/typescript.nvim',
     },
     config = function()
         local opts = { noremap = true, silent = true }
+        -- We must do this here to ensure that the LSP servers are installed before we try to use them
+        local lspconfig = require('mason-lspconfig')
+        lspconfig.setup({
+            ensure_installed = servers,
+        })
         vim.keymap.set('n', '<Leader>[', function()
             vim.diagnostic.goto_prev({ float = false })
         end, opts)
@@ -70,18 +98,7 @@ return {
 
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-        for _, server in ipairs({
-            'pyright',
-            'tsserver',
-            'lua_ls',
-            'jsonls',
-            'yamlls',
-            'taplo',
-            'eslint',
-            'omnisharp',
-            'tailwindcss',
-            'cssls',
-        }) do
+        for _, server in ipairs(servers) do
             local settings
             if server == 'lua_ls' then
                 settings = {
@@ -111,8 +128,11 @@ return {
                         validate = { enable = true },
                     },
                 }
-            elseif server == 'omnisharp' then
-                settings = {}
+            elseif server == 'omnisharp_mono' then
+                settings = {
+                    useGlobalMono = 'always',
+                    useModernNet = false,
+                }
             elseif server == 'yamlls' then
                 settings = {
                     yaml = {

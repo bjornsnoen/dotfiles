@@ -9,7 +9,7 @@
         - waybar
         - hyprland-nvidia-git
         - gdm
-        - albert
+        - anyrun-git
         - gsettings
         - swayidle
         - swaylock
