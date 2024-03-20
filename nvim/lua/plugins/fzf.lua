@@ -8,6 +8,7 @@ return {
             'nvim-lua/popup.nvim',
         },
         { 'nvim-telescope/telescope-media-files.nvim' },
+        { 'nvim-telescope/telescope-ui-select.nvim' },
     },
     config = function()
         local telescope = require('telescope')
@@ -34,6 +35,17 @@ return {
                 },
             },
             extensions = {
+                ['ui-select'] = {
+                    require('telescope.themes').get_dropdown({
+                        winblend = 10,
+                        border = true,
+                        previewer = false,
+                        layout_config = {
+                            width = 0.5,
+                            height = 0.5,
+                        },
+                    }),
+                },
                 media_files = {
                     filetypes = { 'png', 'webp', 'jpg', 'jpeg', 'gif' },
                     find_cmd = 'rg',
@@ -49,6 +61,7 @@ return {
 
         telescope.load_extension('fzf')
         telescope.load_extension('media_files')
+        telescope.load_extension('ui-select')
 
         local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<Leader>f', function()

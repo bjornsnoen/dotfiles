@@ -1,4 +1,4 @@
-vim.keymap.set('n', '<leader>ve', ':vsp ~/.config/nvim/init.lua<CR>')
+vim.keymap.set('n', '<leader>ve', ':vsp ~/.config/nvim/init.lua<CR>', { silent = true })
 -- Using this keymap for .vimspector.json, remap before uncomment
 -- nmap <Leader>vc :vsp ~/.config/nvim/coc-settings.json<CR>
 
@@ -13,12 +13,12 @@ vim.keymap.set('n', '<leader>vr', function()
     vim.notify('Nvim configuration reloaded!', vim.log.levels.INFO)
 end)
 
-vim.keymap.set('n', 'gf', ':edit <cfile><CR>')
-vim.keymap.set('n', 'tn', ':bn<CR>')
-vim.keymap.set('n', 'tp', ':bp<CR>')
-vim.keymap.set('n', '<Leader>wq', ':w<CR>|:bdelete<CR>')
-vim.keymap.set('n', '<Leader>o', ':only<CR>')
-vim.keymap.set('n', '<leader>l', ':LspRestart<CR>')
+vim.keymap.set('n', 'gf', ':edit <cfile><CR>', { silent = true })
+vim.keymap.set('n', 'tn', ':bn<CR>', { silent = true })
+vim.keymap.set('n', 'tp', ':bp<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>wq', ':w<CR>|:bdelete<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>o', ':only<CR>', { silent = true })
+vim.keymap.set('n', '<leader>l', ':LspRestart<CR>', { silent = true })
 
 vim.keymap.set('n', '//', function()
     local r, _ = unpack(vim.api.nvim_win_get_cursor(0))
@@ -30,7 +30,7 @@ vim.keymap.set('n', '//', function()
     end
 end)
 
-vim.keymap.set('n', 'cn', ':cn<CR>')
-vim.keymap.set('n', '<Leader>m', ':make<CR>')
-vim.keymap.set('n', '<Leader>ee', ':e .env<CR>')
-vim.keymap.set('n', '<Leader>er', ':e .envrc<CR>')
+vim.keymap.set('n', 'cn', ':cn<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>m', ':make<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>ee', ':e .env<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>er', ':e .envrc<CR>', { silent = true })

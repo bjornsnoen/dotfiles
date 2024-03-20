@@ -14,7 +14,7 @@ return {
                 add_trailing = true,
             },
         })
-        vim.keymap.set('n', '<Leader>n', ':NvimTreeToggle<CR>', { noremap = true })
-        vim.keymap.set('n', '<Leader>N', ':NvimTreeFindFileToggle<CR>')
+        vim.keymap.set('n', '<Leader>n', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
+        vim.keymap.set('n', '<Leader>N', ':NvimTreeFindFileToggle<CR>', { silent = true })
     end,
 }

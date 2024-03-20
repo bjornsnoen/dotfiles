@@ -9,6 +9,6 @@ return {
         vim.g.floaterm_height = 0.8
         vim.g.floaterm_width = 0.8
 
-        vim.keymap.set('i', '<F1>', '<ESC>:FloatermToggle<CR>')
+        vim.keymap.set('i', '<F1>', '<ESC>:FloatermToggle<CR>', { silent = true })
     end,
 }

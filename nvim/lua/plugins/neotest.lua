@@ -7,7 +7,7 @@ return {
         'haydenmeade/neotest-jest',
         'nvim-neotest/neotest-python',
         'olimorris/neotest-phpunit',
-        'marilari88/neotest-vitest',
+        { 'marilari88/neotest-vitest', dev = true },
         { 'thenbe/neotest-playwright', branch = 'master' },
     },
     init = function()
