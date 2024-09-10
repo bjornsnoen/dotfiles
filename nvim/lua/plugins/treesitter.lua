@@ -19,6 +19,7 @@ return {
                 'vim',
                 'tsx',
                 'svelte',
+                'prisma',
             },
             highlight = {
                 enable = true,

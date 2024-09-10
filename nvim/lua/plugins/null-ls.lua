@@ -40,6 +40,12 @@ return {
                         'svelte',
                     },
                 }),
+                null_ls.builtins.formatting.djlint.with({
+                    filetypes = {
+                        'twig',
+                    },
+                }),
+                null_ls.builtins.formatting.phpcbf,
                 null_ls.builtins.code_actions.refactoring,
                 null_ls.builtins.code_actions.gitsigns,
             },

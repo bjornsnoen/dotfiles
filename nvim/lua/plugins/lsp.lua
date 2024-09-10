@@ -1,5 +1,5 @@
 local servers = {
-    'tsserver',
+    'vtsls',
     'pyright',
     'lua_ls',
     'jsonls',
@@ -13,6 +13,9 @@ local servers = {
     'cssls',
     'terraformls',
     'rust_analyzer',
+    'prismals',
+    'twiggy_language_server',
+    'vuels',
 }
 
 return {
@@ -143,29 +146,12 @@ return {
                 settings = {}
             end
 
-            if server == 'tsserver' then
-                -- This one insists on running lspconfig setup itself
-                require('typescript').setup({
-                    disable_commands = false,
-                    debug = true,
-                    go_to_source_definition = {
-                        fallback = true, -- fall back to standard LSP definition on failure
-                    },
-                    server = { -- pass options to lspconfig's setup method
-                        on_attach = on_attach,
-                        flags = lsp_flags,
-                        capabilities = capabilities,
-                        settings = settings,
-                    },
-                })
-            else
-                require('lspconfig')[server].setup({
-                    on_attach = on_attach,
-                    flags = lsp_flags,
-                    capabilities = capabilities,
-                    settings = settings,
-                })
-            end
+            require('lspconfig')[server].setup({
+                on_attach = on_attach,
+                flags = lsp_flags,
+                capabilities = capabilities,
+                settings = settings,
+            })
         end
     end,
 }
