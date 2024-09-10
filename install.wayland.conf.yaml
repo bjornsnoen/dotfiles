@@ -11,14 +11,15 @@
         - gdm
         - anyrun-git
         - gsettings
-        - swayidle
-        - swaylock
         - qt6-wayland
         - xdg-desktop-portal-hyprland
         - wlogout
         - pciutils
         - blueberry-tray
         - wl-clipboard
+        - blueman
+        - hyprlock
+        - hypridle
 
 - link:
     ~/.config/hypr: hypr
