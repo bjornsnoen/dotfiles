@@ -6,7 +6,7 @@ local servers = {
     'yamlls',
     'taplo',
     'eslint',
-    'omnisharp_mono',
+    -- 'omnisharp_mono',
     'tailwindcss',
     'svelte',
     'phpactor',
@@ -131,11 +131,11 @@ return {
                         validate = { enable = true },
                     },
                 }
-            elseif server == 'omnisharp_mono' then
-                settings = {
-                    useGlobalMono = 'always',
-                    useModernNet = false,
-                }
+            -- elseif server == 'omnisharp_mono' then
+            --     settings = {
+            --         useGlobalMono = 'always',
+            --         useModernNet = false,
+            --     }
             elseif server == 'yamlls' then
                 settings = {
                     yaml = {

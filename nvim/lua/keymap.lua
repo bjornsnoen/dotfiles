@@ -1,6 +1,4 @@
 vim.keymap.set('n', '<leader>ve', ':vsp ~/.config/nvim/init.lua<CR>', { silent = true })
--- Using this keymap for .vimspector.json, remap before uncomment
--- nmap <Leader>vc :vsp ~/.config/nvim/coc-settings.json<CR>
 
 vim.keymap.set('n', '<leader>vr', function()
     for name, _ in pairs(package.loaded) do
@@ -34,3 +32,15 @@ vim.keymap.set('n', 'cn', ':cn<CR>', { silent = true })
 vim.keymap.set('n', '<Leader>m', ':make<CR>', { silent = true })
 vim.keymap.set('n', '<Leader>ee', ':e .env<CR>', { silent = true })
 vim.keymap.set('n', '<Leader>er', ':e .envrc<CR>', { silent = true })
+
+vim.keymap.set('n', '<Leader>p', function()
+    local cmd = 'tmux split-window -h -c #{pane_current_path} gh pr create'
+    local cmdtable = vim.fn.split(cmd)
+    vim.notify(vim.inspect(cmdtable))
+    vim.system(cmdtable)
+end)
+
+vim.keymap.set('n', '<Leader>b', function()
+    local branchname = vim.fn.input('Branch name: ')
+    vim.cmd('G checkout -b' .. branchname)
+end)

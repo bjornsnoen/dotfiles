@@ -12,6 +12,7 @@ return {
             ensure_installed = {
                 'prettierd',
                 'black',
+                'djlint',
                 'isort',
                 'cspell',
                 'stylua',

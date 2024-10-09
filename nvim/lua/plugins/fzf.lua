@@ -67,6 +67,9 @@ return {
         vim.keymap.set('n', '<Leader>f', function()
             builtin.find_files({ hidden = true })
         end, {})
+        vim.keymap.set('n', '<Leader>F', function()
+            builtin.find_files({ hidden = true, no_ignore = true })
+        end, {})
 
         vim.keymap.set('n', '<Leader>r', builtin.live_grep, {})
         vim.keymap.set('n', 'gb', builtin.git_branches, {})

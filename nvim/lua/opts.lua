@@ -12,12 +12,16 @@ vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldenable = false
 
-vim.opt.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal'
+vim.opt.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
+
 vim.opt.updatetime = 250
 
 -- Enables local nvim configs
 vim.opt.exrc = true
 vim.opt.secure = true
+
+-- Don't display the "yanked x lines of text" error ever
+vim.opt.report = 99999999
 
 vim.cmd([[
 let g:clipboard = {
