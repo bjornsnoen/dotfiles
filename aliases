@@ -42,3 +42,5 @@ alias gup="git pull origin master"
 alias gupm="git pull origin main"
 alias gl="git log --stat $(pwd)"
 alias tf="terraform"
+
+alias whatdidido="git log --all --author=bjornsnoen --pretty=format:'%<( 16 ) %ch %m %s'"

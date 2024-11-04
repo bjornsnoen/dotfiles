@@ -33,13 +33,6 @@ vim.keymap.set('n', '<Leader>m', ':make<CR>', { silent = true })
 vim.keymap.set('n', '<Leader>ee', ':e .env<CR>', { silent = true })
 vim.keymap.set('n', '<Leader>er', ':e .envrc<CR>', { silent = true })
 
-vim.keymap.set('n', '<Leader>p', function()
-    local cmd = 'tmux split-window -h -c #{pane_current_path} gh pr create'
-    local cmdtable = vim.fn.split(cmd)
-    vim.notify(vim.inspect(cmdtable))
-    vim.system(cmdtable)
-end)
-
 vim.keymap.set('n', '<Leader>b', function()
     local branchname = vim.fn.input('Branch name: ')
     vim.cmd('G checkout -b' .. branchname)

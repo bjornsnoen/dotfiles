@@ -20,6 +20,8 @@ return {
                 'vuels',
                 'yamlls',
                 'phpcbf',
+                'pylsp',
+                'omnisharp',
             },
         },
     },

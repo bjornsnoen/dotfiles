@@ -6,7 +6,7 @@ local servers = {
     'yamlls',
     'taplo',
     'eslint',
-    -- 'omnisharp_mono',
+    'omnisharp_mono',
     'tailwindcss',
     'svelte',
     'phpactor',
@@ -16,10 +16,14 @@ local servers = {
     'prismals',
     'twiggy_language_server',
     'vuels',
+    'pylsp',
+    'dockerls',
+    'sqls',
 }
 
 return {
     'neovim/nvim-lspconfig',
+    version = 'v1.0.0',
     dependencies = {
         {
             'williamboman/mason-lspconfig.nvim',
@@ -101,6 +105,8 @@ return {
 
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+        local overrides = {}
+
         for _, server in ipairs(servers) do
             local settings
             if server == 'lua_ls' then
@@ -131,27 +137,52 @@ return {
                         validate = { enable = true },
                     },
                 }
-            -- elseif server == 'omnisharp_mono' then
-            --     settings = {
-            --         useGlobalMono = 'always',
-            --         useModernNet = false,
-            --     }
+            elseif server == 'omnisharp_mono' then
+                settings = {
+                    useGlobalMono = 'always',
+                    useModernNet = false,
+                }
             elseif server == 'yamlls' then
                 settings = {
                     yaml = {
                         keyOrdering = false,
                     },
                 }
+            elseif server == 'pylsp' then
+                settings = {
+                    pylsp = {
+                        plugins = {
+                            flake8 = {
+                                enabled = true,
+                                executable = '.venv/bin/flake8',
+                                maxLineLength = 120,
+                            },
+                        },
+                    },
+                }
+            elseif server == 'vtsls' then
+                settings = {
+                    vtsls = {
+                        autoUseWorkspaceTsdk = true,
+                    },
+                }
+            elseif server == 'sqls' then
+                overrides = {
+                    root_dir = function()
+                        return vim.fn.getcwd()
+                    end,
+                }
             else
                 settings = {}
             end
 
-            require('lspconfig')[server].setup({
+            local conf = vim.tbl_extend('force', {
                 on_attach = on_attach,
                 flags = lsp_flags,
                 capabilities = capabilities,
                 settings = settings,
-            })
+            }, overrides)
+            require('lspconfig')[server].setup(conf)
         end
     end,
 }

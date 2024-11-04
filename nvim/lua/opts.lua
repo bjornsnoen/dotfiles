@@ -12,6 +12,9 @@ vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldenable = false
 
+-- "    let g:ftplugin_sql_omni_key_right = '<Right>'
+vim.g.ftplugin_sql_omni_key_right = '<None>'
+
 vim.opt.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
 
 vim.opt.updatetime = 250

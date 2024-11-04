@@ -25,7 +25,6 @@ return {
                     end,
                 }),
                 require('neotest-vitest')({
-                    vitestCommand = 'npm test --',
                     cwd = function(_)
                         return vim.fn.getcwd()
                     end,
