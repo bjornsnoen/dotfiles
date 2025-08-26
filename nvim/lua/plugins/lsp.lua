@@ -15,15 +15,16 @@ local servers = {
     'rust_analyzer',
     'prismals',
     'twiggy_language_server',
-    'vuels',
     'pylsp',
     'dockerls',
     'sqls',
+    'kotlin_lsp',
+    'jdtls',
+    'gopls',
 }
 
 return {
     'neovim/nvim-lspconfig',
-    version = 'v1.0.0',
     dependencies = {
         {
             'williamboman/mason-lspconfig.nvim',
@@ -38,9 +39,10 @@ return {
     config = function()
         local opts = { noremap = true, silent = true }
         -- We must do this here to ensure that the LSP servers are installed before we try to use them
-        local lspconfig = require('mason-lspconfig')
-        lspconfig.setup({
+        local masonLspConfig = require('mason-lspconfig')
+        masonLspConfig.setup({
             ensure_installed = servers,
+            automatic_enable = false,
         })
         vim.keymap.set('n', '<Leader>[', function()
             vim.diagnostic.goto_prev({ float = false })
@@ -98,14 +100,7 @@ return {
             })
         end
 
-        local lsp_flags = {
-            -- This is the default in Nvim 0.7+
-            debounce_text_changes = 150,
-        }
-
-        local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-        local overrides = {}
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
 
         for _, server in ipairs(servers) do
             local settings
@@ -166,23 +161,20 @@ return {
                         autoUseWorkspaceTsdk = true,
                     },
                 }
-            elseif server == 'sqls' then
-                overrides = {
-                    root_dir = function()
-                        return vim.fn.getcwd()
-                    end,
-                }
-            else
-                settings = {}
             end
 
-            local conf = vim.tbl_extend('force', {
+            local lspconfig = require('lspconfig')
+            local common = {
                 on_attach = on_attach,
-                flags = lsp_flags,
+                -- flags = lsp_flags,
                 capabilities = capabilities,
                 settings = settings,
-            }, overrides)
-            require('lspconfig')[server].setup(conf)
+            }
+            local base = lspconfig[server] or {}
+
+            local conf = vim.tbl_deep_extend('force', base, common)
+            vim.lsp.enable(server)
+            vim.lsp.config(server, conf)
         end
     end,
 }

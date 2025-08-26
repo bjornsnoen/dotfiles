@@ -43,4 +43,8 @@ alias gupm="git pull origin main"
 alias gl="git log --stat $(pwd)"
 alias tf="terraform"
 
-alias whatdidido="git log --all --author=bjornsnoen --pretty=format:'%<( 16 ) %ch %m %s'"
+alias whatdidido="git log --all --author=bjorn --pretty=format:'%<( 16 ) %ch %m %s'"
+
+alias g='./gradlew'
+alias cx="OPENAI_API_KEY=\$(bw get notes openai | awk -F' = ' '{ print \$2 }') codex"
+alias ox="codex --profile gpt-oss"

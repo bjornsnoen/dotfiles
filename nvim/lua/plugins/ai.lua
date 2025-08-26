@@ -3,8 +3,9 @@ return {
     config = function()
         local gen = require('gen')
         gen.setup({
-            model = 'deepseek-coder:6.7b',
-            display_mode = 'split',
+            model = 'gpt-oss:20b',
+            display_mode = 'vertical-split',
+            show_model = true,
             show_prompt = true,
         })
         gen.prompts['Write_Test'] = {

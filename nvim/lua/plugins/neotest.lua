@@ -6,9 +6,10 @@ return {
         'nvim-treesitter/nvim-treesitter',
         'antoinemadec/FixCursorHold.nvim',
         'haydenmeade/neotest-jest',
+        'codymikol/neotest-kotlin',
         'nvim-neotest/neotest-python',
         'olimorris/neotest-phpunit',
-        { 'marilari88/neotest-vitest', dev = true },
+        { 'marilari88/neotest-vitest' },
         { 'thenbe/neotest-playwright', branch = 'master' },
     },
     init = function()
@@ -25,6 +26,7 @@ return {
                     end,
                 }),
                 require('neotest-vitest')({
+                    vitestCommand = 'npm test --',
                     cwd = function(_)
                         return vim.fn.getcwd()
                     end,
@@ -45,6 +47,7 @@ return {
                         },
                     },
                 }),
+                require('neotest-kotlin'),
                 require('neotest-phpunit'),
             },
         })

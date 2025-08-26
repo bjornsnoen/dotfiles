@@ -74,6 +74,7 @@
     ~/.config/dunst/dunstrc: dunstrc
     ~/.config/wireplumber/wireplumber.conf.d/51-bluez-config.conf: wireplumber/51-bluez-config.conf
     ~/.config/pipewire/pipewire.conf.d/switch-on-connect.conf: pipewire/switch-on-connect.conf
+    ~/.codex/config.toml: codex/config.toml
 
     ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
 

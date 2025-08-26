@@ -12,3 +12,5 @@ docs/notes/
 .watchman-cookie-*
 .vercel/
 .phpactor.json
+.php-cs-fixer.cache
+.husky/prepare-commit-msg

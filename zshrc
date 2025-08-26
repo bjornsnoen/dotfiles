@@ -6,6 +6,7 @@ export PATH="./vendor/bin:$PATH"
 export PATH="node_modules/.bin:$PATH"
 export PATH=$HOME/go/bin:$PATH
 export PATH=/usr/bin/vendor_perl:$PATH
+export PATH=$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH
 export EDITOR="nvim"
 export XMLLINT_INDENT="    "
 export PIPENV_VERBOSITY=-1
@@ -71,6 +72,7 @@ HIST_STAMPS="yyyy-mm-dd"
 plugins=(tmux docker docker-compose fzf thefuck composer zsh-autosuggestions ssh-agent gpg-agent)
 
 source $HOME/.aliases
+export ASDF_NODEJS_AUTO_ENABLE_COREPACK=1
 source ~/.asdf/asdf.sh
 fpath+=~/.zfunc
 
@@ -98,3 +100,7 @@ PS1='$(show_virtual_env)'$PS1
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 eval "$(direnv hook zsh)"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

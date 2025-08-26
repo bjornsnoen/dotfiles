@@ -6,6 +6,7 @@
         }
     ],
     "require": {
-        "bjornsnoen/myweek": "dev-master"
+        "bjornsnoen/myweek": "dev-master",
+        "wp-cli/wp-cli-bundle": "^2.10"
     }
 }

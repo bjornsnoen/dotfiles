@@ -50,7 +50,7 @@
             "on-scroll"     : 1,
             "on-click-right": "mode",
             "format": {
-                "weeks":      "<span color='#696969'><b>{:%W}</b></span>",
+                "weeks":      "<span color='#696969'><b>{:%V}</b></span>",
                 "today":      "<span color='#99ffdd'><b>{}</b></span>",
             }
         },

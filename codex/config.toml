@@ -1,0 +1,9 @@
+projects = { "/home/bjorn/src/kotlin-crash" = { trust_level = "trusted" } , "/home/bjorn/src/work/feltgis" = { trust_level = "trusted" } }
+
+[model_providers.ollama]
+name = "Ollama"
+base_url = "http://localhost:11434/api"
+
+[profiles.gpt-oss]
+model_provider = "ollama"
+model = "gpt-oss"

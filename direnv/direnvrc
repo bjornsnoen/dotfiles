@@ -5,7 +5,7 @@ layout_poetry() {
   fi
 
   # create venv if it doesn't exist
-  poetry env use $(asdf which python)
+  poetry env use $(uv python find)
 
   VIRTUAL_ENV=$(poetry env info --path)
   source $VIRTUAL_ENV/bin/activate
