@@ -1,1 +1,1 @@
---glob=!LICENSE --glob=!.git/
+--glob=!LICENSE --glob=!.git/ --glob=!.pnpm-store/

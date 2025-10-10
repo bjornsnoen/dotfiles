@@ -27,13 +27,13 @@ return {
                 },
                 file_ignore_patterns = { '.git/' },
             },
-            pickers = {
-                live_grep = {
-                    additional_args = function()
-                        return { '--hidden' }
-                    end,
-                },
-            },
+            -- pickers = {
+            --     live_grep = {
+            --         additional_args = function()
+            --             return { '--hidden' }
+            --         end,
+            --     },
+            -- },
             extensions = {
                 ['ui-select'] = {
                     require('telescope.themes').get_dropdown({

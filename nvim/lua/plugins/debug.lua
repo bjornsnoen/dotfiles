@@ -24,5 +24,68 @@ return {
                 stopOnEntry = false,
             },
         }
+
+        local cpptoolsPath = vim.fn.stdpath('data') .. '/mason/packages/cpptools/extension/'
+        dap.adapters.cppdbg = {
+            type = 'executable',
+            id = 'cppdbg',
+            command = cpptoolsPath .. 'debugAdapters/bin/OpenDebugAD7',
+        }
+
+        dap.configurations.cpp = {
+            {
+                name = 'Launch file',
+                type = 'cppdbg',
+                request = 'launch',
+                setupCommands = {
+                    {
+                        text = '-enable-pretty-printing',
+                        description = 'enable pretty printing',
+                        ignoreFailures = false,
+                    },
+                },
+                program = function()
+                    -- If the main file exists, use that as the defaults
+                    if vim.fn.filereadable('main') == 1 then
+                        return vim.fn.getcwd() .. '/main'
+                    end
+                    return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                end,
+                before = function()
+                    vim.fn.jobstart('make', {
+                        stdout_buffered = true,
+                        stderr_buffered = true,
+                        on_stdout = function(_, data)
+                            if data then
+                                vim.notify(table.concat(data, '\n'), vim.log.levels.INFO)
+                            end
+                        end,
+                        on_stderr = function(_, data)
+                            if data then
+                                vim.notify(table.concat(data, '\n'), vim.log.levels.ERROR)
+                            end
+                        end,
+                    })
+                end,
+                cwd = '${workspaceFolder}',
+            },
+            {
+                name = 'Attach to gdbserver :1234',
+                type = 'cppdbg',
+                request = 'launch',
+                MIMode = 'gdb',
+                miDebuggerServerAddress = 'localhost:1234',
+                miDebuggerPath = '/usr/bin/gdb',
+                cwd = '${workspaceFolder}',
+                program = function()
+                    if vim.fn.filereadable('main') == 1 then
+                        return vim.fn.getcwd() .. '/main'
+                    end
+                    return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                end,
+            },
+        }
+        dap.configurations.c = dap.configurations.cpp
+        dap.configurations.rust = dap.configurations.cpp
     end,
 }

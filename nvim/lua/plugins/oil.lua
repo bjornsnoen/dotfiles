@@ -17,9 +17,9 @@ return {
                 show_hidden = true,
             },
         })
-        vim.keymap.set('n', '<Leader>N', function()
+        vim.keymap.set('n', '<Leader>O', function()
             oil.toggle_float(vim.fn.getcwd())
         end, { noremap = true, silent = true })
-        vim.keymap.set('n', '<Leader>n', oil.toggle_float, { silent = true })
+        vim.keymap.set('n', '<Leader>o', oil.toggle_float, { silent = true })
     end,
 }

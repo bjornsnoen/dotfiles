@@ -1,6 +1,7 @@
 local servers = {
     'vtsls',
     'pyright',
+    'pylsp',
     'lua_ls',
     'jsonls',
     'yamlls',
@@ -15,12 +16,12 @@ local servers = {
     'rust_analyzer',
     'prismals',
     'twiggy_language_server',
-    'pylsp',
     'dockerls',
     'sqls',
     'kotlin_lsp',
     'jdtls',
     'gopls',
+    'clangd',
 }
 
 return {
@@ -152,6 +153,23 @@ return {
                                 executable = '.venv/bin/flake8',
                                 maxLineLength = 120,
                             },
+                            pycodestyle = { enabled = false },
+                            mccabe = { enabled = false },
+                            pyflakes = { enabled = false },
+                        },
+                    },
+                }
+            elseif server == 'pyright' then
+                settings = {
+                    pyright = {
+                        disableOrganizeImports = true,
+                        disableTaggedHints = true,
+                    },
+                    python = {
+                        analysis = {
+                            diagnosticSeverityOverrides = {
+                                reportUnreachable = 'none',
+                            },
                         },
                     },
                 }
@@ -163,14 +181,13 @@ return {
                 }
             end
 
-            local lspconfig = require('lspconfig')
             local common = {
                 on_attach = on_attach,
                 -- flags = lsp_flags,
                 capabilities = capabilities,
                 settings = settings,
             }
-            local base = lspconfig[server] or {}
+            local base = vim.lsp.config[server] or {}
 
             local conf = vim.tbl_deep_extend('force', base, common)
             vim.lsp.enable(server)
