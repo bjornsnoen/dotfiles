@@ -73,7 +73,7 @@ plugins=(tmux docker docker-compose fzf thefuck composer zsh-autosuggestions ssh
 
 source $HOME/.aliases
 export ASDF_NODEJS_AUTO_ENABLE_COREPACK=1
-source ~/.asdf/asdf.sh
+[[ -f ~/.asdf/asdf.sh ]] && source ~/.asdf/asdf.sh
 fpath+=~/.zfunc
 
 source $ZSH/oh-my-zsh.sh
