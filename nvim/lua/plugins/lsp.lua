@@ -7,7 +7,7 @@ local servers = {
     'yamlls',
     'taplo',
     'eslint',
-    'omnisharp_mono',
+    'omnisharp',
     'tailwindcss',
     'svelte',
     'phpactor',
@@ -39,6 +39,35 @@ return {
     },
     config = function()
         local opts = { noremap = true, silent = true }
+
+        local function is_wsl()
+            local release = vim.loop.os_uname().release:lower()
+            return release:find('microsoft') ~= nil or release:find('wsl') ~= nil
+        end
+
+        local function get_omnisharp_exec()
+            if is_wsl() then
+                local win_bin = vim.env.WIN_OMNISHARP_CMD or vim.env.OMNISHARP_CMD
+                if win_bin and win_bin ~= '' then
+                    local expanded = vim.fn.expand(win_bin)
+                    if vim.fn.executable(expanded) == 1 then
+                        return expanded
+                    end
+                end
+            end
+
+            local mason_bin_dir = vim.fn.stdpath('data') .. '/mason/bin/'
+            for _, candidate in ipairs({ 'omnisharp', 'OmniSharp' }) do
+                local mason_bin = mason_bin_dir .. candidate
+                if vim.fn.executable(mason_bin) == 1 then
+                    return mason_bin
+                end
+            end
+
+            if vim.fn.executable('omnisharp') == 1 then
+                return 'omnisharp'
+            end
+        end
         -- We must do this here to ensure that the LSP servers are installed before we try to use them
         local masonLspConfig = require('mason-lspconfig')
         masonLspConfig.setup({
@@ -109,7 +138,7 @@ return {
                 settings = {
                     Lua = {
                         diagnostics = {
-                            globals = { 'vim', 'awesome', 'screen' },
+                            globals = { 'vim', 'awesome', 'screen', 'bluez_monitor' },
                         },
                         format = {
                             enable = true,
@@ -119,7 +148,6 @@ return {
                             },
                         },
                         workspace = {
-                            library = vim.api.nvim_get_runtime_file('', true),
                             maxPreload = 2000,
                             preloadFileSize = 1000,
                             checkThirdParty = false,
@@ -133,10 +161,24 @@ return {
                         validate = { enable = true },
                     },
                 }
-            elseif server == 'omnisharp_mono' then
+            elseif server == 'omnisharp' then
                 settings = {
-                    useGlobalMono = 'always',
-                    useModernNet = false,
+                    FormattingOptions = {
+                        EnableEditorConfigSupport = true,
+                        OrganizeImports = nil,
+                    },
+                    MsBuild = {
+                        LoadProjectsOnDemand = true,
+                    },
+                    RoslynExtensionsOptions = {
+                        EnableAnalyzersSupport = false,
+                        EnableImportCompletion = false,
+                        AnalyzeOpenDocumentsOnly = true,
+                        EnableDecompilationSupport = false,
+                    },
+                    Sdk = {
+                        IncludePrereleases = false,
+                    },
                 }
             elseif server == 'yamlls' then
                 settings = {
@@ -190,8 +232,18 @@ return {
             local base = vim.lsp.config[server] or {}
 
             local conf = vim.tbl_deep_extend('force', base, common)
-            vim.lsp.enable(server)
+            if server == 'omnisharp' then
+                local exec = get_omnisharp_exec()
+                if exec then
+                    if conf.cmd == nil or vim.tbl_isempty(conf.cmd) then
+                        conf.cmd = { exec }
+                    else
+                        conf.cmd[1] = exec
+                    end
+                end
+            end
             vim.lsp.config(server, conf)
+            vim.lsp.enable(server)
         end
     end,
 }

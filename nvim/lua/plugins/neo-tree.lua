@@ -16,6 +16,22 @@ return {
             vim.keymap.set('n', '<Leader>N', function()
                 require('neo-tree.command').execute({ toggle = true, dir = vim.fn.getcwd() })
             end, { noremap = true, silent = true })
+
+            require('neo-tree').setup({
+                close_if_last_window = true,
+                filesystem = {
+                    follow_current_file = { enabled = true },
+                    hijack_netrw_behavior = 'open_default',
+                },
+                event_handlers = {
+                    {
+                        event = 'file_open_requested',
+                        handler = function()
+                            require('neo-tree.command').execute({ action = 'close' })
+                        end,
+                    },
+                },
+            })
         end,
     },
     {
