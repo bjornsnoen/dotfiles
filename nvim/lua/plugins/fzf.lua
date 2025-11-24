@@ -64,6 +64,30 @@ return {
         telescope.load_extension('ui-select')
 
         local builtin = require('telescope.builtin')
+        local has_omnisharp, omnisharp_extended = pcall(require, 'omnisharp_extended')
+
+        local function has_omnisharp_client()
+            for _, client in ipairs(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
+                if client.name == 'omnisharp' then
+                    return true
+                end
+            end
+            return false
+        end
+
+        local function lsp_definitions()
+            if has_omnisharp and has_omnisharp_client() then
+                return omnisharp_extended.telescope_lsp_definitions()
+            end
+            return builtin.lsp_definitions()
+        end
+
+        local function lsp_implementations()
+            if has_omnisharp and has_omnisharp_client() then
+                return omnisharp_extended.telescope_lsp_implementations()
+            end
+            return builtin.lsp_implementations()
+        end
         vim.keymap.set('n', '<Leader>f', function()
             builtin.find_files({ hidden = true })
         end, {})
@@ -76,8 +100,8 @@ return {
         vim.keymap.set('n', 'gu', function()
             builtin.lsp_references({ include_declaration = false, show_line = false })
         end, {})
-        vim.keymap.set('n', 'gi', builtin.lsp_implementations, {})
-        vim.keymap.set('n', 'gd', builtin.lsp_definitions, {})
+        vim.keymap.set('n', 'gi', lsp_implementations, {})
+        vim.keymap.set('n', 'gd', lsp_definitions, {})
 
         local function getVisualSelection()
             vim.cmd('noau normal! "vy"')

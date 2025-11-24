@@ -36,6 +36,7 @@ return {
         'hrsh7th/cmp-nvim-lsp',
         'b0o/schemastore.nvim',
         'jose-elias-alvarez/typescript.nvim',
+        'Hoffs/omnisharp-extended-lsp.nvim',
     },
     config = function()
         local opts = { noremap = true, silent = true }
@@ -131,9 +132,14 @@ return {
         end
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
+        local omnisharp_extended = require('omnisharp_extended')
+        local omnisharp_status = { started = false, ready = false }
 
         for _, server in ipairs(servers) do
             local settings
+            local cmd_env
+            local handlers
+            local on_attach_fn = on_attach
             if server == 'lua_ls' then
                 settings = {
                     Lua = {
@@ -172,14 +178,30 @@ return {
                     },
                     RoslynExtensionsOptions = {
                         EnableAnalyzersSupport = false,
-                        EnableImportCompletion = false,
+                        EnableImportCompletion = true,
                         AnalyzeOpenDocumentsOnly = true,
-                        EnableDecompilationSupport = false,
+                        EnableDecompilationSupport = true,
                     },
                     Sdk = {
                         IncludePrereleases = false,
                     },
                 }
+                cmd_env = {
+                    OMNISHARP_USE_MODERN_NET = 'true',
+                    DOTNET_ROOT = vim.env.DOTNET_ROOT or vim.fn.expand('~/.dotnet'),
+                }
+                handlers = {
+                    ['textDocument/definition'] = omnisharp_extended.handler,
+                    ['textDocument/typeDefinition'] = omnisharp_extended.handler,
+                    ['textDocument/implementation'] = omnisharp_extended.handler,
+                }
+                on_attach_fn = function(client, bufnr)
+                    if not omnisharp_status.ready then
+                        vim.notify('OmniSharp ready', { title = 'LSP (C#)', timeout = 1500 })
+                        omnisharp_status.ready = true
+                    end
+                    return on_attach(client, bufnr)
+                end
             elseif server == 'yamlls' then
                 settings = {
                     yaml = {
@@ -224,10 +246,12 @@ return {
             end
 
             local common = {
-                on_attach = on_attach,
+                on_attach = on_attach_fn,
                 -- flags = lsp_flags,
                 capabilities = capabilities,
                 settings = settings,
+                cmd_env = cmd_env,
+                handlers = handlers,
             }
             local base = vim.lsp.config[server] or {}
 
