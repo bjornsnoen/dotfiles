@@ -64,6 +64,7 @@
     fd
     cargo
     uv
+    lua-language-server
   ];
 
   terminal.font = "${pkgs.nerd-fonts.jetbrains-mono}/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Regular.ttf";
