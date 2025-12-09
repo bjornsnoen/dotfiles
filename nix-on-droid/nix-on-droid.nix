@@ -73,6 +73,7 @@
   environment.motd = null;
 #  user.userName = "bjorn";
   user.shell = "${pkgs.zsh}/bin/zsh";
+  environment.sessionVariables.SHELL = "${pkgs.zsh}/bin/zsh";
   android-integration.termux-reload-settings.enable = true;
   # Read the changelog before changing this value
   system.stateVersion = "24.05";
