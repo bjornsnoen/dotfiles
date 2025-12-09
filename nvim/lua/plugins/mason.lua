@@ -1,6 +1,7 @@
 return {
     {
         'williamboman/mason.nvim',
+        event = 'VeryLazy',
         config = true,
     },
     {
@@ -8,6 +9,7 @@ return {
         dependencies = {
             'williamboman/mason.nvim',
         },
+        event = 'VeryLazy',
         opts = {
             ensure_installed = {
                 'prettierd',
@@ -20,9 +22,7 @@ return {
                 'yamlls',
                 'phpcbf',
                 'pylsp',
-                'omnisharp',
                 'kotlin-lsp',
-                'gopls',
             },
         },
     },

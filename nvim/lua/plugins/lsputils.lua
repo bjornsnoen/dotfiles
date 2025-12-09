@@ -1,5 +1,6 @@
 return {
     'RishabhRD/nvim-lsputils',
+    event = 'LspAttach',
     dependencies = {
         'neovim/nvim-lspconfig',
         'RishabhRD/popfix',

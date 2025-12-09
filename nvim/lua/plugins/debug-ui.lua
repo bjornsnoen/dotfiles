@@ -1,6 +1,9 @@
 return {
     'rcarriga/nvim-dap-ui',
     dependencies = { 'mfussenegger/nvim-dap' },
+    keys = {
+        { '<Leader>dq', function() vim.schedule(function() require('dapui').close({}) end) end, desc = 'DAP close UI' },
+    },
     config = function()
         local dap, dapui = require('dap'), require('dapui')
         dapui.setup({

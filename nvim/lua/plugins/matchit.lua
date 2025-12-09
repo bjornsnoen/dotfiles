@@ -1,1 +1,4 @@
-return { 'chrisbra/matchit' }
+return {
+    'chrisbra/matchit',
+    event = { 'BufReadPre', 'BufNewFile' },
+}

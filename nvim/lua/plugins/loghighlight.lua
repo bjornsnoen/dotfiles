@@ -1,1 +1,4 @@
-return { 'mtdl9/vim-log-highlighting' }
+return {
+    'mtdl9/vim-log-highlighting',
+    ft = { 'log', 'txt' },
+}

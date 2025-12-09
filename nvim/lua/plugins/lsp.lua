@@ -26,6 +26,7 @@ local servers = {
 
 return {
     'neovim/nvim-lspconfig',
+    event = { 'BufEnter', 'BufNewFile' },
     dependencies = {
         {
             'williamboman/mason-lspconfig.nvim',

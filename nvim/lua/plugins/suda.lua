@@ -1,6 +1,6 @@
 return {
     'lambdalisue/suda.vim',
-    config = function()
-        vim.keymap.set('c', 'w!', ':SudaWrite<CR>', { silent = true })
-    end,
+    keys = {
+        { 'w!', ':SudaWrite<CR>', mode = 'c', silent = true, desc = 'Write with sudo' },
+    },
 }

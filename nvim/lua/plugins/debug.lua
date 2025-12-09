@@ -1,13 +1,15 @@
 return {
     'mfussenegger/nvim-dap',
+    keys = {
+        { '<F5>', function() require('dap').continue() end, desc = 'DAP continue' },
+        { '<F17>', function() require('dap').run_last() end, desc = 'DAP run last' },
+        { '<F9>', function() require('dap').toggle_breakpoint() end, desc = 'DAP toggle breakpoint' },
+        { '<F10>', function() require('dap').step_over() end, desc = 'DAP step over' },
+        { '<F11>', function() require('dap').step_into() end, desc = 'DAP step into' },
+        { '<F12>', function() require('dap').step_out() end, desc = 'DAP step out' },
+    },
     config = function()
         local dap = require('dap')
-        vim.keymap.set('n', '<F5>', dap.continue)
-        vim.keymap.set('n', '<F17>', dap.run_last)
-        vim.keymap.set('n', '<F9>', dap.toggle_breakpoint)
-        vim.keymap.set('n', '<F10>', dap.step_over)
-        vim.keymap.set('n', '<F11>', dap.step_into)
-        vim.keymap.set('n', '<F12>', dap.step_out)
 
         dap.adapters.php = {
             type = 'executable',

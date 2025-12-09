@@ -7,16 +7,24 @@ return {
             'MunifTanjim/nui.nvim',
             'nvim-tree/nvim-web-devicons',
         },
+        cmd = { 'Neotree' },
+        keys = {
+            {
+                '<Leader>n',
+                function()
+                    require('neo-tree.command').execute({ toggle = true, reveal = true, dir = vim.fn.getcwd() })
+                end,
+                desc = 'Neo-tree reveal cwd',
+            },
+            {
+                '<Leader>N',
+                function()
+                    require('neo-tree.command').execute({ toggle = true, dir = vim.fn.getcwd() })
+                end,
+                desc = 'Neo-tree toggle cwd',
+            },
+        },
         config = function()
-            -- Open Neo-tree with <Leader>n with the currently oppen file's directory
-            vim.keymap.set('n', '<Leader>n', function()
-                require('neo-tree.command').execute({ toggle = true, reveal = true, dir = vim.fn.getcwd() })
-            end, { noremap = true, silent = true })
-            -- Open Neo-tree with <Leader>N to show the repo root
-            vim.keymap.set('n', '<Leader>N', function()
-                require('neo-tree.command').execute({ toggle = true, dir = vim.fn.getcwd() })
-            end, { noremap = true, silent = true })
-
             require('neo-tree').setup({
                 close_if_last_window = true,
                 filesystem = {
@@ -36,6 +44,7 @@ return {
     },
     {
         'antosha417/nvim-lsp-file-operations',
+        event = 'LspAttach',
         dependencies = {
             'nvim-lua/plenary.nvim',
             'nvim-neo-tree/neo-tree.nvim', -- makes sure that this loads after Neo-tree.

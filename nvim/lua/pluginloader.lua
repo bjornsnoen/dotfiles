@@ -15,4 +15,9 @@ return require('lazy').setup('plugins', {
     dev = {
         path = '~/src/nvim',
     },
+    performance = {
+        cache = {
+            enabled = true,
+        },
+    },
 })
