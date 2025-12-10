@@ -27,26 +27,6 @@ vim.opt.secure = true
 vim.opt.report = 99999999
 
 vim.cmd([[
-let g:clipboard = {
-     \   'name': 'myClipboard',
-     \   'copy': {
-     \      '+': ['wl-copy'],
-     \      '*': ['wl-copy'],
-     \    },
-     \   'paste': {
-     \      '+': '+',
-     \      '*': '*',
-     \   },
-     \   'cache_enabled': 1,
-     \ }
-
-augroup ClipboardEvents
-    autocmd!
-    autocmd TextYankPost * let @+ = getreg(v:event.regname)
-augroup end
-]])
-
-vim.cmd([[
 " guard for distributions lacking the 'persistent_undo' feature.
 if has('persistent_undo')
     " define a path to store persistent undo files.
@@ -62,3 +42,47 @@ if has('persistent_undo')
     set undofile
 endif
 ]])
+
+local function has_cmd(cmd)
+    return vim.fn.executable(cmd) == 1
+end
+
+local function set_clipboard(copy_cmd, paste_cmd, name)
+    vim.g.clipboard = {
+        name = name,
+        copy = {
+            ['+'] = copy_cmd,
+            ['*'] = copy_cmd,
+        },
+        paste = {
+            ['+'] = paste_cmd,
+            ['*'] = paste_cmd,
+        },
+        cache_enabled = 0,
+    }
+    vim.opt.clipboard = 'unnamedplus'
+end
+
+-- Pick an OS-appropriate clipboard provider so configs stay committed across machines.
+local function configure_clipboard()
+    if vim.fn.has('wsl') == 1 and has_cmd('clip.exe') then
+        set_clipboard('clip.exe', 'clip.exe -o', 'wsl-clip')
+        return
+    end
+
+    if vim.fn.has('macunix') == 1 and has_cmd('pbcopy') then
+        set_clipboard('pbcopy', 'pbpaste', 'mac')
+        return
+    end
+
+    if has_cmd('wl-copy') and has_cmd('wl-paste') then
+        set_clipboard('wl-copy', 'wl-paste --no-newline', 'wayland')
+        return
+    end
+
+    if has_cmd('xclip') then
+        set_clipboard('xclip -selection clipboard', 'xclip -selection clipboard -o', 'xclip')
+    end
+end
+
+configure_clipboard()

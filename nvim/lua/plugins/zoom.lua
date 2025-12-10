@@ -1,5 +1,6 @@
 return {
     'dhruvasagar/vim-zoom',
+    cmd = 'ZoomToggle',
     config = function()
         vim.cmd([[
             augroup PlugZoom

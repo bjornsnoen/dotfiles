@@ -5,6 +5,7 @@
   environment.packages = with pkgs; [
     # User-facing stuff that you really really want to have
     vim # or some other editor, e.g. nano or neovim
+    neovim
 
     # Some common stuff that people expect to have
     procps
@@ -54,16 +55,26 @@
     file
     lua51Packages.lua
     lua51Packages.luarocks
-     # install only the JetBrainsMono Nerd Font
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    openssl
+    patchelf
+    jq
+    corepack_24
+    nodejs_24
+    nerd-fonts.jetbrains-mono
+    fd
+    cargo
+    uv
+    lua-language-server
   ];
 
+  terminal.font = "${pkgs.nerd-fonts.jetbrains-mono}/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Regular.ttf";
 
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
   environment.etcBackupExtension = ".bak";
   environment.motd = null;
 #  user.userName = "bjorn";
   user.shell = "${pkgs.zsh}/bin/zsh";
+  environment.sessionVariables.SHELL = "${pkgs.zsh}/bin/zsh";
   android-integration.termux-reload-settings.enable = true;
   # Read the changelog before changing this value
   system.stateVersion = "24.05";
@@ -75,4 +86,5 @@
 
   # Set your time zone
   time.timeZone = "Europe/Oslo";
+  build.extraProotOptions = ["--kill-on-exit"];
 }

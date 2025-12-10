@@ -1,1 +1,4 @@
-return { 'chrisbra/csv.vim' }
+return {
+    'chrisbra/csv.vim',
+    ft = 'csv',
+}

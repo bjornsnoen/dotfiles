@@ -1,14 +1,108 @@
 return {
     'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
     dependencies = {
         { 'nvim-lua/plenary.nvim' },
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-        {
-            'nvim-lua/popup.nvim',
-        },
+        { 'nvim-lua/popup.nvim' },
         { 'nvim-telescope/telescope-media-files.nvim' },
         { 'nvim-telescope/telescope-ui-select.nvim' },
+    },
+    cmd = 'Telescope',
+    keys = {
+        {
+            '<Leader>f',
+            function()
+                require('telescope.builtin').find_files({ hidden = true })
+            end,
+            desc = 'Find files (hidden)',
+        },
+        {
+            '<Leader>F',
+            function()
+                require('telescope.builtin').find_files({ hidden = true, no_ignore = true })
+            end,
+            desc = 'Find files (all)',
+        },
+        {
+            '<Leader>r',
+            function()
+                require('telescope.builtin').live_grep()
+            end,
+            mode = 'n',
+            desc = 'Live grep',
+        },
+        {
+            '<Leader>r',
+            function()
+                local builtin = require('telescope.builtin')
+                vim.cmd('noau normal! "vy"')
+                local text = vim.fn.getreg('v'):gsub('\n', '')
+                vim.fn.setreg('v', {})
+                if #text > 0 then
+                    builtin.live_grep({ default_text = text })
+                end
+            end,
+            mode = 'v',
+            desc = 'Live grep selection',
+        },
+        {
+            '<Leader>R',
+            function()
+                vim.cmd('normal vE')
+                local builtin = require('telescope.builtin')
+                vim.cmd('noau normal! "vy"')
+                local text = vim.fn.getreg('v'):gsub('\n', '')
+                vim.fn.setreg('v', {})
+                if #text > 0 then
+                    builtin.live_grep({ default_text = text })
+                end
+            end,
+            desc = 'Live grep word',
+        },
+        {
+            'gb',
+            function()
+                require('telescope.builtin').git_branches()
+            end,
+            desc = 'Git branches',
+        },
+        {
+            'gu',
+            function()
+                require('telescope.builtin').lsp_references({ include_declaration = false, show_line = false })
+            end,
+            desc = 'LSP references',
+        },
+        {
+            'gi',
+            function()
+                local has_omnisharp, omnisharp_extended = pcall(require, 'omnisharp_extended')
+                if has_omnisharp then
+                    for _, client in ipairs(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
+                        if client.name == 'omnisharp' then
+                            return omnisharp_extended.telescope_lsp_implementations()
+                        end
+                    end
+                end
+                return require('telescope.builtin').lsp_implementations()
+            end,
+            desc = 'LSP implementations',
+        },
+        {
+            'gd',
+            function()
+                local has_omnisharp, omnisharp_extended = pcall(require, 'omnisharp_extended')
+                if has_omnisharp then
+                    for _, client in ipairs(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
+                        if client.name == 'omnisharp' then
+                            return omnisharp_extended.telescope_lsp_definitions()
+                        end
+                    end
+                end
+                return require('telescope.builtin').lsp_definitions()
+            end,
+            desc = 'LSP definitions',
+        },
     },
     config = function()
         local telescope = require('telescope')
@@ -27,13 +121,6 @@ return {
                 },
                 file_ignore_patterns = { '.git/' },
             },
-            -- pickers = {
-            --     live_grep = {
-            --         additional_args = function()
-            --             return { '--hidden' }
-            --         end,
-            --     },
-            -- },
             extensions = {
                 ['ui-select'] = {
                     require('telescope.themes').get_dropdown({
@@ -62,75 +149,5 @@ return {
         telescope.load_extension('fzf')
         telescope.load_extension('media_files')
         telescope.load_extension('ui-select')
-
-        local builtin = require('telescope.builtin')
-        local has_omnisharp, omnisharp_extended = pcall(require, 'omnisharp_extended')
-
-        local function has_omnisharp_client()
-            for _, client in ipairs(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
-                if client.name == 'omnisharp' then
-                    return true
-                end
-            end
-            return false
-        end
-
-        local function lsp_definitions()
-            if has_omnisharp and has_omnisharp_client() then
-                return omnisharp_extended.telescope_lsp_definitions()
-            end
-            return builtin.lsp_definitions()
-        end
-
-        local function lsp_implementations()
-            if has_omnisharp and has_omnisharp_client() then
-                return omnisharp_extended.telescope_lsp_implementations()
-            end
-            return builtin.lsp_implementations()
-        end
-        vim.keymap.set('n', '<Leader>f', function()
-            builtin.find_files({ hidden = true })
-        end, {})
-        vim.keymap.set('n', '<Leader>F', function()
-            builtin.find_files({ hidden = true, no_ignore = true })
-        end, {})
-
-        vim.keymap.set('n', '<Leader>r', builtin.live_grep, {})
-        vim.keymap.set('n', 'gb', builtin.git_branches, {})
-        vim.keymap.set('n', 'gu', function()
-            builtin.lsp_references({ include_declaration = false, show_line = false })
-        end, {})
-        vim.keymap.set('n', 'gi', lsp_implementations, {})
-        vim.keymap.set('n', 'gd', lsp_definitions, {})
-
-        local function getVisualSelection()
-            vim.cmd('noau normal! "vy"')
-            local text = vim.fn.getreg('v')
-            vim.fn.setreg('v', {})
-
-            text = string.gsub(text, '\n', '')
-            if #text > 0 then
-                return text
-            else
-                return ''
-            end
-        end
-
-        local function grepVisualSelection()
-            local search_for = getVisualSelection()
-            if search_for ~= '' then
-                builtin.live_grep({ default_text = search_for })
-            end
-        end
-
-        vim.keymap.set('v', '<Leader>r', grepVisualSelection, { noremap = true, silent = true })
-        vim.keymap.set('n', '<Leader>R', function()
-            vim.cmd('normal vE')
-            grepVisualSelection()
-        end)
-        vim.keymap.set('n', '<Leader>R', function()
-            vim.cmd('normal vE')
-            grepVisualSelection()
-        end)
     end,
 }

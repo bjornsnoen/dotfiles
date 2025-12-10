@@ -1,1 +1,4 @@
-return { 'editorconfig/editorconfig-vim' }
+return {
+    'gpanders/editorconfig.nvim',
+    event = { 'BufEnter' },
+}

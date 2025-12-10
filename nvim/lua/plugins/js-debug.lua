@@ -1,9 +1,8 @@
 return {
     'mxsdev/nvim-dap-vscode-js',
+    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     dependencies = {
-        {
-            'mfussenegger/nvim-dap',
-        },
+        { 'mfussenegger/nvim-dap' },
         {
             'microsoft/vscode-js-debug',
             build = 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
@@ -30,7 +29,6 @@ return {
                     type = 'pwa-node',
                     request = 'launch',
                     name = 'Debug Jest Tests',
-                    -- trace = true, -- include debugger info
                     runtimeExecutable = 'node',
                     runtimeArgs = {
                         './node_modules/jest/bin/jest.js',
@@ -45,7 +43,6 @@ return {
                     type = 'pwa-node',
                     request = 'launch',
                     name = 'Debug Vite Tests',
-                    -- trace = true, -- include debugger info
                     runtimeExecutable = 'node',
                     runtimeArgs = {
                         './node_modules/.bin/vitest',

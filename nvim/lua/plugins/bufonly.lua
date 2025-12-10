@@ -1,8 +1,9 @@
 return {
     'vim-scripts/BufOnly.vim',
-    config = function()
-        vim.keymap.set('n', '<Leader>q', ':bdelete!<CR>', { silent = true })
-        vim.keymap.set('n', '<Leader>Q', ':BufOnly!<CR>', { silent = true })
-        vim.keymap.set('n', '<F16>', ':BufOnly<CR>', { silent = true })
-    end,
+    lazy = false,
+    keys = {
+        { '<Leader>q', ':bdelete!<CR>', mode = 'n', silent = true, desc = 'Delete current buffer' },
+        { '<Leader>Q', ':BufOnly!<CR>', mode = 'n', silent = true, desc = 'Keep only current buffer' },
+        { '<F16>', ':BufOnly<CR>', mode = 'n', silent = true, desc = 'Keep only current buffer' },
+    },
 }

@@ -1,1 +1,4 @@
-return { 'mustache/vim-mustache-handlebars' }
+return {
+    'mustache/vim-mustache-handlebars',
+    ft = { 'mustache', 'handlebars', 'hbs' },
+}
