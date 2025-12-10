@@ -19,14 +19,27 @@ vim.keymap.set('n', '<Leader>o', ':only<CR>', { silent = true })
 vim.keymap.set('n', '<leader>l', ':LspRestart<CR>', { silent = true })
 
 vim.keymap.set('n', '//', function()
-    local r, _ = unpack(vim.api.nvim_win_get_cursor(0))
-    local folded = vim.fn.foldclosed(r)
-    if folded == -1 then
-        vim.cmd(':normal za')
-    else
-        vim.cmd(':normal zA')
+    local line = vim.api.nvim_win_get_cursor(0)[1]
+    local has_fold = vim.fn.foldlevel(line) > 0
+    if not has_fold then
+        return
     end
-end)
+
+    local was_enabled = vim.wo.foldenable
+    if not was_enabled then
+        vim.wo.foldenable = true
+    end
+
+    if vim.fn.foldclosed(line) == -1 then
+        vim.cmd('normal! zc')
+    else
+        vim.cmd('normal! zo')
+    end
+
+    if not was_enabled then
+        vim.wo.foldenable = false
+    end
+end, { silent = true, desc = 'Toggle fold under cursor' })
 
 vim.keymap.set('n', 'cn', ':cn<CR>', { silent = true })
 vim.keymap.set('n', '<Leader>m', ':make<CR>', { silent = true })

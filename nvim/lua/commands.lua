@@ -20,3 +20,26 @@ vim.api.nvim_create_user_command('Hotfix', function()
     vim.notify(vim.inspect(cmdtable))
     vim.system(cmdtable)
 end, {})
+
+-- For floaterm buffers, make gf open the file in the previous window
+-- and hide the floaterm instead of editing in the float.
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'floaterm',
+    callback = function(ev)
+        vim.keymap.set('n', 'gf', function()
+            local file = vim.fn.expand('<cfile>')
+            if file == '' then
+                return
+            end
+
+            -- go to the window you were in before the floaterm
+            vim.cmd('wincmd p')
+
+            -- open the file there
+            vim.cmd('edit ' .. vim.fn.fnameescape(file))
+
+            -- hide all floaterms
+            vim.cmd('silent! FloatermHide!')
+        end, { buffer = ev.buf, silent = true })
+    end,
+})
