@@ -19,17 +19,17 @@ return {
             lualine_z = {
                 {
                     'lsp_status',
-                    ignore_lsp = { 
-                        "null-ls",
-                        "tailwindcss",
-                        "GitHub Copilot",
-                        "eslint",
-                    }
-                }
+                    ignore_lsp = {
+                        'null-ls',
+                        'tailwindcss',
+                        'GitHub Copilot',
+                        'eslint',
+                    },
+                },
             },
         },
         tabline = {
-            lualine_a = { { 'buffers', mode = 2 } },
+            lualine_a = { { 'buffers', mode = 0 } },
             lualine_z = { 'tabs' },
         },
     },
