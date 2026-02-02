@@ -6,11 +6,15 @@ vim.opt.tabstop = 4
 vim.opt.number = true
 vim.opt.splitright = true
 vim.opt.termguicolors = true
+vim.opt.hidden = true
+vim.opt.fillchars:append({ diff = '╱' })
 vim.opt.mouse = 'va'
 vim.opt.scrolloff = 999
 vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldenable = false
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
 
 -- "    let g:ftplugin_sql_omni_key_right = '<Right>'
 vim.g.ftplugin_sql_omni_key_right = '<None>'

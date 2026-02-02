@@ -1,10 +1,14 @@
 return {
     'github/copilot.vim',
-    event = 'InsertEnter',
+    event = 'VimEnter',
     config = function()
+        vim.g.copilot_no_tab_map = true
         vim.cmd([[
             imap <silent><script><expr> <Right> copilot#Accept("\<C-o>a")
         ]])
-        vim.g.copilot_no_tab_map = true
+        -- Enable Copilot on startup and ignore errors if the command is unavailable
+        vim.schedule(function()
+            pcall(vim.cmd, 'Copilot enable')
+        end)
     end,
 }

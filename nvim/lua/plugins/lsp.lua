@@ -47,6 +47,17 @@ return {
             return release:find('microsoft') ~= nil or release:find('wsl') ~= nil
         end
 
+        local function omnisharp_cmd(exec)
+            return {
+                exec,
+                '--languageserver',
+                '--hostPID',
+                tostring(vim.fn.getpid()),
+                '--encoding',
+                'utf-8',
+            }
+        end
+
         local function get_omnisharp_exec()
             if is_wsl() then
                 local win_bin = vim.env.WIN_OMNISHARP_CMD or vim.env.OMNISHARP_CMD
@@ -190,6 +201,7 @@ return {
                 cmd_env = {
                     OMNISHARP_USE_MODERN_NET = 'true',
                     DOTNET_ROOT = vim.env.DOTNET_ROOT or vim.fn.expand('~/.dotnet'),
+                    OMNISHARP_LOGLEVEL = 'quiet',
                 }
                 handlers = {
                     ['textDocument/definition'] = omnisharp_extended.handler,
@@ -260,11 +272,7 @@ return {
             if server == 'omnisharp' then
                 local exec = get_omnisharp_exec()
                 if exec then
-                    if conf.cmd == nil or vim.tbl_isempty(conf.cmd) then
-                        conf.cmd = { exec }
-                    else
-                        conf.cmd[1] = exec
-                    end
+                    conf.cmd = omnisharp_cmd(exec)
                 end
             end
             vim.lsp.config(server, conf)

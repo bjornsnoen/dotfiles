@@ -1,23 +1,76 @@
 return {
-    'David-Kunz/gen.nvim',
-    cmd = 'Gen',
+    'olimorris/codecompanion.nvim',
+    event = 'VeryLazy',
     keys = {
-        { '<leader>ai', ':Gen<CR>', mode = { 'n', 'v' }, silent = true, desc = 'Gen prompt' },
-        { '<C-c>', ':Gen Chat<CR>', mode = { 'n', 'v' }, silent = true, desc = 'Gen chat' },
-        { '<C-t>', ':Gen Write_Test<CR>', mode = 'v', silent = true, desc = 'Gen write test' },
-        { '<C-r>', ':Gen Review_Code<CR>', mode = 'v', silent = true, desc = 'Gen review code' },
+        { '<leader>aa', '<cmd>CodeCompanionChat<cr>', desc = 'CodeCompanion Chat' },
     },
-    config = function()
-        local gen = require('gen')
-        gen.setup({
-            model = 'gpt-oss:20b',
-            display_mode = 'vertical-split',
-            show_model = true,
-            show_prompt = true,
-        })
-        gen.prompts['Write_Test'] = {
-            prompt = 'Write a test for the following code. Only output the result in format ```$filetype\n...\n```:```$filetype\n$text\n```',
-            replace = false,
-        }
+    config = function(_, opts)
+        require('codecompanion').setup(opts)
+
+        -- Suppress CodeCompanion prompt library warnings
+        local original_notify = vim.notify
+        vim.notify = function(msg, level, notify_opts)
+            if type(msg) == 'string' and msg:match('%[Prompt Library%]') then
+                return
+            end
+            original_notify(msg, level, notify_opts)
+        end
     end,
+    opts = {
+        display = {
+            chat = {
+                show_tools_processing = true,
+            },
+        },
+        adapters = {
+            http = {
+                copilot = function()
+                    return require('codecompanion.adapters').extend('copilot', {
+                        opts = {
+                            tools = true,
+                        },
+                    })
+                end,
+            },
+        },
+        interactions = {
+            chat = {
+                adapter = { name = 'copilot', model = 'claude-sonnet-4.5' },
+                tools = {
+                    opts = {
+                        default_tools = { 'mcp', 'full_stack_dev' },
+                        auto_submit_errors = true,
+                        auto_submit_success = true,
+                    },
+                },
+            },
+            inline = { adapter = { name = 'copilot', model = 'claude-sonnet-4.5' } },
+        },
+        extensions = {
+            mcphub = {
+                callback = 'mcphub.extensions.codecompanion',
+                opts = {
+                    make_tools = true,
+                    show_server_tools_in_chat = true,
+                    add_mcp_prefix_to_tool_names = false,
+                    show_result_in_chat = true,
+                    make_vars = true,
+                    make_slash_commands = true,
+                },
+            },
+        },
+    },
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        'nvim-treesitter/nvim-treesitter',
+        'nvim-tree/nvim-web-devicons',
+        'stevearc/dressing.nvim',
+        {
+            'zbirenbaum/copilot.lua',
+            opts = {
+                suggestion = { enabled = false },
+                panel = { enabled = false },
+            },
+        },
+    },
 }

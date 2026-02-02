@@ -5,3 +5,5 @@ require('commands')
 
 -- Require all files in the `scripts` directory
 require('scripts.scrolloff_fix')
+
+

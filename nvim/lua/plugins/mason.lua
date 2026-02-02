@@ -22,6 +22,7 @@ return {
                 'yamlls',
                 'phpcbf',
                 'pylsp',
+                'sonarlint-language-server',
                 'kotlin-lsp',
             },
         },

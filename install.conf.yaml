@@ -9,6 +9,7 @@
     - ~/.config/awesome/
     - ~/.config/direnv/
     - ~/.config/nvim/
+    - ~/.config/mcphub/
 
 - ifarch:
     - git:
@@ -51,6 +52,7 @@
     ~/.aliases: aliases
     ~/.gitconfig: gitconfig
     ~/.zprofile: zprofile
+    ~/.zshenv: zshenv
     ~/.config/kitty: kitty
     ~/.xinitrc: xinitrc
     ~/.zshrc: zshrc
@@ -76,7 +78,7 @@
     ~/.config/pipewire/pipewire.conf.d/switch-on-connect.conf: pipewire/switch-on-connect.conf
     ~/.codex/config.toml: codex/config.toml
     ~/.config/atuin: atuin
-
+    ~/.config/mcphub/servers.json: mcphub.json
     ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
 
 - git:

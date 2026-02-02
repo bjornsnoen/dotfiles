@@ -12,41 +12,21 @@ vim.keymap.set('n', '<leader>vr', function()
 end)
 
 vim.keymap.set('n', 'gf', ':edit <cfile><CR>', { silent = true })
+vim.keymap.set('n', 'ga', '<Leader>ga', { remap = true, silent = true, desc = 'Git add buffer' })
 vim.keymap.set('n', 'tn', ':bn<CR>', { silent = true })
 vim.keymap.set('n', 'tp', ':bp<CR>', { silent = true })
+vim.keymap.set('n', 'gt', ':tabnext<CR>', { silent = true, desc = 'Next tab' })
+vim.keymap.set('n', 'gT', ':tabprevious<CR>', { silent = true, desc = 'Prev tab' })
 vim.keymap.set('n', '<Leader>wq', ':w<CR>|:bdelete<CR>', { silent = true })
 vim.keymap.set('n', '<Leader>o', ':only<CR>', { silent = true })
 vim.keymap.set('n', '<leader>l', ':LspRestart<CR>', { silent = true })
 
-vim.keymap.set('n', '//', function()
-    local line = vim.api.nvim_win_get_cursor(0)[1]
-    local has_fold = vim.fn.foldlevel(line) > 0
-    if not has_fold then
-        return
-    end
-
-    local was_enabled = vim.wo.foldenable
-    if not was_enabled then
-        vim.wo.foldenable = true
-    end
-
-    if vim.fn.foldclosed(line) == -1 then
-        vim.cmd('normal! zc')
-    else
-        vim.cmd('normal! zo')
-    end
-
-    if not was_enabled then
-        vim.wo.foldenable = false
-    end
-end, { silent = true, desc = 'Toggle fold under cursor' })
+vim.keymap.set('n', '//', '<Cmd>silent! normal! za<CR>', { silent = true, desc = 'Toggle fold under cursor' })
 
 vim.keymap.set('n', 'cn', ':cn<CR>', { silent = true })
 vim.keymap.set('n', '<Leader>m', ':make<CR>', { silent = true })
 vim.keymap.set('n', '<Leader>ee', ':e .env<CR>', { silent = true })
 vim.keymap.set('n', '<Leader>er', ':e .envrc<CR>', { silent = true })
 
-vim.keymap.set('n', '<Leader>b', function()
-    local branchname = vim.fn.input('Branch name: ')
-    vim.cmd('G checkout -b' .. branchname)
-end)
+-- Make <C-w> in insert mode behave like normal mode for window navigation
+vim.keymap.set('i', '<C-w>', '<Esc><C-w>', { silent = true, desc = 'Window command prefix, exit insert mode' })

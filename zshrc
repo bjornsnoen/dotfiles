@@ -15,7 +15,7 @@ export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgreprc
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="avit"
+ZSH_THEME="cloud"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -71,7 +71,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Add wisely, as too many plugins slow down shell startup.
 zstyle :omz:plugins:ssh-agent lazy yes
 zstyle :omz:plugins:ssh-agent quiet yes
-plugins=(tmux docker docker-compose fzf thefuck composer zsh-autosuggestions ssh-agent gpg-agent)
+plugins=(tmux docker docker-compose fzf composer zsh-autosuggestions ssh-agent gpg-agent)
 
 source $HOME/.aliases
 export ASDF_NODEJS_AUTO_ENABLE_COREPACK=1

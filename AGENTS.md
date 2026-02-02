@@ -1,5 +1,15 @@
 # Repository Guidelines
 
+## ⚠️ CRITICAL: Installation Command Restrictions
+
+**AGENTS MUST NEVER EXECUTE `./install` OR ANY DOTBOT INSTALL COMMANDS DIRECTLY!**
+
+- The `./install` command runs lengthy operations (package installations, plugin syncs, shell initialization) that WILL timeout in agent execution environments
+- These commands can take several minutes and may require user interaction or system-level permissions
+- **ONLY the human user should run `./install` commands manually in their terminal**
+- Agents should inform the user to run `./install` themselves after making configuration changes, but NEVER execute it
+- If symlinks need to be created for testing/verification purposes, create them manually with explicit `ln -sf` commands instead
+
 ## Project Structure & Module Organization
 - `install` drives Dotbot with `install.conf.yaml` (default), plus variants like `install.wayland.conf.yaml` and `install.ubuntu.conf.yaml` for platform-specific links and packages.
 - `dotbot/` is a submodule; Dotbot plugins live in `dotbot-*` directories. Keep new automation in the matching config file rather than inlined shell.
