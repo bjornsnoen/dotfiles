@@ -80,6 +80,7 @@
     ~/.config/atuin: atuin
     ~/.config/mcphub/servers.json: mcphub.json
     ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
+    ~/.codex/AGENTS.md: GLOBAL_AGENTS.md
 
 - git:
     "~/.asdf":
