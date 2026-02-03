@@ -6,6 +6,23 @@ return {
         presets = {
             bottom_search = true,
         },
+        routes = {
+            {
+                filter = {
+                    event = 'lsp',
+                    kind = 'progress',
+                    cond = function(msg)
+                        local progress = msg.opts and msg.opts.progress
+                        if not progress or not progress.client_id then
+                            return false
+                        end
+                        local client = vim.lsp.get_client_by_id(progress.client_id)
+                        return client and client.name == 'sonarlint.nvim'
+                    end,
+                },
+                opts = { skip = true },
+            },
+        },
     },
     dependencies = {
         -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries

@@ -1,9 +1,17 @@
 vim.api.nvim_create_autocmd('BufWritePre', {
     pattern = { '*.js', '*.jsx', '*.ts', '*.tsx' },
     callback = function()
-        if vim.fn.exists(':EslintFixAll') > 0 and vim.fn.executable('eslint') == 1 then
-            vim.cmd('EslintFixAll')
+        if vim.fn.exists(':LspEslintFixAll') > 0 then
+            pcall(vim.cmd, 'LspEslintFixAll')
+        elseif vim.fn.exists(':EslintFixAll') > 0 then
+            pcall(vim.cmd, 'EslintFixAll')
         end
+
+        pcall(vim.lsp.buf.format, {
+            bufnr = 0,
+            async = false,
+            timeout_ms = 5000,
+        })
     end,
 })
 

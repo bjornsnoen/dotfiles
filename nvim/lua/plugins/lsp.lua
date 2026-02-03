@@ -94,18 +94,6 @@ return {
             vim.diagnostic.goto_next({ float = false })
         end, opts)
 
-        local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-
-        local lsp_formatting = function(bufnr)
-            vim.lsp.buf.format({
-                filter = function(client)
-                    -- apply whatever logic you want (in this example, we'll only use null-ls)
-                    return client.name == 'null-ls'
-                end,
-                bufnr = bufnr,
-            })
-        end
-
         local on_attach = function(client, bufnr)
             vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -132,15 +120,6 @@ return {
                 end,
             })
             vim.diagnostic.config({ virtual_text = false })
-
-            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-            vim.api.nvim_create_autocmd('BufWritePre', {
-                group = augroup,
-                buffer = bufnr,
-                callback = function()
-                    lsp_formatting(bufnr)
-                end,
-            })
         end
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -256,6 +235,14 @@ return {
                         autoUseWorkspaceTsdk = true,
                     },
                 }
+            elseif server == 'eslint' then
+                local base_on_attach = vim.lsp.config.eslint and vim.lsp.config.eslint.on_attach
+                on_attach_fn = function(client, bufnr)
+                    if base_on_attach then
+                        base_on_attach(client, bufnr)
+                    end
+                    return on_attach(client, bufnr)
+                end
             end
 
             local common = {

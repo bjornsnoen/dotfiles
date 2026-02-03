@@ -24,6 +24,7 @@ return {
                         'tailwindcss',
                         'GitHub Copilot',
                         'eslint',
+                        'sonarlint',
                     },
                 },
             },
