@@ -104,6 +104,15 @@ return {
             vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
             vim.keymap.set('x', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
 
+            if client.server_capabilities and client.server_capabilities.codeLensProvider then
+                vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave', 'BufWritePost' }, {
+                    buffer = bufnr,
+                    callback = function()
+                        vim.lsp.codelens.refresh({ bufnr = bufnr })
+                    end,
+                })
+            end
+
             -- Diagnostics float on hold
             vim.api.nvim_create_autocmd('CursorHold', {
                 buffer = bufnr,
@@ -233,6 +242,14 @@ return {
                 settings = {
                     vtsls = {
                         autoUseWorkspaceTsdk = true,
+                    },
+                    typescript = {
+                        referencesCodeLens = { enabled = true },
+                        implementationsCodeLens = { enabled = true },
+                    },
+                    javascript = {
+                        referencesCodeLens = { enabled = true },
+                        implementationsCodeLens = { enabled = true },
                     },
                 }
             elseif server == 'eslint' then

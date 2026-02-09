@@ -123,7 +123,7 @@ return {
             'gi',
             with_normal_context(function()
                 local has_omnisharp, omnisharp_extended = pcall(require, 'omnisharp_extended')
-                if has_omnisharp then
+                if has_omnisharp and type(omnisharp_extended.telescope_lsp_implementations) == 'function' then
                     for _, client in ipairs(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
                         if client.name == 'omnisharp' then
                             return omnisharp_extended.telescope_lsp_implementations()
@@ -138,7 +138,7 @@ return {
             'gd',
             with_normal_context(function()
                 local has_omnisharp, omnisharp_extended = pcall(require, 'omnisharp_extended')
-                if has_omnisharp then
+                if has_omnisharp and type(omnisharp_extended.telescope_lsp_definitions) == 'function' then
                     for _, client in ipairs(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
                         if client.name == 'omnisharp' then
                             return omnisharp_extended.telescope_lsp_definitions()
