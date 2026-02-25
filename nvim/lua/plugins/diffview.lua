@@ -4,6 +4,20 @@ return {
     cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewFileHistory', 'DiffviewToggleFiles', 'Review' },
     keys = {
         {
+            'gv',
+            function()
+                local ok, lib = pcall(require, 'diffview.lib')
+                if ok and lib.get_current_view() then
+                    vim.cmd('DiffviewClose')
+                    return
+                end
+                vim.cmd('DiffviewOpen')
+            end,
+            mode = 'n',
+            silent = true,
+            desc = 'Git diffview toggle',
+        },
+        {
             '<Leader>gv',
             function()
                 local ok, lib = pcall(require, 'diffview.lib')
@@ -17,6 +31,7 @@ return {
             silent = true,
             desc = 'Git diffview toggle',
         },
+        { 'gV', ':DiffviewFileHistory<CR>', mode = 'n', silent = true, desc = 'Git diffview history' },
         { '<Leader>gV', ':DiffviewFileHistory<CR>', mode = 'n', silent = true, desc = 'Git diffview history' },
     },
     config = function()
@@ -39,6 +54,26 @@ return {
             end
         end
 
+        local function goto_file_and_close()
+            local ok, lib = pcall(require, 'diffview.lib')
+            local view = ok and lib.get_current_view() or nil
+
+            actions.goto_file_edit()
+
+            if not view then
+                return
+            end
+
+            vim.schedule(function()
+                pcall(function()
+                    view:close()
+                    if ok and lib and lib.dispose_view then
+                        lib.dispose_view(view)
+                    end
+                end)
+            end)
+        end
+
         require('diffview').setup({
             hooks = {
                 view_post_layout = function(view)
@@ -48,6 +83,9 @@ return {
                 end,
             },
             keymaps = {
+                view = {
+                    { 'n', 'gf', goto_file_and_close, { desc = 'Open file and close diffview' } },
+                },
                 file_panel = {
                     { 'n', '<cr>', actions.focus_entry, { desc = 'Open diff and focus' } },
                     { 'n', 'o', actions.focus_entry, { desc = 'Open diff and focus' } },

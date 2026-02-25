@@ -1,5 +1,6 @@
 return {
     'ravitemer/mcphub.nvim',
+    enabled = false,
     event = 'VeryLazy',
     opts = {
         -- Enable auto-approval for all MCP tool calls

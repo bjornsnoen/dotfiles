@@ -1,0 +1,33 @@
+- defaults:
+    shell:
+      quiet: true
+
+- shell:
+    - command: |
+        if [ -d ~/winhome ]; then
+          exit 0
+        fi
+        if command -v powershell.exe >/dev/null 2>&1; then
+          WINHOME_RAW="$(powershell.exe -NoProfile -NonInteractive -Command 'Write-Host -NoNewLine $Env:UserProfile' 2>/dev/null | tr -d '\r')"
+          if [ -n "$WINHOME_RAW" ]; then
+            WINHOME="$(wslpath "$WINHOME_RAW" 2>/dev/null || true)"
+          fi
+        fi
+        if [ -n "$WINHOME" ] && [ ! -e ~/winhome ]; then
+          ln -s "$WINHOME" ~/winhome
+        fi
+        if [ ! -d ~/winhome ]; then
+          echo "Missing ~/winhome. Enable WSL interop or create the symlink manually."
+          exit 0
+        fi
+      description: Ensure Windows home symlink exists
+    - command: 'mkdir -p ~/winhome/.config/komorebi'
+      description: Ensure Windows config directories exist
+    - command: 'cp -f win/whkdrc ~/winhome/.config/whkdrc'
+      description: Install whkdrc
+    - command: 'cp -f win/komorebi.json ~/winhome/.config/komorebi/komorebi.json'
+      description: Install komorebi.json
+    - command: 'cp -f win/komorebi.bar.json ~/winhome/.config/komorebi/komorebi.bar.json'
+      description: Install komorebi.bar.json
+    - command: 'cp -f win/wezterm.lua ~/winhome/.wezterm.lua'
+      description: Install wezterm.lua

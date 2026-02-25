@@ -34,12 +34,34 @@ return {
                     return is_normal_buffer(buf)
                 end
 
+                local function is_available_normal_buffer(bufnr, exclude_buf)
+                    return bufnr ~= exclude_buf
+                        and bufnr > 0
+                        and vim.api.nvim_buf_is_loaded(bufnr)
+                        and is_normal_buffer(bufnr)
+                end
+
                 local function find_normal_buffer(exclude_buf)
-                    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-                        if buf ~= exclude_buf and vim.api.nvim_buf_is_loaded(buf) and is_normal_buffer(buf) then
-                            return buf
+                    local alt_buf = vim.fn.bufnr('#')
+                    if is_available_normal_buffer(alt_buf, exclude_buf) then
+                        return alt_buf
+                    end
+
+                    local normal_bufs = {}
+                    for _, info in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
+                        if is_available_normal_buffer(info.bufnr, exclude_buf) then
+                            table.insert(normal_bufs, info)
                         end
                     end
+
+                    table.sort(normal_bufs, function(a, b)
+                        return a.lastused > b.lastused
+                    end)
+
+                    if #normal_bufs > 0 then
+                        return normal_bufs[1].bufnr
+                    end
+
                     return nil
                 end
 

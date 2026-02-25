@@ -1,5 +1,6 @@
 return {
     'olimorris/codecompanion.nvim',
+    enabled = false,
     event = 'VeryLazy',
     keys = {
         { '<leader>aa', '<cmd>CodeCompanionChat<cr>', desc = 'CodeCompanion Chat' },
