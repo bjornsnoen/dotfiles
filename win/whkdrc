@@ -22,8 +22,8 @@ alt + k                 : komorebic focus up
 alt + l                 : komorebic focus right
 alt + shift + oem_4     : komorebic cycle-focus previous # oem_4 is [
 alt + shift + oem_6     : komorebic cycle-focus next # oem_6 is q]
-win + h                 : komorebic focus left
-win + l                 : komorebic focus right
+win + j                 : komorebic focus left
+win + k                 : komorebic focus right
 
 # Move windows
 alt + shift + h         : komorebic move left
