@@ -69,8 +69,8 @@ end
 
 -- Pick an OS-appropriate clipboard provider so configs stay committed across machines.
 local function configure_clipboard()
-    if vim.fn.has('wsl') == 1 and has_cmd('clip.exe') then
-        set_clipboard('clip.exe', 'clip.exe -o', 'wsl-clip')
+    if vim.fn.has('wsl') == 1 and has_cmd('clipcopy') and has_cmd('clippaste') then
+        set_clipboard('clipcopy', 'clippaste', 'wsl-clip')
         return
     end
 
