@@ -1,38 +1,28 @@
 -- Helper function to ensure telescope opens files in the correct window context
--- This handles cases where telescope is invoked from special buffers like codecompanion or floaterm
+-- This handles cases where telescope is invoked from special buffers like floaterm
 local function with_normal_context(telescope_fn)
     return function()
         local current_buf = vim.api.nvim_get_current_buf()
         local buf_name = vim.api.nvim_buf_get_name(current_buf)
         local buf_filetype = vim.bo[current_buf].filetype
 
-        -- Check if we're in a special buffer (codecompanion, floaterm, etc.)
-        local is_special_buffer = buf_filetype == 'codecompanion'
-            or buf_filetype == 'floaterm'
+        local is_special_buffer = buf_filetype == 'floaterm'
             or buf_name:match('^/tmp/')
             or vim.bo[current_buf].buftype ~= ''
 
         if is_special_buffer then
-            -- Find the most recent normal window (not special buffer)
             local windows = vim.api.nvim_list_wins()
             for _, win in ipairs(windows) do
                 local win_buf = vim.api.nvim_win_get_buf(win)
                 local win_buftype = vim.bo[win_buf].buftype
-                local win_filetype = vim.bo[win_buf].filetype
 
-                -- Check if this is a normal editable buffer
-                if
-                    win_buftype == ''
-                    and win_filetype ~= 'codecompanion'
-                    and win_filetype ~= 'floaterm'
-                then
+                if win_buftype == '' and vim.bo[win_buf].filetype ~= 'floaterm' then
                     vim.api.nvim_set_current_win(win)
                     break
                 end
             end
         end
 
-        -- Now invoke telescope from the correct context
         telescope_fn()
     end
 end

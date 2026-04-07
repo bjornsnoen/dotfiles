@@ -5,20 +5,33 @@ return {
         {
             '<Leader>q',
             function()
-                local function is_codecompanion_buffer(bufnr)
-                    local filetype = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
-                    return filetype == 'codecompanion'
-                end
+                local special_filetypes = {
+                    fugitive = true,
+                    fugitiveblame = true,
+                }
 
                 local function is_normal_buffer(bufnr)
+                    if bufnr <= 0 or not vim.api.nvim_buf_is_valid(bufnr) then
+                        return false
+                    end
+
+                    local filetype = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
+                    if special_filetypes[filetype] then
+                        return false
+                    end
+
                     local buftype = vim.api.nvim_get_option_value('buftype', { buf = bufnr })
                     if buftype ~= '' then
                         return false
                     end
-                    return not is_codecompanion_buffer(bufnr)
+                    return true
                 end
 
                 local function is_normal_window(win)
+                    if not vim.api.nvim_win_is_valid(win) then
+                        return false
+                    end
+
                     local win_config = vim.api.nvim_win_get_config(win)
                     local is_floating = win_config.relative and win_config.relative ~= ''
                     if is_floating then
@@ -35,10 +48,7 @@ return {
                 end
 
                 local function is_available_normal_buffer(bufnr, exclude_buf)
-                    return bufnr ~= exclude_buf
-                        and bufnr > 0
-                        and vim.api.nvim_buf_is_loaded(bufnr)
-                        and is_normal_buffer(bufnr)
+                    return bufnr ~= exclude_buf and is_normal_buffer(bufnr)
                 end
 
                 local function find_normal_buffer(exclude_buf)
@@ -65,33 +75,32 @@ return {
                     return nil
                 end
 
-                local function find_normal_window(exclude_win)
-                    for _, win in ipairs(vim.api.nvim_list_wins()) do
-                        if win ~= exclude_win and is_normal_window(win) then
-                            return win
-                        end
-                    end
-
-                    return nil
-                end
-
                 local current_win = vim.api.nvim_get_current_win()
                 local current_buf = vim.api.nvim_get_current_buf()
+                local replacement_buf = nil
 
-                -- If we're in a normal window, try to load another normal buffer first
-                if is_normal_window(current_win) then
-                    local alt_buffer = find_normal_buffer(current_buf)
-                    if alt_buffer then
-                        -- Switch to another normal buffer in this window before deleting
-                        vim.api.nvim_win_set_buf(current_win, alt_buffer)
-                    else
-                        -- No other normal buffers, create a new empty buffer
-                        vim.cmd('enew')
+                if not is_normal_window(current_win) then
+                    if #vim.api.nvim_list_wins() > 1 and pcall(vim.cmd, 'close') then
+                        return
                     end
                 end
 
-                -- Delete the buffer
-                vim.cmd('bdelete! ' .. current_buf)
+                if is_normal_buffer(current_buf) then
+                    replacement_buf = find_normal_buffer(current_buf)
+                end
+
+                if not replacement_buf then
+                    vim.cmd('enew')
+                    replacement_buf = vim.api.nvim_get_current_buf()
+                end
+
+                for _, win in ipairs(vim.api.nvim_list_wins()) do
+                    if is_normal_window(win) and vim.api.nvim_win_get_buf(win) == current_buf then
+                        vim.api.nvim_win_set_buf(win, replacement_buf)
+                    end
+                end
+
+                vim.api.nvim_buf_delete(current_buf, { force = true })
             end,
             mode = 'n',
             silent = true,
