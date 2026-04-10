@@ -42,6 +42,7 @@
         - mate-polkit
         - bitwarden
 
+        - usage
         - noto-fonts-emoji
         - ttf-roboto
         - ttf-font-awesome
