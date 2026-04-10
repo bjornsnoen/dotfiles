@@ -78,7 +78,6 @@ export ASDF_NODEJS_AUTO_ENABLE_COREPACK=1
 [[ -f ~/.asdf/asdf.sh ]] && source ~/.asdf/asdf.sh
 fpath+=~/.zfunc
 
-source $ZSH/oh-my-zsh.sh
 
 # heroku autocomplete setup
 HEROKU_AC_ZSH_SETUP_PATH=$HOME/.cache/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
@@ -87,6 +86,7 @@ HEROKU_AC_ZSH_SETUP_PATH=$HOME/.cache/heroku/autocomplete/zsh_setup && test -f $
 #unsetopt LIST_BEEP
 #unsetopt HIST_BEEP
 export COMPOSE_DOCKER_CLI_BUILD=1
+export COMPOSE_MENU=false
 export DOCKER_BUILDKIT=1
 #export DOCKER_HOST=unix:///run/user/1000/docker.sock
 
@@ -101,8 +101,11 @@ PS1='$(show_virtual_env)'$PS1
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
+source $ZSH/oh-my-zsh.sh
+
 eval "$(direnv hook zsh)"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
