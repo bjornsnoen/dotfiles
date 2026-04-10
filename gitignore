@@ -1,6 +1,7 @@
 .tool-versions
 .direnv
 .envrc
+mise.toml
 .vimspector.json
 .vscode/
 .idea/

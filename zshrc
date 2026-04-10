@@ -74,8 +74,7 @@ zstyle :omz:plugins:ssh-agent quiet yes
 plugins=(tmux docker docker-compose fzf composer zsh-autosuggestions ssh-agent gpg-agent)
 
 source $HOME/.aliases
-export ASDF_NODEJS_AUTO_ENABLE_COREPACK=1
-[[ -f ~/.asdf/asdf.sh ]] && source ~/.asdf/asdf.sh
+plugins+=(mise)
 fpath+=~/.zfunc
 
 
@@ -93,7 +92,7 @@ export DOCKER_BUILDKIT=1
 setopt PROMPT_SUBST
 
 show_virtual_env() {
-  if [[ -n "$VIRTUAL_ENV" && -n "$DIRENV_DIR" ]]; then
+  if [[ -n "$VIRTUAL_ENV" ]]; then
       echo "($(basename $(dirname $VIRTUAL_ENV)))"
   fi
 }
@@ -103,9 +102,6 @@ PS1='$(show_virtual_env)'$PS1
 
 source $ZSH/oh-my-zsh.sh
 
-eval "$(direnv hook zsh)"
-
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-

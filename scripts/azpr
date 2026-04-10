@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if ! command -v az >/dev/null 2>&1; then
+    printf 'az CLI not found in PATH\n' >&2
+    exit 1
+fi
+
+if ! command -v jq >/dev/null 2>&1; then
+    printf 'jq not found in PATH\n' >&2
+    exit 1
+fi
+
+if ! branch_name=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); then
+    printf 'Not in a git repository\n' >&2
+    exit 1
+fi
+
+rest=${branch_name#*/}
+work_item=${rest%%-*}
+case "$work_item" in
+    ''|*[!0-9]*)
+        printf 'Branch name must look like feature/<number>-desc or bugfix/<number>-desc\n' >&2
+        exit 1
+        ;;
+esac
+
+if [ "$#" -lt 1 ]; then
+    printf 'Usage: azpr "<title>" [extra az repos pr create flags]\n' >&2
+    exit 1
+fi
+
+title=$1
+shift
+
+search_dir=$(pwd)
+template_file=''
+while [ "$search_dir" != "/" ]; do
+    candidate="$search_dir/.azuredevops/pull_request_template"
+    if [ -d "$candidate" ]; then
+        if [ -f "$candidate/branches/main.md" ]; then
+            template_file="$candidate/branches/main.md"
+            break
+        fi
+        if [ -f "$candidate/pull_request_template.md" ]; then
+            template_file="$candidate/pull_request_template.md"
+            break
+        fi
+    fi
+    parent=$(dirname "$search_dir")
+    [ "$parent" = "$search_dir" ] && break
+    search_dir="$parent"
+done
+
+if [ -n "$template_file" ]; then
+    pr_result=$(az repos pr create --open --draft --work-items "$work_item" --title "$title" --description @"$template_file" --output json "$@")
+else
+    printf 'PR template not found; creating without --description\n' >&2
+    pr_result=$(az repos pr create --open --draft --work-items "$work_item" --title "$title" --output json "$@")
+fi
+
+pr_fields=$(jq -r '[.pullRequestId, .title, (.repository.webUrl | sub("/DefaultCollection"; "") | sub("/$"; ""))] | @tsv' <<<"$pr_result")
+IFS=$'\t' read -r pr_number pr_title repo_web_url <<<"$pr_fields"
+pr_url="${repo_web_url}/pullrequest/${pr_number}"
+printf 'Pull request %s: %s\n%s\n' "$pr_number" "$pr_title" "$pr_url"

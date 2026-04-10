@@ -15,6 +15,5 @@
         - firefox
         - zsh
         - ack
-        - direnv
         - curl
         - tmux

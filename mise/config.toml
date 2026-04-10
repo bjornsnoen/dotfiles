@@ -1,0 +1,8 @@
+[settings]
+# Makes `mise use` write pinned versions by default (better reproducibility; closer to asdf-style).
+pin = true
+
+# Enable common "idiomatic" version files (.nvmrc, .python-version, etc.) in addition to `.tool-versions`.
+# Add/remove tools here as needed.
+idiomatic_version_file_enable_tools = ['node', 'python', 'ruby', 'go']
+

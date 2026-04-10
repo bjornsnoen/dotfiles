@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+set -eu
+
+if ! command -v powershell.exe >/dev/null 2>&1; then
+    echo "clippaste: powershell.exe not found" >&2
+    exit 127
+fi
+
+powershell.exe -NoProfile -Command '[Console]::OutputEncoding=[Text.Encoding]::UTF8; Get-Clipboard -Raw' | tr -d '\r'
+
