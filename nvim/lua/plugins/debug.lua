@@ -1,14 +1,51 @@
 return {
     'mfussenegger/nvim-dap',
     keys = {
-        { '<F5>', function() require('dap').continue() end, desc = 'DAP continue' },
-        { '<F17>', function() require('dap').run_last() end, desc = 'DAP run last' },
-        { '<F9>', function() require('dap').toggle_breakpoint() end, desc = 'DAP toggle breakpoint' },
-        { '<F10>', function() require('dap').step_over() end, desc = 'DAP step over' },
-        { '<F11>', function() require('dap').step_into() end, desc = 'DAP step into' },
-        { '<F12>', function() require('dap').step_out() end, desc = 'DAP step out' },
+        {
+            '<F5>',
+            function()
+                require('dap').continue()
+            end,
+            desc = 'DAP continue',
+        },
+        {
+            '<F17>',
+            function()
+                require('dap').run_last()
+            end,
+            desc = 'DAP run last',
+        },
+        {
+            '<F9>',
+            function()
+                require('dap').toggle_breakpoint()
+            end,
+            desc = 'DAP toggle breakpoint',
+        },
+        {
+            '<F10>',
+            function()
+                require('dap').step_over()
+            end,
+            desc = 'DAP step over',
+        },
+        {
+            '<F11>',
+            function()
+                require('dap').step_into()
+            end,
+            desc = 'DAP step into',
+        },
+        {
+            '<F12>',
+            function()
+                require('dap').step_out()
+            end,
+            desc = 'DAP step out',
+        },
     },
     config = function()
+        require('lazy').load({ plugins = { 'nvim-dap-ui' } })
         local dap = require('dap')
 
         dap.adapters.php = {
@@ -32,6 +69,13 @@ return {
             type = 'executable',
             id = 'cppdbg',
             command = cpptoolsPath .. 'debugAdapters/bin/OpenDebugAD7',
+        }
+
+        local netcoredbgPath = vim.fn.stdpath('data') .. '/mason/packages/netcoredbg/'
+        dap.adapters.netcoredbg = {
+            type = 'executable',
+            command = netcoredbgPath .. 'netcoredbg',
+            args = { '--interpreter=vscode' },
         }
 
         dap.configurations.cpp = {

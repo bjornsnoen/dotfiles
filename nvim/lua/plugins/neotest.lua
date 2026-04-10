@@ -9,11 +9,18 @@ return {
         'codymikol/neotest-kotlin',
         'nvim-neotest/neotest-python',
         'olimorris/neotest-phpunit',
+        'nsidorenco/neotest-vstest',
         { 'marilari88/neotest-vitest' },
         { 'thenbe/neotest-playwright', branch = 'master' },
     },
     keys = {
-        { 'tt', function() require('neotest').run.run() end, desc = 'Test nearest' },
+        {
+            'tt',
+            function()
+                require('neotest').run.run()
+            end,
+            desc = 'Test nearest',
+        },
         {
             'td',
             function()
@@ -55,8 +62,20 @@ return {
             end,
             desc = 'Debug test suite',
         },
-        { '<Leader>t', function() require('neotest').run.run_last() end, desc = 'Rerun last test' },
-        { '<C-t>', function() require('neotest').summary.toggle() end, desc = 'Toggle test summary' },
+        {
+            '<Leader>t',
+            function()
+                require('neotest').run.run_last()
+            end,
+            desc = 'Rerun last test',
+        },
+        {
+            '<C-t>',
+            function()
+                require('neotest').summary.toggle()
+            end,
+            desc = 'Toggle test summary',
+        },
         {
             'to',
             function()
@@ -102,6 +121,7 @@ return {
                 }),
                 require('neotest-kotlin'),
                 require('neotest-phpunit'),
+                require('neotest-vstest'),
             },
         })
     end,

@@ -51,6 +51,8 @@ return {
             return {
                 exec,
                 '--languageserver',
+                '--loglevel',
+                'Error',
                 '--hostPID',
                 tostring(vim.fn.getpid()),
                 '--encoding',

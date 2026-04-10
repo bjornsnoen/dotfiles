@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+set -eu
+
+if ! command -v clip.exe >/dev/null 2>&1; then
+    echo "clipcopy: clip.exe not found" >&2
+    exit 127
+fi
+
+if command -v iconv >/dev/null 2>&1; then
+    if [ "$#" -gt 0 ]; then
+        cat -- "$@" | sed 's/$/\r/' | iconv -f UTF-8 -t UTF-16LE 2>/dev/null | clip.exe
+    else
+        sed 's/$/\r/' | iconv -f UTF-8 -t UTF-16LE 2>/dev/null | clip.exe
+    fi
+else
+    if [ "$#" -gt 0 ]; then
+        cat -- "$@" | clip.exe
+    else
+        cat | clip.exe
+    fi
+fi
+

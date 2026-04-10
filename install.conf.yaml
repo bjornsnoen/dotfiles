@@ -7,9 +7,9 @@
     - "~"
     - ~/.config/kitty/
     - ~/.config/awesome/
-    - ~/.config/direnv/
     - ~/.config/nvim/
     - ~/.config/mcphub/
+    - ~/.config/mise/
 
 - ifarch:
     - git:
@@ -21,12 +21,12 @@
         - [rm -rf ~/yay, "Remove yay git clone"]
 
     - yay:
-        - direnv
         - dotnet-sdk
         - flameshot
         - kitty
         - kitty-terminfo
         - light-locker
+        - mise
         - neovim
         - playerctl
         - ripgrep
@@ -50,6 +50,10 @@
 - link:
     ~/.tmux.conf: tmux.conf
     ~/.aliases: aliases
+    ~/.local/bin/azpr: scripts/azpr
+    ~/.local/bin/clipcopy: scripts/clipcopy
+    ~/.local/bin/clippaste: scripts/clippaste
+    ~/.local/bin/direnv-to-mise: scripts/migrate-envrc-aliases-to-mise.py
     ~/.gitconfig: gitconfig
     ~/.zprofile: zprofile
     ~/.zshenv: zshenv
@@ -59,7 +63,7 @@
     ~/.config/nvim: nvim
     ~/.config/composer/composer.json: composer.json
     ~/.config/ripgreprc: ripgreprc
-    ~/.config/direnv: direnv
+    ~/.config/mise: mise
     ~/.config/awesome: awesome
     ~/.config/pypoetry/config.toml: pypoetry.toml
     ~/.config/libvirt/libvirt.conf: libvirt.conf
@@ -82,22 +86,15 @@
     ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
     ~/.codex/AGENTS.md: GLOBAL_AGENTS.md
 
+- shell:
+    - [
+        'if command -v mise >/dev/null 2>&1 || [ -x "$HOME/.local/bin/mise" ]; then :; else curl -fsSL https://mise.run | sh; fi',
+        "Install mise",
+      ]
+
 - git:
-    "~/.asdf":
-      url: https://github.com/asdf-vm/asdf.git
-      branch: v0.12.0
     "~/.tmux/plugins/tpm":
       url: https://github.com/tmux-plugins/tpm
-
-- asdf:
-    - asdf_path: ~/.asdf/asdf.sh
-    - plugin: python
-      versions:
-        - latest
-      global: system
-    - plugin: nodejs
-      versions:
-        - latest
 
 - shell: ["pip install --user pipx --break-system-packages", "Install pipx"]
 
