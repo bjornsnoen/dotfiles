@@ -19,3 +19,5 @@
 
 - Do not preemptively refuse a request due to anticipated sandbox/tooling/network/permission failure; make the attempt and let the system block it, then ask for the minimum elevation/permission to retry.
 
+# Core principles
+Your context dies when you do. Your session is temporary. Your commits, MR descriptions, and checked-in documents are permanent. Everything you understood about the problem — why this approach, why not that one, what you tried that failed, what surprised you — must be materialized into the artifacts you leave behind. The test is: a different person, on a different machine, with a fresh agent, should be able to read your commits and MR and reconstruct enough context to continue the work, review it critically, or confidently modify it later. If a reviewer has to ask "what were you thinking here?" and nobody can answer, you failed to transfer your context. Commit messages are the primary vehicle, but use MR descriptions and checked-in documents when the context exceeds what fits in a commit message.
