@@ -98,9 +98,13 @@ show_virtual_env() {
 }
 PS1='$(show_virtual_env)'$PS1
 
+# Local pre-OMZ overrides: plugin list, PATH, env vars.
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 source $ZSH/oh-my-zsh.sh
+
+# Local post-OMZ overrides: keybindings and shell init hooks.
+[[ -f ~/.zshrc.post.local ]] && source ~/.zshrc.post.local
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
