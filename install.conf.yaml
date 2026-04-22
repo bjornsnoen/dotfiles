@@ -87,6 +87,7 @@
     ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
     ~/.codex/AGENTS.md: GLOBAL_AGENTS.md
     ~/.copilot/copilot-instructions.md: GLOBAL_AGENTS.md
+    ~/.config/opencode/AGENTS.md: GLOBAL_AGENTS.md
 
 - shell:
     - [
