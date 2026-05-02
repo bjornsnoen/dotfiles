@@ -2,6 +2,7 @@ return {
     'nvimtools/none-ls.nvim',
     event = { 'BufEnter' },
     dependencies = {
+        'lewis6991/async.nvim',
         'nvim-lua/plenary.nvim',
         'lewis6991/gitsigns.nvim',
         'ThePrimeagen/refactoring.nvim',
