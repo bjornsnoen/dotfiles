@@ -7,5 +7,6 @@ pin = true
 idiomatic_version_file_enable_tools = ['node', 'python', 'ruby', 'go']
 
 [tools]
-opencode = "1.14.19"
+opencode = "1.15.5"
+oxlint = "1.61.0"
 

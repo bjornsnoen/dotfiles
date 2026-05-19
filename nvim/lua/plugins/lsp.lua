@@ -199,6 +199,8 @@ return {
                     ['textDocument/implementation'] = omnisharp_extended.handler,
                 }
                 on_attach_fn = function(client, bufnr)
+                    client.server_capabilities.semanticTokensProvider = nil
+
                     if not omnisharp_status.ready then
                         vim.notify('OmniSharp ready', { title = 'LSP (C#)', timeout = 1500 })
                         omnisharp_status.ready = true

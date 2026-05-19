@@ -1,4 +1,5 @@
 export ZSH="$HOME/.oh-my-zsh"
+typeset -U path PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.npm-global/bin:$PATH
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
@@ -13,6 +14,7 @@ export PIPENV_VERBOSITY=-1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgreprc
+export OPENCODE_EXPERIMENTAL_DISABLE_COPY_ON_SELECT=true
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="cloud"
@@ -109,3 +111,15 @@ source $ZSH/oh-my-zsh.sh
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# Keep local wrappers ahead of plugin-managed tool paths like mise,
+# including when hooks adjust PATH after startup or directory changes.
+autoload -Uz add-zsh-hook
+ensure_local_bin_first() {
+  # Rebuild PATH with exactly one ~/.local/bin at the front.
+  path=("$HOME/.local/bin" ${path:#$HOME/.local/bin})
+  export PATH
+}
+ensure_local_bin_first
+add-zsh-hook chpwd ensure_local_bin_first
+add-zsh-hook precmd ensure_local_bin_first

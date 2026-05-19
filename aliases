@@ -25,6 +25,14 @@ alias ec2list="aws ec2 describe-instances --query \"Reservations[*].Instances[*]
 alias drm="docker run --rm -it"
 alias vim=nvim
 alias p=pnpm
+unalias tba 2>/dev/null || true
+tba() {
+    if [ "$#" -eq 0 ]; then
+        taskbar-autohide toggle
+    else
+        taskbar-autohide "$@"
+    fi
+}
 # Quickly cd to dotfiles directory
 alias dotf="cd $(dirname $(readlink ~/.zshrc))"
 
@@ -38,3 +46,4 @@ alias whatdidido="git log --all --author=bjorn --pretty=format:'%<( 16 ) %ch %m 
 alias g='./gradlew'
 alias cx="OPENAI_API_KEY=\$(bw get notes openai | awk -F' = ' '{ print \$2 }') codex"
 alias ox="codex --profile gpt-oss"
+alias oc="opencode"

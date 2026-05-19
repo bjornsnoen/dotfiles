@@ -3,13 +3,11 @@
       relink: true
       create: true
 
+- clean: ["~"]
+
 - clean:
-    - "~"
-    - ~/.config/kitty/
-    - ~/.config/awesome/
-    - ~/.config/nvim/
-    - ~/.config/mcphub/
-    - ~/.config/mise/
+    ~/.config:
+      recursive: true
 
 - ifarch:
     - git:
@@ -52,9 +50,9 @@
     ~/.tmux.conf: tmux.conf
     ~/.aliases: aliases
     ~/.local/bin/azpr: scripts/azpr
-    ~/.local/bin/clipcopy: scripts/clipcopy
-    ~/.local/bin/clippaste: scripts/clippaste
+    ~/.local/bin/copilot: scripts/copilot
     ~/.local/bin/direnv-to-mise: scripts/migrate-envrc-aliases-to-mise.py
+    ~/.local/bin/taskbar-autohide: scripts/taskbar-autohide
     ~/.gitconfig: gitconfig
     ~/.zprofile: zprofile
     ~/.zshenv: zshenv
@@ -89,6 +87,7 @@
     ~/.copilot/copilot-instructions.md: GLOBAL_AGENTS.md
     ~/.config/opencode/AGENTS.md: GLOBAL_AGENTS.md
     ~/.config/opencode/opencode.json: opencode/opencode.json
+    ~/.config/opencode/tui.json: opencode/tui.json
 
 - shell:
     - [

@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SCRIPT_PATH=$(readlink -f "${BASH_SOURCE[0]}")
+SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+REPO_ROOT=$(dirname "$SCRIPT_DIR")
+ALLOWLIST_FILE="${COPILOT_ALLOWLIST_FILE:-$REPO_ROOT/copilot/allow-tools}"
+
+if [ ! -f "$ALLOWLIST_FILE" ]; then
+    printf 'Allowlist file not found: %s\n' "$ALLOWLIST_FILE" >&2
+    exit 1
+fi
+
+mapfile -t copilot_bins < <(which -a copilot 2>/dev/null | awk '!seen[$0]++')
+real_copilot_bin=''
+for candidate in "${copilot_bins[@]}"; do
+    if [ "$(readlink -f "$candidate")" != "$SCRIPT_PATH" ]; then
+        real_copilot_bin=$candidate
+        break
+    fi
+done
+
+if [ -z "$real_copilot_bin" ]; then
+    printf 'Could not find underlying copilot binary\n' >&2
+    exit 1
+fi
+
+allow_tool_args=()
+while IFS= read -r tool || [ -n "$tool" ]; do
+    tool=${tool%%#*}
+    tool=${tool#"${tool%%[![:space:]]*}"}
+    tool=${tool%"${tool##*[![:space:]]}"}
+
+    if [ -z "$tool" ]; then
+        continue
+    fi
+    allow_tool_args+=(--allow-tool "$tool")
+done < "$ALLOWLIST_FILE"
+
+printf '+ %q' "$real_copilot_bin" >&2
+for arg in "${allow_tool_args[@]}" "$@"; do
+    printf ' %q' "$arg" >&2
+done
+printf '\n' >&2
+
+exec "$real_copilot_bin" "${allow_tool_args[@]}" "$@"
