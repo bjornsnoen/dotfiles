@@ -4,5 +4,8 @@ url = "https://pypi.brbcoffee.com/"
 
 [virtualenvs]
 in-project = true
+use-poetry-python = false
+prefer-active-python = true
+
 [virtualenvs.options]
 system-site-packages = true
