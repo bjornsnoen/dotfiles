@@ -23,11 +23,5 @@
     "compaction": {
       "model": "openai/gpt-5.4-mini"
     }
-  },
-  "mcp": {
-    "tavily": {
-      "type": "remote",
-      "url": "https://mcp.tavily.com/mcp/?tavilyApiKey=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"
-    }
   }
 }
