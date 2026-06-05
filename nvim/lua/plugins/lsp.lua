@@ -36,7 +36,6 @@ return {
         },
         'hrsh7th/cmp-nvim-lsp',
         'b0o/schemastore.nvim',
-        'jose-elias-alvarez/typescript.nvim',
         'Hoffs/omnisharp-extended-lsp.nvim',
     },
     config = function()

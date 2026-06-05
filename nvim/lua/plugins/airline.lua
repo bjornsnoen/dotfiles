@@ -4,7 +4,7 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
         options = {
-            theme = 'codedark',
+            theme = 'tokyonight',
             icons_enabled = false,
             component_separators = { left = '', right = '' },
             section_separators = { left = '', right = '' },
