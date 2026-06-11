@@ -1,10 +1,7 @@
 return {
-    'nvim-treesitter/nvim-treesitter',
-    branch = 'master',
-    build = ':TSUpdate',
-    event = { 'BufEnter' },
+    'romus204/tree-sitter-manager.nvim',
     config = function()
-        require('nvim-treesitter.configs').setup({
+        require('tree-sitter-manager').setup({
             ensure_installed = {
                 'javascript',
                 'typescript',
@@ -23,21 +20,7 @@ return {
                 'svelte',
                 'prisma',
             },
-            highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = false,
-            },
-            indent = {
-                enable = true,
-            },
-            incremental_selection = {
-                enable = true,
-                keymaps = {
-                    node_incremental = 'v',
-                    scope_incremental = '<C-v>',
-                    node_decremental = 'V',
-                },
-            },
+            auto_install = true,
         })
     end,
 }

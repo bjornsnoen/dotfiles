@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 return require('lazy').setup('plugins', {
     dev = {
-        path = '~/src/nvim',
+        path = '~/src/personal/nvim',
     },
     performance = {
         cache = {

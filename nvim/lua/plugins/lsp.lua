@@ -109,7 +109,7 @@ return {
                 vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave', 'BufWritePost' }, {
                     buffer = bufnr,
                     callback = function()
-                        vim.lsp.codelens.refresh({ bufnr = bufnr })
+                        vim.lsp.codelens.enable(true, { bufnr = bufnr })
                     end,
                 })
             end

@@ -30,3 +30,9 @@ vim.keymap.set('n', '<Leader>er', ':e .envrc<CR>', { silent = true })
 
 -- Make <C-w> in insert mode behave like normal mode for window navigation
 vim.keymap.set('i', '<C-w>', '<Esc><C-w>', { silent = true, desc = 'Window command prefix, exit insert mode' })
+
+-- Incremental selection via treesitter
+local inc_sel = require('incremental_selection')
+vim.keymap.set('x', 'v', inc_sel.increment, { silent = true, desc = 'Expand selection to parent node' })
+vim.keymap.set('x', 'V', inc_sel.decrement, { silent = true, desc = 'Shrink selection to child node' })
+vim.keymap.set('x', '<C-v>', inc_sel.scope, { silent = true, desc = 'Expand selection to enclosing scope' })

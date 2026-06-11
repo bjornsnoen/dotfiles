@@ -26,6 +26,7 @@
         - light-locker
         - mise
         - neovim
+        - tree-sitter-cli
         - playerctl
         - ripgrep
         - tmux
@@ -88,6 +89,7 @@
     ~/.config/opencode/AGENTS.md: GLOBAL_AGENTS.md
     ~/.config/opencode/opencode.json: opencode/opencode.json
     ~/.config/opencode/tui.json: opencode/tui.json
+    ~/.config/worktrunk/config.toml: worktrunk.toml
 
 - shell:
     - [
