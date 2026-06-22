@@ -1,27 +1,27 @@
 local servers = {
-    'vtsls',
-    'pyright',
-    'pylsp',
-    'lua_ls',
-    'jsonls',
-    'yamlls',
-    'taplo',
-    'eslint',
-    'omnisharp',
-    'tailwindcss',
-    'svelte',
-    'phpactor',
-    'cssls',
-    'terraformls',
-    'rust_analyzer',
-    'prismals',
-    'twiggy_language_server',
-    'dockerls',
-    'sqls',
-    'kotlin_lsp',
-    'jdtls',
-    'gopls',
     'clangd',
+    'cssls',
+    'dockerls',
+    'eslint',
+    'gopls',
+    'jdtls',
+    'jsonls',
+    'kotlin_lsp',
+    'lua_ls',
+    'omnisharp',
+    'phpactor',
+    'prismals',
+    'pylsp',
+    'pyright',
+    'rust_analyzer',
+    'sqls',
+    'svelte',
+    'tailwindcss',
+    'taplo',
+    'terraformls',
+    'twiggy_language_server',
+    'vtsls',
+    'yamlls',
 }
 
 return {
@@ -281,6 +281,8 @@ return {
                 if exec then
                     conf.cmd = omnisharp_cmd(exec)
                 end
+            elseif server == 'kotlin_lsp' then
+                conf.cmd = { 'faketime', '2026-06-04', 'intellij-server', '--stdio' }
             end
             vim.lsp.config(server, conf)
             vim.lsp.enable(server)

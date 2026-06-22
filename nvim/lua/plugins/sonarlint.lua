@@ -1,5 +1,6 @@
 return {
     'https://gitlab.com/schrieveslaach/sonarlint.nvim.git',
+    enabled = false,
     event = { 'BufEnter', 'BufNewFile' },
     dependencies = {
         'neovim/nvim-lspconfig',

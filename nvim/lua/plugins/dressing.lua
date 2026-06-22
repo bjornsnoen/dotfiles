@@ -4,7 +4,7 @@ return {
     config = function()
         require('dressing').setup({
             select = {
-                backend = { 'telescope', 'builtin' },
+                backend = { 'builtin' },
                 builtin = {
                     relative = 'editor',
                     border = 'rounded',
