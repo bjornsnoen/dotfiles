@@ -1,3 +1,17 @@
+local function sync_tmux_window_cwd(cwd)
+    if not vim.env.TMUX or vim.env.TMUX == '' then
+        return
+    end
+
+    vim.fn.system({
+        'tmux',
+        'set-option',
+        '-wq',
+        '@vim_cwd',
+        cwd,
+    })
+end
+
 return {
     'afonsofrancof/worktrees.nvim',
     dev = true,
@@ -15,14 +29,17 @@ return {
         end,
         on_switch = function(from_path, to_path, old_cwd)
             if old_cwd == from_path then
+                sync_tmux_window_cwd(to_path)
                 return
             end
 
-            local cwd_relatve_to_source_root = string.gsub(old_cwd, from_path .. '/', '')
-            local target_path = to_path .. '/' .. cwd_relatve_to_source_root
+            local escaped_from_path = from_path:gsub('([%.%-%+%[%]%(%)%$%^%%%?%*])', '%%%1')
+            local cwd_relatve_to_wt_root = string.gsub(old_cwd, escaped_from_path .. '/', '')
+            local target_path = to_path .. '/' .. cwd_relatve_to_wt_root
 
             if vim.uv.fs_stat(target_path) then
                 vim.fn.chdir(target_path)
+                sync_tmux_window_cwd(target_path)
             else
                 print('Target path does not exist in the new worktree: ' .. target_path)
             end

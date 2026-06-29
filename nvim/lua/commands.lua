@@ -6,12 +6,6 @@ vim.api.nvim_create_autocmd('BufWritePre', {
         elseif vim.fn.exists(':EslintFixAll') > 0 then
             pcall(vim.cmd, 'EslintFixAll')
         end
-
-        pcall(vim.lsp.buf.format, {
-            bufnr = 0,
-            async = false,
-            timeout_ms = 5000,
-        })
     end,
 })
 
