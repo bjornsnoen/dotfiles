@@ -125,6 +125,10 @@
       stdout: true
       stderr: true
 
+# Dracula custom plugin wrapper; has to be after tmux plugins are installed
+- link:
+    ~/.tmux/plugins/tmux/scripts/copilot_quota.sh: scripts/copilot_quota.sh
+
 - git: # Has to be after oh-my-zsh install
     "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions":
       url: https://github.com/zsh-users/zsh-autosuggestions
