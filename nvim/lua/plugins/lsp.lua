@@ -106,7 +106,20 @@ return {
             vim.keymap.set('x', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
 
             if client.server_capabilities and client.server_capabilities.codeLensProvider then
-                vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave', 'BufWritePost' }, {
+                -- vim.lsp.codelens.enable() attaches an on_lines callback that
+                -- re-requests (and re-resolves) every lens on each buffer change.
+                -- For servers like lua_ls, each lens resolve is a workspace-wide
+                -- reference search, causing "Searching in files..." progress spam
+                -- on every keystroke. Suspend codelens while inserting and refresh
+                -- on leave/save instead.
+                vim.lsp.codelens.enable(true, { bufnr = bufnr })
+                vim.api.nvim_create_autocmd('InsertEnter', {
+                    buffer = bufnr,
+                    callback = function()
+                        vim.lsp.codelens.enable(false, { bufnr = bufnr })
+                    end,
+                })
+                vim.api.nvim_create_autocmd({ 'InsertLeave', 'BufWritePost' }, {
                     buffer = bufnr,
                     callback = function()
                         vim.lsp.codelens.enable(true, { bufnr = bufnr })
@@ -147,6 +160,7 @@ return {
                         diagnostics = {
                             globals = { 'vim', 'awesome', 'screen', 'bluez_monitor' },
                         },
+                        codeLens = { enable = true },
                         format = {
                             enable = true,
                             defaultConfig = {

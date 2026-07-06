@@ -1,3 +1,23 @@
+--- Run fn with the snacks module, or warn if it isn't available.
+---@param fn fun(snacks: Snacks)
+local function with_snacks(fn)
+    local ok, snacks = pcall(require, 'snacks')
+    if not ok then
+        vim.notify('snacks.nvim is not available', vim.log.levels.WARN)
+        return
+    end
+    return fn(snacks)
+end
+
+--- Returns a keymap callback that runs fn with the snacks module.
+---@param fn fun(snacks: Snacks)
+---@return fun()
+local function snacks_fn(fn)
+    return function()
+        return with_snacks(fn)
+    end
+end
+
 local function with_normal_context(picker_fn)
     return function()
         local current_buf = vim.api.nvim_get_current_buf()
@@ -34,7 +54,9 @@ end
 
 local function grep_text(text)
     if #text > 0 then
-        Snacks.picker.grep({ search = text })
+        with_snacks(function(snacks)
+            snacks.picker.grep({ search = text })
+        end)
     end
 end
 
@@ -146,12 +168,14 @@ local function show_omnisharp_locations(title, locations, client)
         return
     end
 
-    Snacks.picker({
-        title = title,
-        items = items,
-        format = 'file',
-        jump = { tagstack = true, reuse_win = true },
-    })
+    with_snacks(function(snacks)
+        snacks.picker({
+            title = title,
+            items = items,
+            format = 'file',
+            jump = { tagstack = true, reuse_win = true },
+        })
+    end)
 end
 
 local function omnisharp_locations(title, method, params, to_locations)
@@ -178,17 +202,24 @@ local function lsp_references()
     local client = get_omnisharp_client()
     if client then
         local omnisharp_utils = require('omnisharp_utils')
-        return omnisharp_locations('OmniSharp references', 'o#/findusages', omnisharp_utils.cmd_params(client, {
-            excludeDefinition = true,
-        }), function(result)
-            if not result or not result.QuickFixes or result.QuickFixes == vim.NIL then
-                return {}
+        return omnisharp_locations(
+            'OmniSharp references',
+            'o#/findusages',
+            omnisharp_utils.cmd_params(client, {
+                excludeDefinition = true,
+            }),
+            function(result)
+                if not result or not result.QuickFixes or result.QuickFixes == vim.NIL then
+                    return {}
+                end
+                return omnisharp_utils.quickfixes_to_locations(result.QuickFixes, client)
             end
-            return omnisharp_utils.quickfixes_to_locations(result.QuickFixes, client)
-        end)
+        )
     end
 
-    Snacks.picker.lsp_references({ include_declaration = false })
+    with_snacks(function(snacks)
+        snacks.picker.lsp_references({ include_declaration = false })
+    end)
 end
 
 local function lsp_implementations()
@@ -208,7 +239,9 @@ local function lsp_implementations()
         )
     end
 
-    Snacks.picker.lsp_implementations()
+    with_snacks(function(snacks)
+        snacks.picker.lsp_implementations()
+    end)
 end
 
 local function lsp_definitions()
@@ -225,7 +258,9 @@ local function lsp_definitions()
         )
     end
 
-    Snacks.picker.lsp_definitions()
+    with_snacks(function(snacks)
+        snacks.picker.lsp_definitions()
+    end)
 end
 
 return {
@@ -235,30 +270,36 @@ return {
     keys = {
         {
             '<Leader>b',
-            function()
-                Snacks.picker.buffers({ hidden = true })
-            end,
+            snacks_fn(function(snacks)
+                snacks.picker.buffers({ hidden = true })
+            end),
             desc = 'Buffers (all)',
         },
         {
             '<Leader>f',
-            with_normal_context(function()
-                Snacks.picker.files({ hidden = true })
-            end),
+            with_normal_context(snacks_fn(function(snacks)
+                snacks.picker.files({ hidden = true })
+            end)),
             desc = 'Find files (hidden)',
         },
         {
             '<Leader>F',
-            with_normal_context(function()
-                Snacks.picker.files({ hidden = true, ignored = true })
-            end),
+            with_normal_context(snacks_fn(function(snacks)
+                snacks.picker.files({ hidden = true, ignored = true })
+            end)),
             desc = 'Find files (all)',
         },
         {
+            '<Leader>s',
+            with_normal_context(snacks_fn(function(snacks)
+                snacks.picker.git_diff()
+            end)),
+        },
+        {
             '<Leader>r',
-            with_normal_context(function()
-                Snacks.picker.grep()
-            end),
+            with_normal_context(snacks_fn(function(snacks)
+                snacks.picker.grep()
+            end)),
             mode = 'n',
             desc = 'Live grep',
         },
@@ -280,44 +321,38 @@ return {
         },
         {
             'gb',
-            with_normal_context(function()
-                Snacks.picker.git_branches()
-            end),
+            with_normal_context(snacks_fn(function(snacks)
+                snacks.picker.git_branches()
+            end)),
             desc = 'Git branches',
         },
         {
             'gu',
-            with_normal_context(function()
-                lsp_references()
-            end),
+            with_normal_context(lsp_references),
             desc = 'LSP references',
         },
         {
             'gi',
-            with_normal_context(function()
-                lsp_implementations()
-            end),
+            with_normal_context(lsp_implementations),
             desc = 'LSP implementations',
         },
         {
             'gd',
-            with_normal_context(function()
-                lsp_definitions()
-            end),
+            with_normal_context(lsp_definitions),
             desc = 'LSP definitions',
         },
         {
             '<leader>.',
-            function()
-                Snacks.scratch()
-            end,
+            snacks_fn(function(snacks)
+                snacks.scratch()
+            end),
             desc = 'Toggle Scratch Buffer',
         },
         {
             '<leader>S',
-            function()
-                Snacks.scratch.select()
-            end,
+            snacks_fn(function(snacks)
+                snacks.scratch.select()
+            end),
             desc = 'Select Scratch Buffer',
         },
     },

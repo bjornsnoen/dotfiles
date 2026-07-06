@@ -12,6 +12,18 @@ return {
         { 'marilari88/neotest-vitest' },
         { 'thenbe/neotest-playwright', branch = 'master' },
     },
+    event = {
+        'BufReadPost *.test.*',
+        'BufNewFile *.test.*',
+        'BufReadPost *.spec.*',
+        'BufNewFile *.spec.*',
+        'BufReadPost test_*.py',
+        'BufReadPost *_test.py',
+        'BufReadPost *Test.kt',
+        'BufReadPost *Test.php',
+        'BufReadPost *Test.cs',
+        'BufReadPost *Tests.cs',
+    },
     keys = {
         {
             'tt',
@@ -84,7 +96,21 @@ return {
         },
     },
     config = function()
+        -- Register tsx/typescript language mappings for treesitter.
+        -- Neotest's subprocess (started with -u NONE) can't resolve these,
+        -- and its error handling is broken (nio future.wait() throws instead
+        -- of returning errors, making the fallback dead code). Disabling the
+        -- subprocess forces in-process parsing which works correctly.
+        --
+        -- This is temporary, remove after neotest is updated upstream
+        vim.treesitter.language.register('tsx', 'typescriptreact')
+        vim.treesitter.language.register('typescript', 'typescript')
+
         local neotest = require('neotest')
+        require('neotest.lib').subprocess.enabled = function()
+            return false
+        end
+
         neotest.setup({
             quickfix = {
                 enabled = false,
@@ -97,7 +123,6 @@ return {
                     end,
                 }),
                 require('neotest-vitest')({
-                    vitestCommand = 'npm test --',
                     cwd = function(_)
                         return vim.fn.getcwd()
                     end,

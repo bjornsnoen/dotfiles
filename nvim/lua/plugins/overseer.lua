@@ -30,5 +30,16 @@ return {
             default_detail = 1,
         },
     },
+    config = function(_, opts)
+        local overseer = require('overseer')
+        overseer.setup(opts)
+        -- The builtin mise template sets cwd to the dir containing the found
+        -- mise.toml (e.g. ~/src/dnv), breaking tasks that depend on running
+        -- from the current repo. Run mise tasks from vim's cwd instead; mise
+        -- still finds the config by searching upward.
+        overseer.add_template_hook({ module = '^mise$' }, function(task_defn)
+            task_defn.cwd = vim.fn.getcwd()
+        end)
+    end,
 }
 
