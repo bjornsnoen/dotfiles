@@ -23,6 +23,8 @@
         - flameshot
         - kitty
         - kitty-terminfo
+        - imagemagick
+        - lazydocker
         - light-locker
         - mise
         - neovim
