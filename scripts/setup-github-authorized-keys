@@ -1,0 +1,222 @@
+#!/usr/bin/env python3
+"""Idempotent root installer for the GitHub authorized keys sshd integration.
+
+Run with sudo; the dotbot install does this on every bootstrap so the
+installed copy tracks the repo.
+
+sshd refuses AuthorizedKeysCommand programs that are not root-owned (and
+refuses user-writable path components), so the script is copied into
+/usr/local/bin instead of symlinked into this repo. Trust is scoped to the
+sudo-invoking user via a Match block and the script refuses to target root,
+so root and every other account only ever use their regular authorized_keys
+files. Password authentication is always disabled: logins are key-only, via
+the GitHub keys or the regular authorized_keys files, where the main public
+key is kept as a permanent break-glass fallback.
+"""
+
+from __future__ import annotations
+
+import os
+import pwd
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+REPO_DIR = Path(__file__).resolve().parent.parent
+COMMAND_SOURCE = REPO_DIR / "scripts" / "github-authorized-keys"
+COMMAND_TARGET = Path("/usr/local/bin/github-authorized-keys")
+CACHE_DIR = Path("/var/cache/github-authorized-keys")
+SSHD_CONFIG = Path("/etc/ssh/sshd_config")
+CONF_TARGET = Path("/etc/ssh/sshd_config.d/60-github-authorized-keys.conf")
+HARDENING_TARGET = Path("/etc/ssh/sshd_config.d/10-disable-password-auth.conf")
+INCLUDE_LINE = "Include /etc/ssh/sshd_config.d/*.conf"
+INCLUDE_RE = re.compile(r"^\s*Include\s+/etc/ssh/sshd_config\.d/\*\.conf", re.IGNORECASE | re.MULTILINE)
+
+# My public ssh key, "the main one": the permanent break-glass fallback kept in
+# authorized_keys so losing the GitHub path can never mean losing the machine.
+MAIN_PUBLIC_SSH_KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICA6ElzWkw6ZPHPOIEcOgFWq8hIS6QaSyGhq8NQkDFZ+"
+
+
+def install_command() -> None:
+    shutil.copyfile(COMMAND_SOURCE, COMMAND_TARGET)
+    os.chown(COMMAND_TARGET, 0, 0)
+    os.chmod(COMMAND_TARGET, 0o755)
+
+
+def create_cache_dir() -> None:
+    """The command runs as AuthorizedKeysCommandUser (nobody) and caches keys here."""
+    CACHE_DIR.mkdir(exist_ok=True)
+    os.chown(CACHE_DIR, pwd.getpwnam("nobody").pw_uid, -1)
+    os.chmod(CACHE_DIR, 0o700)
+
+
+def write_dropin(target_user: str) -> None:
+    CONF_TARGET.parent.mkdir(mode=0o755, exist_ok=True)
+    CONF_TARGET.write_text(
+        "# Managed by dotfiles (scripts/setup-github-authorized-keys)\n"
+        f"Match User {target_user}\n"
+        f"    AuthorizedKeysCommand {COMMAND_TARGET} %u\n"
+        "    AuthorizedKeysCommandUser nobody\n"
+    )
+    CONF_TARGET.chmod(0o644)
+
+
+def ensure_include() -> None:
+    """Make sure the drop-in directory is included by the main config.
+
+    Prepend rather than append so the Include never lands inside a Match block.
+    """
+    if not SSHD_CONFIG.is_file():
+        return
+    config = SSHD_CONFIG.read_text()
+    if INCLUDE_RE.search(config):
+        return
+    tmp = SSHD_CONFIG.with_name("sshd_config.dotfiles-tmp")
+    tmp.write_text(f"{INCLUDE_LINE}\n\n{config}")
+    shutil.copystat(SSHD_CONFIG, tmp)
+    tmp.replace(SSHD_CONFIG)
+    print(f"Prepended sshd_config.d include to {SSHD_CONFIG}")
+
+
+def ensure_fallback_key(account: pwd.struct_passwd) -> None:
+    """Guarantee the main public key stays valid even with GitHub gone for good.
+
+    sshd consults the regular authorized_keys file alongside the
+    AuthorizedKeysCommand, so this is a permanent, GitHub-independent path in.
+    Existing entries are preserved. Presence means the canonical
+    "<type> <blob>" string appears anywhere in the file; that includes a
+    deliberately commented-out line, which stays commented out.
+    """
+    ssh_dir = Path(account.pw_dir) / ".ssh"
+    authorized_keys = ssh_dir / "authorized_keys"
+    existing = authorized_keys.read_text() if authorized_keys.is_file() else ""
+    if MAIN_PUBLIC_SSH_KEY in existing:
+        return
+    ssh_dir.mkdir(mode=0o700, exist_ok=True)
+    os.chown(ssh_dir, account.pw_uid, account.pw_gid)
+    ssh_dir.chmod(0o700)
+    separator = "" if existing == "" or existing.endswith("\n") else "\n"
+    with authorized_keys.open("a") as handle:
+        handle.write(f"{separator}{MAIN_PUBLIC_SSH_KEY}\n")
+    os.chown(authorized_keys, account.pw_uid, account.pw_gid)
+    authorized_keys.chmod(0o600)
+
+
+def prewarm_cache() -> None:
+    """Run the installed command once as nobody, exactly as sshd will run it.
+
+    A successful run leaves a cache with the right ownership so the offline
+    fallback works from the first login. Purely informational on failure;
+    password auth gets disabled regardless.
+    """
+    try:
+        result = subprocess.run(
+            [str(COMMAND_TARGET)], capture_output=True, text=True, timeout=30, user="nobody"
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        result = None
+    if result is None or result.returncode != 0 or result.stdout.strip() == "":
+        print("warning: GitHub key fetch yielded no keys yet", file=sys.stderr)
+
+
+def disable_password_auth() -> None:
+    """Force key-only logins.
+
+    Deliberately a separate low-prefix file: sshd uses the first obtained value
+    and reads the include dir in sorted order, so 10- beats e.g. the
+    PasswordAuthentication yes that cloud images drop in 50-cloud-init.conf.
+    KbdInteractiveAuthentication closes the PAM prompt that can still ask for
+    passwords when PasswordAuthentication alone is off.
+    """
+    HARDENING_TARGET.write_text(
+        "# Managed by dotfiles (scripts/setup-github-authorized-keys)\n"
+        "PasswordAuthentication no\n"
+        "KbdInteractiveAuthentication no\n"
+    )
+    HARDENING_TARGET.chmod(0o644)
+
+
+def ensure_host_keys() -> None:
+    """A never-started sshd has no host keys, and sshd -t refuses to validate
+    anything without them (Arch only generates them on first service start).
+    -A creates the missing ones and leaves existing keys alone."""
+    keygen = shutil.which("ssh-keygen")
+    if keygen is not None:
+        subprocess.run([keygen, "-A"], capture_output=True)
+
+
+def find_sshd() -> str | None:
+    search_path = f"{os.environ.get('PATH', os.defpath)}:/usr/sbin:/sbin"
+    return shutil.which("sshd", path=search_path)
+
+
+def reload_sshd() -> None:
+    """Unit is sshd.service on Arch, ssh.service on Debian/Ubuntu; only running
+    daemons need a poke, socket-activated sshd reads fresh config anyway."""
+    if shutil.which("systemctl") is None:
+        return
+    for unit in ("sshd.service", "ssh.service"):
+        result = subprocess.run(["systemctl", "try-reload-or-restart", unit], capture_output=True)
+        if result.returncode == 0:
+            return
+
+
+def resolve_target_user() -> str | None:
+    """Only ever trust the account that invoked sudo, and never root.
+
+    No uid fallback: from a plain root shell that would resolve to root, and a
+    Match User root block would let the GitHub keys open root logins.
+    """
+    target_user = os.environ.get("SUDO_USER")
+    if not target_user or target_user == "root":
+        return None
+    return target_user
+
+
+def main() -> int:
+    if os.geteuid() != 0:
+        print("setup-github-authorized-keys: run with sudo", file=sys.stderr)
+        return 1
+
+    target_user = resolve_target_user()
+    if target_user is None:
+        print(
+            "setup-github-authorized-keys: refusing to trust GitHub keys for root; "
+            "run via sudo from your own account",
+            file=sys.stderr,
+        )
+        return 1
+
+    try:
+        account = pwd.getpwnam(target_user)
+    except KeyError:
+        print(f"setup-github-authorized-keys: no such user '{target_user}'", file=sys.stderr)
+        return 1
+
+    ensure_fallback_key(account)
+    install_command()
+    create_cache_dir()
+    write_dropin(target_user)
+    ensure_include()
+    prewarm_cache()
+    disable_password_auth()
+
+    sshd = find_sshd()
+    if sshd is None:
+        print("sshd not installed; config staged for when the openssh server arrives")
+        return 0
+
+    ensure_host_keys()
+    if subprocess.run([sshd, "-t"]).returncode != 0:
+        print("sshd -t rejected the config; not reloading", file=sys.stderr)
+        return 1
+
+    reload_sshd()
+    print(f"GitHub authorized keys active for user '{target_user}'; logins are key-only")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

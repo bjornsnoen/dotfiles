@@ -17,7 +17,7 @@ export RIPGREP_CONFIG_PATH=$HOME/.config/ripgreprc
 export OPENCODE_EXPERIMENTAL_DISABLE_COPY_ON_SELECT=true
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="cloud"
+ZSH_THEME="afowler"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"

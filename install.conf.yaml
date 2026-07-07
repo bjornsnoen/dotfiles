@@ -111,6 +111,13 @@
     stdout: true
     stderr: true
 
+- shell:
+    - command: sudo ./scripts/setup-github-authorized-keys
+      description: Trust GitHub public keys for ssh logins (needs sudo)
+      stdin: true
+      stdout: true
+      stderr: true
+
 - shell: # Finalize installs
     - [
         'if [ ! -d ~/.oh-my-zsh ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc; fi',
