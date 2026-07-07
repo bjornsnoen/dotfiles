@@ -64,12 +64,16 @@ return {
             },
         }
 
-        local cpptoolsPath = vim.fn.stdpath('data') .. '/mason/packages/cpptools/extension/'
-        dap.adapters.cppdbg = {
-            type = 'executable',
-            id = 'cppdbg',
-            command = cpptoolsPath .. 'debugAdapters/bin/OpenDebugAD7',
-        }
+        -- cpptools isn't in mason's ensure_installed; only register the adapter when present
+        local cpptoolsAdapter = vim.fn.stdpath('data')
+            .. '/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7'
+        if vim.fn.executable(cpptoolsAdapter) == 1 then
+            dap.adapters.cppdbg = {
+                type = 'executable',
+                id = 'cppdbg',
+                command = cpptoolsAdapter,
+            }
+        end
 
         local netcoredbgPath = vim.fn.stdpath('data') .. '/mason/packages/netcoredbg/'
         dap.adapters.netcoredbg = {

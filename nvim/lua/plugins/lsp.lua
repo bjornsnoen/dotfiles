@@ -89,14 +89,14 @@ return {
             automatic_enable = false,
         })
         vim.keymap.set('n', '<Leader>[', function()
-            vim.diagnostic.goto_prev({ float = false })
+            vim.diagnostic.jump({ count = -1, float = false })
         end, opts)
         vim.keymap.set('n', '<Leader>]', function()
-            vim.diagnostic.goto_next({ float = false })
+            vim.diagnostic.jump({ count = 1, float = false })
         end, opts)
 
         local on_attach = function(client, bufnr)
-            vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+            vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -295,7 +295,8 @@ return {
                 if exec then
                     conf.cmd = omnisharp_cmd(exec)
                 end
-            elseif server == 'kotlin_lsp' then
+            elseif server == 'kotlin_lsp' and vim.fn.executable('faketime') == 1 then
+                -- intellij-server build is time-bombed; pin clock to keep it running
                 conf.cmd = { 'faketime', '2026-06-04', 'intellij-server', '--stdio' }
             end
             vim.lsp.config(server, conf)

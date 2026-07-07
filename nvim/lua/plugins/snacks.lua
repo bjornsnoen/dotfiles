@@ -150,8 +150,7 @@ local function show_omnisharp_locations(title, locations, client)
     end
 
     if #locations == 1 then
-        local show_document = vim.lsp.util.show_document or vim.lsp.util.jump_to_location
-        show_document(locations[1], client.offset_encoding, { reuse_win = true })
+        vim.lsp.util.show_document(locations[1], client.offset_encoding, { reuse_win = true, focus = true })
         return
     end
 
@@ -359,6 +358,9 @@ return {
     ---@type snacks.Config
     opts = {
         bigfile = {
+            enabled = true,
+        },
+        input = {
             enabled = true,
         },
         picker = {

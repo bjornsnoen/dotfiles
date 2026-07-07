@@ -15,6 +15,10 @@ return require('lazy').setup('plugins', {
     dev = {
         path = '~/src/personal/nvim',
     },
+    -- No plugins require luarocks; skip hererocks bootstrap (checkhealth error otherwise)
+    rocks = {
+        enabled = false,
+    },
     performance = {
         cache = {
             enabled = true,
