@@ -14,6 +14,8 @@ vim.opt.rtp:prepend(lazypath)
 return require('lazy').setup('plugins', {
     dev = {
         path = '~/src/personal/nvim',
+        -- Clone from GitHub when the local checkout is missing (e.g. fresh machines, CI)
+        fallback = true,
     },
     -- No plugins require luarocks; skip hererocks bootstrap (checkhealth error otherwise)
     rocks = {
