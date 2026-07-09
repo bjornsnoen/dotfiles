@@ -5,18 +5,6 @@
 [submodule "dotbot-ifplatform"]
 	path = dotbot-ifplatform
 	url = https://github.com/ssbanerje/dotbot-ifplatform.git
-[submodule "awesome/battery-widget"]
-	path = awesome/battery-widget
-	url = https://github.com/deficient/battery-widget.git
-[submodule "awesome/net_widgets"]
-	path = awesome/net_widgets
-	url = https://github.com/pltanton/net_widgets.git
-[submodule "awesome/screenrotation"]
-	path = awesome/screenrotation
-	url = https://github.com/raksooo/screenrotation.git
-[submodule "awesome/volume-control"]
-	path = awesome/volume-control
-	url = https://github.com/deficient/volume-control.git
 [submodule "dotbot-yay"]
 	path = dotbot-yay
 	url = https://github.com/bjornsnoen/dotbot-yay.git

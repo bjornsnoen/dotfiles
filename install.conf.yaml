@@ -65,7 +65,6 @@
     ~/.config/composer/composer.json: composer.json
     ~/.config/ripgreprc: ripgreprc
     ~/.config/mise: mise
-    ~/.config/awesome: awesome
     ~/.config/pypoetry/config.toml: pypoetry.toml
     ~/.config/libvirt/libvirt.conf: libvirt.conf
     ~/.ackrc: ackrc
