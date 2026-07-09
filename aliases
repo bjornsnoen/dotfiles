@@ -45,5 +45,6 @@ alias whatdidido="git log --all --author=bjorn --pretty=format:'%<( 16 ) %ch %m 
 
 alias g='./gradlew'
 alias cx="OPENAI_API_KEY=\$(bw get notes openai | awk -F' = ' '{ print \$2 }') codex"
-alias ox="codex --profile gpt-oss"
 alias oc="opencode"
+alias winget="winget.exe"
+alias wsl="wsl.exe"

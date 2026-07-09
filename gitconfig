@@ -13,7 +13,7 @@
 [pull]
 	rebase = false
 [init]
-	templatedir = /home/bjorn/.git-templates
+	defaultBranch = main
 [author]
 	email = bjorn@snoen.io
 [commit]

@@ -3,7 +3,7 @@
       relink: true
       create: true
 
-- clean: ["~"]
+- clean: ["~", "~/.codex"]
 
 - clean:
     ~/.config:
@@ -59,7 +59,6 @@
     ~/.zprofile: zprofile
     ~/.zshenv: zshenv
     ~/.config/kitty: kitty
-    ~/.xinitrc: xinitrc
     ~/.zshrc: zshrc
     ~/.config/nvim: nvim
     ~/.config/composer/composer.json: composer.json
@@ -69,18 +68,12 @@
     ~/.config/libvirt/libvirt.conf: libvirt.conf
     ~/.ackrc: ackrc
     ~/.gitignore: gitignore
-    ~/.config/ulauncher: ulauncher
-    ~/.config/polybar: polybar
-    ~/.config/autorandr/postswitch: autorandr/postswitch
     ~/.config/fontconfig: fontconfig
-    ~/.config/picom/picom.conf: picom.conf
     ~/.config/hypr: hypr
     ~/.config/waybar: waybar
-    ~/.config/sway: sway
     ~/.config/dunst/dunstrc: dunstrc
     ~/.config/wireplumber/wireplumber.conf.d/51-bluez-config.conf: wireplumber/51-bluez-config.conf
     ~/.config/pipewire/pipewire.conf.d/switch-on-connect.conf: pipewire/switch-on-connect.conf
-    ~/.codex/config.toml: codex/config.toml
     ~/.config/atuin: atuin
     ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
     ~/.codex/AGENTS.md: GLOBAL_AGENTS.md
