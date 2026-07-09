@@ -33,8 +33,8 @@ tba() {
         taskbar-autohide "$@"
     fi
 }
-# Quickly cd to dotfiles directory
-alias dotf="cd $(dirname $(readlink ~/.zshrc))"
+# Quickly cd to dotfiles directory (zshrc lives in <repo>/home/)
+alias dotf="cd $(dirname $(dirname $(readlink ~/.zshrc)))"
 
 alias gup="git pull origin master"
 alias gupm="git pull origin main"

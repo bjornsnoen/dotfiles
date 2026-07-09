@@ -1,16 +1,16 @@
 [submodule "dotbot"]
-	path = dotbot
+	path = modules/dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
 [submodule "dotbot-ifplatform"]
-	path = dotbot-ifplatform
+	path = modules/dotbot-ifplatform
 	url = https://github.com/ssbanerje/dotbot-ifplatform.git
 [submodule "dotbot-yay"]
-	path = dotbot-yay
+	path = modules/dotbot-yay
 	url = https://github.com/bjornsnoen/dotbot-yay.git
 [submodule "dotbot-apt"]
-	path = dotbot-apt
+	path = modules/dotbot-apt
 	url = https://github.com/bryant1410/dotbot-apt
 [submodule "dotbot-git"]
-	path = dotbot-git
+	path = modules/dotbot-git
 	url = https://github.com/DrDynamic/dotbot-git.git

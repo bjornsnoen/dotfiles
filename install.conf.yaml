@@ -49,39 +49,48 @@
         - otf-font-awesome
 
 - link:
-    ~/.tmux.conf: tmux.conf
-    ~/.aliases: aliases
+    # Shell / classic home dotfiles
+    ~/.tmux.conf: home/tmux.conf
+    ~/.aliases: home/aliases
+    ~/.gitconfig: home/gitconfig
+    ~/.gitignore: home/gitignore
+    ~/.zprofile: home/zprofile
+    ~/.zshenv: home/zshenv
+    ~/.zshrc: home/zshrc
+    ~/.ackrc: home/ackrc
+
+    # Scripts
     ~/.local/bin/azpr: scripts/azpr
     ~/.local/bin/copilot: scripts/copilot
     ~/.local/bin/direnv-to-mise: scripts/migrate-envrc-aliases-to-mise.py
     ~/.local/bin/taskbar-autohide: scripts/taskbar-autohide
-    ~/.gitconfig: gitconfig
-    ~/.zprofile: zprofile
-    ~/.zshenv: zshenv
-    ~/.config/kitty: kitty
-    ~/.zshrc: zshrc
-    ~/.config/nvim: nvim
-    ~/.config/composer/composer.json: composer.json
-    ~/.config/ripgreprc: ripgreprc
-    ~/.config/mise: mise
-    ~/.config/pypoetry/config.toml: pypoetry.toml
-    ~/.config/libvirt/libvirt.conf: libvirt.conf
-    ~/.ackrc: ackrc
-    ~/.gitignore: gitignore
-    ~/.config/fontconfig: fontconfig
-    ~/.config/hypr: hypr
-    ~/.config/waybar: waybar
-    ~/.config/dunst/dunstrc: dunstrc
-    ~/.config/wireplumber/wireplumber.conf.d/51-bluez-config.conf: wireplumber/51-bluez-config.conf
-    ~/.config/pipewire/pipewire.conf.d/switch-on-connect.conf: pipewire/switch-on-connect.conf
-    ~/.config/atuin: atuin
+
+    # App configs (~/.config mirrors)
+    ~/.config/kitty: config/kitty
+    ~/.config/nvim: config/nvim
+    ~/.config/mise: config/mise
+    ~/.config/atuin: config/atuin
+    ~/.config/fontconfig: config/fontconfig
+    ~/.config/hypr: config/hypr
+    ~/.config/waybar: config/waybar
+    ~/.config/dunst/dunstrc: config/dunstrc
+    ~/.config/ripgreprc: config/ripgreprc
+    ~/.config/composer/composer.json: config/composer.json
+    ~/.config/pypoetry/config.toml: config/pypoetry.toml
+    ~/.config/libvirt/libvirt.conf: config/libvirt.conf
+    ~/.config/worktrunk/config.toml: config/worktrunk.toml
+    ~/.config/wireplumber/wireplumber.conf.d/51-bluez-config.conf: config/wireplumber/51-bluez-config.conf
+    ~/.config/pipewire/pipewire.conf.d/switch-on-connect.conf: config/pipewire/switch-on-connect.conf
+    ~/.config/opencode/opencode.json: config/opencode/opencode.json
+    ~/.config/opencode/tui.json: config/opencode/tui.json
+
+    # Fonts
     ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
-    ~/.codex/AGENTS.md: GLOBAL_AGENTS.md
-    ~/.copilot/copilot-instructions.md: GLOBAL_AGENTS.md
-    ~/.config/opencode/AGENTS.md: GLOBAL_AGENTS.md
-    ~/.config/opencode/opencode.json: opencode/opencode.json
-    ~/.config/opencode/tui.json: opencode/tui.json
-    ~/.config/worktrunk/config.toml: worktrunk.toml
+
+    # Agent instructions
+    ~/.codex/AGENTS.md: agents/GLOBAL_AGENTS.md
+    ~/.copilot/copilot-instructions.md: agents/GLOBAL_AGENTS.md
+    ~/.config/opencode/AGENTS.md: agents/GLOBAL_AGENTS.md
 
 - shell:
     - [
