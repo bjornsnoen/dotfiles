@@ -48,6 +48,14 @@
         - ttf-font-awesome
         - otf-font-awesome
 
+- ifdebian:
+    - apt:
+      - build-essential
+      - git
+      - unzip
+      - ssh
+      - tmux
+
 - link:
     # Shell / classic home dotfiles
     ~/.tmux.conf: home/tmux.conf
