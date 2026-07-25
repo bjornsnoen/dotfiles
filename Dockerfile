@@ -1,4 +1,4 @@
-FROM archlinux as build
+FROM archlinux AS build
 
 RUN pacman -Syu python base-devel git --noconfirm
 RUN useradd -m bjorn
@@ -14,7 +14,7 @@ WORKDIR /home/bjorn/.dotfiles
 CMD ["sh", "-c", "sudo pacman -Syy && echo docker | ./install -vvv"]
 
 
-FROM build as debug
+FROM build AS debug
 WORKDIR /tmp
 RUN git clone https://aur.archlinux.org/yay.git \
     && cd yay && makepkg -si --noconfirm \

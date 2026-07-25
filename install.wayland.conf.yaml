@@ -22,12 +22,12 @@
         - hypridle
 
 - link:
-    ~/.config/hypr: hypr
-    ~/.config/waybar: waybar
-    ~/.config/libinput-gestures.conf: wayland/libinput-gestures.conf
-    ~/.config/electron-flags.conf: wayland/electron-flags.conf
-    ~/.config/brave-flags.conf: wayland/electron-flags.conf
-    ~/.config/anyrun: anyrun
+    ~/.config/hypr: config/hypr
+    ~/.config/waybar: config/waybar
+    ~/.config/libinput-gestures.conf: platform/wayland/libinput-gestures.conf
+    ~/.config/electron-flags.conf: platform/wayland/electron-flags.conf
+    ~/.config/brave-flags.conf: platform/wayland/electron-flags.conf
+    ~/.config/anyrun: config/anyrun
 
 - shell:
     - [

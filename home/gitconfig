@@ -1,0 +1,20 @@
+[user]
+	email = bjorn@snoen.io
+	name = Bjørn Polat-Snoen
+	signingkey = 35FA11634EE72A4D
+[push]
+	default = current
+	autoSetupRemote = true
+[core]
+	editor = nvim
+	excludesfile = ~/.gitignore
+	pager = less
+	whitespace = cr-at-eol
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
+[author]
+	email = bjorn@snoen.io
+[commit]
+	gpgsign = true

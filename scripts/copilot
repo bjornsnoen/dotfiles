@@ -5,7 +5,7 @@ set -euo pipefail
 SCRIPT_PATH=$(readlink -f "${BASH_SOURCE[0]}")
 SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
 REPO_ROOT=$(dirname "$SCRIPT_DIR")
-ALLOWLIST_FILE="${COPILOT_ALLOWLIST_FILE:-$REPO_ROOT/copilot/allow-tools}"
+ALLOWLIST_FILE="${COPILOT_ALLOWLIST_FILE:-$REPO_ROOT/agents/copilot-allow-tools}"
 
 if [ ! -f "$ALLOWLIST_FILE" ]; then
     printf 'Allowlist file not found: %s\n' "$ALLOWLIST_FILE" >&2

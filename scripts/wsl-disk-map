@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# Map /dev/sdX block devices to the WSL distro whose rootfs lives on them.
+# Works because all WSL2 distros share one kernel VM, so device names are
+# consistent across distros. Only running distros have their VHDX attached.
+set -euo pipefail
+
+if ! command -v wsl.exe >/dev/null 2>&1; then
+    echo "wsl.exe not found - are we inside WSL?" >&2
+    exit 1
+fi
+
+declare -A owner
+
+# wsl.exe prints UTF-16LE with CRLF; strip nulls and carriage returns.
+# Read /proc/mounts remotely (works even in busybox distros like docker-desktop)
+# and claim every /dev/sd* mount for that distro. Root mount wins the label.
+while IFS= read -r distro; do
+    [[ -z "$distro" ]] && continue
+    while read -r src mnt _; do
+        [[ "$src" == /dev/sd* ]] || continue
+        disk=$(sed 's/[0-9]*$//' <<<"$src")   # /dev/sdd1 -> /dev/sdd
+        if [[ "$mnt" == / ]]; then
+            owner["$disk"]="$distro"
+        else
+            : "${owner["$disk"]:="$distro ($mnt)"}"
+        fi
+    done < <(wsl.exe -d "$distro" -- cat /proc/mounts </dev/null 2>/dev/null | tr -d '\0\r' || true)
+done < <(wsl.exe --list --quiet --running | tr -d '\0\r')
+
+# Swap devices
+while IFS= read -r dev; do
+    owner["$dev"]="(swap)"
+done < <(awk 'NR>1 && $1 ~ /^\/dev\// {print $1}' /proc/swaps)
+
+# All registered distros + VHDX paths from the registry (works for stopped ones too).
+declare -A vhdx seen
+while IFS=$'\t' read -r distro path; do
+    [[ -z "$distro" ]] && continue
+    vhdx["$distro"]="$path"
+done < <(powershell.exe -NoProfile -Command '
+    Get-ChildItem "HKCU:\Software\Microsoft\Windows\CurrentVersion\Lxss" |
+    ForEach-Object {
+        $n = $_.GetValue("DistributionName"); if (-not $n) { return }
+        $v = $_.GetValue("VhdFileName"); if (-not $v) { $v = "ext4.vhdx" }
+        "$n`t$($_.GetValue("BasePath"))\$v"
+    }' </dev/null 2>/dev/null | tr -d '\0\r' || true)
+
+printf '%-12s %-8s %-45s %s\n' DEVICE SIZE DISTRO VHDX
+while read -r name size; do
+    dev="/dev/$name"
+    label="${owner[$dev]:-?}"
+    base=${label%% (*}          # "docker-desktop (/mnt/x)" -> "docker-desktop"
+    seen["$base"]=1
+    v=""
+    # Registry only knows the rootfs VHDX; don't claim it for extra data disks.
+    [[ "$label" == "$base" ]] && v="${vhdx[$base]:-}"
+    printf '%-12s %-8s %-45s %s\n' "$dev" "$size" "$label" "$v"
+done < <(lsblk -dn -o NAME,SIZE)
+
+# Stopped distros: no device attached; show on-disk VHDX file size instead.
+for distro in "${!vhdx[@]}"; do
+    [[ -n "${seen[$distro]:-}" ]] && continue
+    path="${vhdx[$distro]}"
+    upath=$(wslpath -u "${path#\\\\?\\}" 2>/dev/null || true)
+    size=$([[ -f "$upath" ]] && stat -c %s "$upath" | numfmt --to=iec || echo '-')
+    printf '%-12s %-8s %-45s %s\n' - "$size" "$distro (stopped)" "$path"
+done

@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+"""AuthorizedKeysCommand for sshd: trust the public keys published on GitHub.
+
+Prints the keys from https://github.com/<user>.keys. Successful fetches are
+cached so logins keep working while GitHub is unreachable. A successful but
+empty fetch means the keys were removed on GitHub, so nothing is trusted and
+the cache is updated too (revocation works). Installed to /usr/local/bin by
+scripts/setup-github-authorized-keys; sshd runs it as the unprivileged
+AuthorizedKeysCommandUser, which is the only writer of the cache directory.
+"""
+
+from __future__ import annotations
+
+import os
+import sys
+import tempfile
+import urllib.request
+from contextlib import suppress
+from pathlib import Path
+
+GITHUB_USER = "bjornsnoen"
+KEYS_URL = f"https://github.com/{GITHUB_USER}.keys"
+CACHE_DIR = Path("/var/cache/github-authorized-keys")
+CACHE_FILE = CACHE_DIR / f"{GITHUB_USER}.keys"
+TIMEOUT_SECONDS = 5
+
+
+def fetch_keys() -> str | None:
+    try:
+        with urllib.request.urlopen(KEYS_URL, timeout=TIMEOUT_SECONDS) as response:
+            return response.read().decode("utf-8")
+    except Exception:
+        return None
+
+
+def read_cache() -> str | None:
+    try:
+        return CACHE_FILE.read_text()
+    except OSError:
+        return None
+
+
+def refresh_cache(keys: str) -> None:
+    """Atomically replace the cache; never let a cache failure break the login."""
+    tmp_path: str | None = None
+    try:
+        fd, tmp_path = tempfile.mkstemp(dir=CACHE_DIR)
+        with os.fdopen(fd, "w") as tmp:
+            tmp.write(keys)
+        os.replace(tmp_path, CACHE_FILE)
+    except OSError:
+        if tmp_path is not None:
+            with suppress(OSError):
+                os.unlink(tmp_path)
+
+
+def main() -> int:
+    keys = fetch_keys()
+    if keys is not None:
+        sys.stdout.write(keys)
+        refresh_cache(keys)
+    else:
+        cached = read_cache()
+        if cached is not None:
+            sys.stdout.write(cached)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
