@@ -91,6 +91,8 @@
     ~/.config/pipewire/pipewire.conf.d/switch-on-connect.conf: config/pipewire/switch-on-connect.conf
     ~/.config/opencode/opencode.json: config/opencode/opencode.json
     ~/.config/opencode/tui.json: config/opencode/tui.json
+    ~/.config/tmux-powerline: config/tmux-powerline
+    ~/.config/systemd/user/bw-agent.service: ../bw-agent/systemd/bw-agent.service
 
     # Fonts
     ~/.local/share/fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf
@@ -134,10 +136,6 @@
       stdin: true
       stdout: true
       stderr: true
-
-# Dracula custom plugin wrapper; has to be after tmux plugins are installed
-- link:
-    ~/.tmux/plugins/tmux/scripts/copilot_quota.sh: scripts/copilot_quota.sh
 
 - git: # Has to be after oh-my-zsh install
     "~/.oh-my-zsh/custom/plugins/zsh-autosuggestions":
