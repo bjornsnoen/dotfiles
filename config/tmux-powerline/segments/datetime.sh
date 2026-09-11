@@ -1,5 +1,5 @@
 # shellcheck shell=bash
 
 run_segment() {
-  date '+%a %m/%d %R %Z'
+  date '+%a %d/%m %R %Z'
 }
