@@ -2,6 +2,8 @@
   "$schema": "https://opencode.ai/tui.json",
   "leader_timeout": 2000,
   "keybinds": {
-    "display_thinking": "<leader>t"
+    "display_thinking": "<leader>t",
+    "app_toggle_animations": "<leader>a",
+    "agent_list": "none"
   }
 }
