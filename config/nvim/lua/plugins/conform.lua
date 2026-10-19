@@ -36,6 +36,7 @@ return {
             formatters_by_ft = formatters_by_ft,
             format_on_save = {
                 timeout_ms = 5000,
+                lsp_format = 'fallback',
             },
             formatters = {
                 oxfmt = {
