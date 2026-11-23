@@ -47,46 +47,21 @@ if has('persistent_undo')
 endif
 ]])
 
-local function has_cmd(cmd)
-    return vim.fn.executable(cmd) == 1
+-- Read locally so p never waits for an OSC 52 reply; use terminal paste for external text.
+-- :help clipboard-osc52 (the built-in writer also handles base64 encoding).
+local function local_paste()
+    return { vim.fn.getreg('"', 1, true), vim.fn.getregtype('"') }
 end
 
-local function set_clipboard(copy_cmd, paste_cmd, name)
-    vim.g.clipboard = {
-        name = name,
-        copy = {
-            ['+'] = copy_cmd,
-            ['*'] = copy_cmd,
-        },
-        paste = {
-            ['+'] = paste_cmd,
-            ['*'] = paste_cmd,
-        },
-        cache_enabled = 0,
-    }
-    vim.opt.clipboard = 'unnamedplus'
-end
-
--- Pick an OS-appropriate clipboard provider so configs stay committed across machines.
-local function configure_clipboard()
-    if vim.fn.has('wsl') == 1 and has_cmd('clipcopy') and has_cmd('clippaste') then
-        set_clipboard('clipcopy', 'clippaste', 'wsl-clip')
-        return
-    end
-
-    if vim.fn.has('macunix') == 1 and has_cmd('pbcopy') then
-        set_clipboard('pbcopy', 'pbpaste', 'mac')
-        return
-    end
-
-    if has_cmd('wl-copy') and has_cmd('wl-paste') then
-        set_clipboard('wl-copy', 'wl-paste --no-newline', 'wayland')
-        return
-    end
-
-    if has_cmd('xclip') then
-        set_clipboard('xclip -selection clipboard', 'xclip -selection clipboard -o', 'xclip')
-    end
-end
-
-configure_clipboard()
+vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    },
+    paste = {
+        ['+'] = local_paste,
+        ['*'] = local_paste,
+    },
+}
+vim.opt.clipboard = 'unnamedplus'
