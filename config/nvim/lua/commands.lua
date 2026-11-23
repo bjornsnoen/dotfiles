@@ -1,3 +1,5 @@
+vim.cmd([[cnoreabbrev <expr> new getcmdtype() ==# ':' && getcmdline() ==# 'new' ? 'enew' : 'new']])
+
 vim.api.nvim_create_autocmd('BufWritePre', {
     pattern = { '*.js', '*.jsx', '*.ts', '*.tsx' },
     callback = function()
