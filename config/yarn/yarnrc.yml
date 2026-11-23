@@ -1,0 +1,4 @@
+# Keep dependency archives local rather than unpacking node_modules on NFS.
+enableGlobalCache: true
+globalFolder: "${HOME}/.local/share/yarn/berry"
+nodeLinker: pnp

@@ -1,0 +1,3 @@
+# Keep dependency files local when projects live on NFS.
+store-dir=${HOME}/.local/share/pnpm/store
+enable-global-virtual-store=true

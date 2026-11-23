@@ -3,7 +3,7 @@
 url = "https://pypi.brbcoffee.com/"
 
 [virtualenvs]
-in-project = true
+in-project = false
 use-poetry-python = false
 prefer-active-python = true
 

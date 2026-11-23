@@ -1,0 +1,2 @@
+# Keep project environments local when source files live on NFS.
+preview-features = ["centralized-project-envs"]

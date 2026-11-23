@@ -62,6 +62,7 @@
     ~/.aliases: home/aliases
     ~/.gitconfig: home/gitconfig
     ~/.gitignore: home/gitignore
+    ~/.yarnrc.yml: config/yarn/yarnrc.yml
     ~/.zprofile: home/zprofile
     ~/.zshenv: home/zshenv
     ~/.zshrc: home/zshrc
@@ -78,6 +79,8 @@
     ~/.config/kitty: config/kitty
     ~/.config/nvim: config/nvim
     ~/.config/mise: config/mise
+    ~/.config/pnpm: config/pnpm
+    ~/.config/uv/uv.toml: config/uv/uv.toml
     ~/.config/atuin: config/atuin
     ~/.config/fontconfig: config/fontconfig
     ~/.config/hypr: config/hypr
