@@ -48,4 +48,13 @@ jobs:
           mkdir -p "$HOME"
           eval "$(brew shellenv)"
           ./install -x -vv -c install.macos.conf.yaml --plugin-dir modules/dotbot-brew
-          ./install -x -vv
+          # TPM discards Git's stderr; stream Git's separate, redacted trace.
+          trace="$RUNNER_TEMP/dotfiles-git-trace.log"
+          touch "$trace"
+          tail -n +1 -f "$trace" &
+          trace_pid=$!
+          trap 'kill "$trace_pid" 2>/dev/null || true' EXIT
+          GIT_TRACE="$trace" GIT_TRACE_CURL="$trace" \
+            GIT_TRACE_CURL_NO_DATA=1 GIT_TRACE_REDACT=1 \
+            GIT_HTTP_LOW_SPEED_LIMIT=1000 GIT_HTTP_LOW_SPEED_TIME=60 \
+            ./install -x -vv
