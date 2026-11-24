@@ -63,7 +63,6 @@
     ~/.gitconfig: home/gitconfig
     ~/.gitignore: home/gitignore
     ~/.yarnrc.yml: config/yarn/yarnrc.yml
-    ~/.zprofile: home/zprofile
     ~/.zshenv:
       path: home/zshenv
       # Preserve the Mac wrapper, which sources this file and adds Mac setup.

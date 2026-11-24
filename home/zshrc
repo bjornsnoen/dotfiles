@@ -109,6 +109,10 @@ PS1='$(show_virtual_env)'$PS1
 
 source $ZSH/oh-my-zsh.sh
 
+# Generate completions after mise selects the configured uv version.
+eval "$(uv generate-shell-completion zsh)"
+eval "$(uvx --generate-shell-completion zsh)"
+
 # Local post-OMZ overrides: keybindings and shell init hooks.
 [[ -f ~/.zshrc.post.local ]] && source ~/.zshrc.post.local
 
