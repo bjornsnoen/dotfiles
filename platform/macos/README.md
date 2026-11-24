@@ -25,11 +25,6 @@ Regular-file conflicts stop installation rather than being force-overwritten;
 existing symlinks can be relinked. Linux still uses the original `./install`
 invocation and does not load the Homebrew plugin.
 
-On Mac, tmux plugins are installed directly against a temporary server started
-without the user config. TPM reads the plugin list from `.tmux.conf`; its output
-goes to the installer log rather than a detached pane. The temporary server is
-stopped on exit without touching existing tmux sessions.
-
 Shared zsh configuration is reused through its existing `.zshrc.local` hook.
 The Mac-only `.zshenv` adds Homebrew discovery without putting its Python ahead
 of an inherited virtual environment. Modern Bash and GNU readlink are linked
@@ -48,5 +43,7 @@ machine. Debugger binaries and other external projects referenced by shared
 configs also need to be installed separately.
 
 The `macOS install` job in `.github/workflows/build_and_test.yaml` runs both
-profiles on `macos-latest` with a temporary home directory. It checks installation,
-not whether installed GUI applications launch. Its first run is still pending.
+profiles on `macos-latest` with a temporary home directory. Git credential helpers
+are disabled only in this CI step: TPM's public clone URL contains dummy
+credentials, and saving them through `osxkeychain` hangs on the headless runner.
+The job checks installation, not whether installed GUI applications launch.
