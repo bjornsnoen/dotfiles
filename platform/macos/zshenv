@@ -1,0 +1,25 @@
+source "${${(%):-%x}:A:h:h:h}/home/zshenv"
+
+if [[ -z "${HOMEBREW_PREFIX-}" ]]; then
+  if [[ -x /opt/homebrew/bin/brew ]]; then
+    export HOMEBREW_PREFIX=/opt/homebrew
+  elif [[ -x /usr/local/bin/brew ]]; then
+    export HOMEBREW_PREFIX=/usr/local
+  fi
+fi
+
+typeset -U path PATH
+# Keep inherited mise/venv tool ordering; Homebrew supplies missing commands.
+path=("$HOME/.local/bin" $path)
+if [[ -n "${HOMEBREW_PREFIX-}" ]]; then
+  path+=("$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin")
+  _dotfiles_mac_ca_bundle="$HOMEBREW_PREFIX/etc/ca-certificates/cert.pem"
+  if [[ -r "$_dotfiles_mac_ca_bundle" ]]; then
+    export REQUESTS_CA_BUNDLE="${REQUESTS_CA_BUNDLE:-$_dotfiles_mac_ca_bundle}"
+    export SSL_CERT_FILE="${SSL_CERT_FILE:-$_dotfiles_mac_ca_bundle}"
+  fi
+  unset _dotfiles_mac_ca_bundle
+fi
+
+# The shared zshrc assigns a Linux CA path before sourcing its local hook.
+_dotfiles_mac_requests_ca_bundle="${REQUESTS_CA_BUNDLE-}"

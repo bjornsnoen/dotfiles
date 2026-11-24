@@ -1,0 +1,53 @@
+# Mac-only prerequisites and overrides. Run before the shared install.conf.yaml.
+- defaults:
+    link:
+      relink: true
+      create: true
+
+- shell:
+    - command: |
+        if [ "$(uname -s)" != Darwin ] || [ -z "${HOMEBREW_PREFIX:-}" ]; then
+          echo 'Run this profile on macOS after eval "$(brew shellenv)".' >&2
+          exit 1
+        fi
+      description: Require macOS and an initialized Homebrew environment
+      stderr: true
+
+- brew:
+    - bash
+    - ca-certificates
+    - coreutils
+    - git
+    - gnupg
+    - imagemagick
+    - jq
+    - lazydocker
+    - mise
+    - neovim
+    - python
+    - tree-sitter-cli
+    - ripgrep
+    - tmux
+    - fzf
+    - usage
+
+- cask:
+    - dotnet-sdk
+    - kitty
+    - bitwarden
+    - font-fira-code-nerd-font
+
+- shell:
+    - command: brew postinstall ca-certificates
+      description: Refresh the macOS CA bundle
+      stdout: true
+      stderr: true
+
+- link:
+    ~/.zshenv: platform/macos/zshenv
+    ~/.zshrc.local: platform/macos/zshrc.local
+    ~/.local/bin/bash: ${HOMEBREW_PREFIX}/bin/bash
+    ~/.local/bin/readlink: ${HOMEBREW_PREFIX}/bin/greadlink
+    ~/Library/Preferences/pnpm/rc: config/pnpm/rc
+    ~/Library/Application Support/pypoetry/config.toml: config/pypoetry.toml
+    ~/Library/Fonts/WifiFont.ttf: fonts/DejaVuSansMono-wifi-ramp.ttf

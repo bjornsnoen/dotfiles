@@ -11,17 +11,19 @@
 - If symlinks need to be created for testing/verification purposes, create them manually with explicit `ln -sf` commands instead
 
 ## Project Structure & Module Organization
-- `install` drives Dotbot with `install.conf.yaml` (default), plus variants like `install.wayland.conf.yaml` and `install.ubuntu.conf.yaml` for platform-specific links and packages.
+- `install` drives Dotbot with `install.conf.yaml` (shared setup and the working Linux default). Auxiliary profiles such as `install.macos.conf.yaml`, `install.wayland.conf.yaml` and `install.ubuntu.conf.yaml` contain platform-specific setup and are selected with `-c`.
 - `modules/dotbot` is a submodule; Dotbot plugins live in `modules/dotbot-*` directories. Keep new automation in the matching config file rather than inlined shell.
 - `config/` holds app configs that link into `~/.config` (hypr, waybar, kitty, nvim, mise, etc.); editor plugin pins are in `config/nvim/lazy-lock.json`.
 - `home/` holds classic `~/.`-prefixed dotfiles (zshrc, aliases, tmux.conf, gitconfig, ...).
 - `agents/` holds AI agent instruction files (`GLOBAL_AGENTS.md` links to codex/copilot/opencode) and the copilot tool allowlist.
 - `platform/` holds platform-specific assets (`wayland/`, `win/`, `nix-on-droid/`); `scripts/` and `fonts/` hold helper scripts and local fonts.
 - Place new app configs under `config/` to match the existing linking pattern.
+- Do not modify `install` or Dotbot to add platform support. Preserve working Linux behavior and existing Dotbot flags. Define shared links and setup once in `install.conf.yaml`; auxiliary profiles contain only platform-specific additions. Keep Mac overrides under `platform/macos/`. Do not guard harmless links; use conditions only to prevent actual conflicts or incompatible setup. Every profile must parse independently, without cross-file anchors or preprocessing. Do not modify shared shell/application configs for Mac-specific behavior.
 
 ## Build, Test, and Development Commands
 - `./install` — run the default Dotbot playbook to sync links, packages, and plugins.
 - `./install -c install.wayland.conf.yaml` (or `install.ubuntu.conf.yaml`) — apply a different profile; keep commands idempotent because installs may be rerun.
+- macOS: after initializing Homebrew and the submodules, the human user runs `./install -x -c install.macos.conf.yaml --plugin-dir modules/dotbot-brew`, then `./install -x`. Packages use `brew:`/`cask:` in the Mac profile. See `platform/macos/README.md`.
 - `nvim --headless '+Lazy! sync' +qa` — refresh Neovim plugins and lockfile after changing `config/nvim/lua/plugins/*` or `config/nvim/lazy-lock.json`.
 
 ## Coding Style & Naming Conventions

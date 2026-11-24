@@ -1,0 +1,5 @@
+if [[ -n "${_dotfiles_mac_requests_ca_bundle-}" ]]; then
+  export REQUESTS_CA_BUNDLE="$_dotfiles_mac_requests_ca_bundle"
+else
+  unset REQUESTS_CA_BUNDLE
+fi

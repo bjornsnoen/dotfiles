@@ -1,4 +1,16 @@
-# Development on the NFS share
+# Development setup
+
+## macOS corporate certificates
+
+The auxiliary Mac profile in `install.macos.conf.yaml` installs Homebrew's `ca-certificates` and runs `brew postinstall ca-certificates`. Homebrew builds a PEM bundle containing trusted System Keychain CAs alongside Mozilla roots. The Mac-only files in `platform/macos/` select that bundle unless a custom certificate-bundle variable is already set. Shared links and setup remain in `install.conf.yaml`; Linux shell files are unchanged by Mac support. See `platform/macos/README.md` for the two-step installation.
+
+After IT installs or rotates a corporate CA in the System Keychain, refresh the bundle:
+
+```sh
+brew postinstall ca-certificates
+```
+
+Open a new shell after the initial install. This is a generated bundle, not live Keychain access; certificates installed only in the login Keychain are not included. Applications that ignore these environment variables need their own configuration. TLS verification stays enabled.
 
 ## Yarn
 

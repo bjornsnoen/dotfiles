@@ -41,7 +41,7 @@
       }
     },
     "ollama": {
-      "npm": "file:///home/bjorn/.config/opencode/provider/ollama-32k.mjs",
+      "npm": "file://{env:HOME}/.config/opencode/provider/ollama-32k.mjs",
       "name": "Ollama (local)",
       "options": {
         "baseURL": "http://localhost:11434"

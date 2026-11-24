@@ -57,14 +57,17 @@
       - tmux
 
 - link:
-    # Shell / classic home dotfiles
+    # Shared links live here, not in the platform profiles.
     ~/.tmux.conf: home/tmux.conf
     ~/.aliases: home/aliases
     ~/.gitconfig: home/gitconfig
     ~/.gitignore: home/gitignore
     ~/.yarnrc.yml: config/yarn/yarnrc.yml
     ~/.zprofile: home/zprofile
-    ~/.zshenv: home/zshenv
+    ~/.zshenv:
+      path: home/zshenv
+      # Preserve the Mac wrapper, which sources this file and adds Mac setup.
+      if: '[ "$(uname -s)" != Darwin ]'
     ~/.zshrc: home/zshrc
     ~/.ackrc: home/ackrc
 
@@ -75,7 +78,7 @@
     ~/.local/bin/direnv-to-mise: scripts/migrate-envrc-aliases-to-mise.py
     ~/.local/bin/taskbar-autohide: scripts/taskbar-autohide
 
-    # App configs (~/.config mirrors)
+    # App configs
     ~/.config/kitty: config/kitty
     ~/.config/nvim: config/nvim
     ~/.config/mise: config/mise
@@ -123,7 +126,7 @@
       description: Install mise tools
       stdout: true
       stderr: true
-    - command: sudo ./scripts/setup-github-authorized-keys
+    - command: 'if [ "$(uname -s)" != Darwin ]; then sudo ./scripts/setup-github-authorized-keys; fi'
       description: Trust GitHub public keys for ssh logins (needs sudo)
       stdin: true
       stdout: true
@@ -137,7 +140,7 @@
         Install tmux plugins,
       ]
     - [nvim --headless '+Lazy! sync' +qa, Install vim plugins]
-    - command: 'if [[ "$(echo $SHELL)" != "$(cat /etc/shells | grep zsh | tail -n 1)" ]]; then chsh -s $(cat /etc/shells | grep zsh | tail -n 1); fi'
+    - command: 'if [ "$(uname -s)" != Darwin ] && [[ "$(echo $SHELL)" != "$(cat /etc/shells | grep zsh | tail -n 1)" ]]; then chsh -s $(cat /etc/shells | grep zsh | tail -n 1); fi'
       description: Switch to using zsh
       stdin: true
       stdout: true

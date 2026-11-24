@@ -27,3 +27,24 @@ jobs:
       - name: Test
         run: |
           docker run --rm -t test
+
+  macos:
+    runs-on: macos-latest
+    name: "macOS install"
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+      - name: Install Mac profile and shared setup
+        shell: bash
+        env:
+          NONINTERACTIVE: "1"
+        run: |
+          # Avoid conflicts with the runner's existing dotfiles.
+          export HOME="$RUNNER_TEMP/dotfiles-home"
+          mkdir -p "$HOME"
+          eval "$(brew shellenv)"
+          ./install -x -vv -c install.macos.conf.yaml --plugin-dir modules/dotbot-brew
+          ./install -x -vv
