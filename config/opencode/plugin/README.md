@@ -16,14 +16,7 @@ The Ollama plugin retains the provider package configured in `opencode.json`.
 The compaction plugin retains the existing cloud/local health-check policy;
 it is not a retry handler for failed compaction requests.
 
-Run regression tests with Node 22.18+:
-
-```sh
-node --test config/opencode/plugin/tests/plugins.test.mjs
-```
-
-The tests mock network requests and use forbidden-path strings only; they do not
-create or read secret files. Typecheck against `@opencode/plugin@2.0.27` with
+Typecheck against `@opencode/plugin@2.0.27` with
 TypeScript's strict mode and Node typings when changing these contracts.
 
 Dotbot links each plugin individually. Run `./install` yourself after deploying

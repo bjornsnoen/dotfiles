@@ -31,7 +31,10 @@
 - Lua (Neovim): four-space indent, single quotes, modules return tables; keep plugin declarations consistent with existing structure and update `config/nvim/lazy-lock.json` when versions change.
 
 ## Testing Guidelines
-- Run the relevant install profile in a disposable session (`./install` or the `-c` variant) to ensure links resolve and package managers are available.
+- The existing GitHub Actions install smoke test in `.github/workflows/build_and_test.yaml` is the only permitted repository-owned automated test.
+- Do not add test files, test scripts, suites, fixtures, test frameworks, or additional automated tests, including in CI.
+- Upstream tests inside submodules are outside this policy; leave them alone.
+- Only the human user may run install profiles in a disposable session to verify links and package managers; agents must follow the installation restrictions above.
 - After Neovim changes, run the headless sync above and open `:checkhealth` in a fresh session to verify LSPs and plugins load.
 - For shell or Python edits, execute the script directly to confirm it exits cleanly; avoid introducing commands that assume unavailable system packages.
 - Manually reload affected apps (kitty, tmux, Waybar/Hyprland) to confirm visual changes and keybindings work.
