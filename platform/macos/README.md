@@ -25,6 +25,11 @@ Regular-file conflicts stop installation rather than being force-overwritten;
 existing symlinks can be relinked. Linux still uses the original `./install`
 invocation and does not load the Homebrew plugin.
 
+On Mac, tmux plugins are installed directly against a temporary server started
+without the user config. TPM reads the plugin list from `.tmux.conf`; its output
+goes to the installer log rather than a detached pane. The temporary server is
+stopped on exit without touching existing tmux sessions.
+
 Shared zsh configuration is reused through its existing `.zshrc.local` hook.
 The Mac-only `.zshenv` adds Homebrew discovery without putting its Python ahead
 of an inherited virtual environment. Modern Bash and GNU readlink are linked

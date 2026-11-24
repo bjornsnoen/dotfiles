@@ -134,10 +134,20 @@
         'if [ ! -d ~/.oh-my-zsh ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc; fi',
         Install ohmyzsh,
       ]
-    - [
-        "tmux new-session -d && tmux run '~/.tmux/plugins/tpm/scripts/install_plugins.sh' || true && tmux kill-session -t $(tmux ls -F '#{session_name}' | tail -n 1)",
-        Install tmux plugins,
-      ]
+    - command: |
+        if [ "$(uname -s)" = Darwin ]; then
+          set -e
+          socket="dotfiles-install-$$"
+          trap 'tmux -L "$socket" kill-server >/dev/null 2>&1 || true' EXIT
+          # TPM reads .tmux.conf itself; do not load plugins during server startup.
+          tmux -L "$socket" -f /dev/null new-session -d -s install 'cat'
+          export TMUX="$(tmux -L "$socket" display-message -p '#{socket_path}'),0,0"
+          tmux set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins/"
+          "$HOME/.tmux/plugins/tpm/scripts/install_plugins.sh"
+        else
+          tmux new-session -d && tmux run '~/.tmux/plugins/tpm/scripts/install_plugins.sh' || true && tmux kill-session -t $(tmux ls -F '#{session_name}' | tail -n 1)
+        fi
+      description: Install tmux plugins
     - [nvim --headless '+Lazy! sync' +qa, Install vim plugins]
     - command: 'if [ "$(uname -s)" != Darwin ] && [[ "$(echo $SHELL)" != "$(cat /etc/shells | grep zsh | tail -n 1)" ]]; then chsh -s $(cat /etc/shells | grep zsh | tail -n 1); fi'
       description: Switch to using zsh
