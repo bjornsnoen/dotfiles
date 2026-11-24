@@ -6,5 +6,9 @@ return {
     ---@type render.md.UserConfig
     opts = {
         file_types = { 'markdown', 'rmarkdown', 'quarto' },
+        -- Leave LSP popup rendering and sizing to its signature/hover provider.
+        ignore = function(buf)
+            return vim.bo[buf].buftype == 'nofile'
+        end,
     },
 }

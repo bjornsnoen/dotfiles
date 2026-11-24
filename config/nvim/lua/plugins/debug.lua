@@ -51,7 +51,7 @@ return {
         dap.adapters.php = {
             type = 'executable',
             command = 'node',
-            args = { '/home/bjorn/src/vscode-php-debug/out/phpDebug.js' },
+            args = { vim.fn.expand('~/src/vscode-php-debug/out/phpDebug.js') },
         }
 
         dap.configurations.php = {
@@ -125,7 +125,7 @@ return {
                 request = 'launch',
                 MIMode = 'gdb',
                 miDebuggerServerAddress = 'localhost:1234',
-                miDebuggerPath = '/usr/bin/gdb',
+                miDebuggerPath = vim.fn.exepath('gdb'),
                 cwd = '${workspaceFolder}',
                 program = function()
                     if vim.fn.filereadable('main') == 1 then

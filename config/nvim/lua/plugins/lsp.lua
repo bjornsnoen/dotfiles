@@ -1,3 +1,7 @@
+-- Use NVIM_CSHARP_LSP=omnisharp nvim for projects that need the legacy server.
+local csharp_server = vim.env.NVIM_CSHARP_LSP or 'roslyn'
+assert(csharp_server == 'roslyn' or csharp_server == 'omnisharp', 'NVIM_CSHARP_LSP must be roslyn or omnisharp')
+
 local servers = {
     'clangd',
     'cssls',
@@ -22,11 +26,12 @@ local servers = {
     'twiggy_language_server',
     'vtsls',
     'yamlls',
+    'astro',
 }
 
 return {
     'neovim/nvim-lspconfig',
-    event = { 'BufEnter', 'BufNewFile' },
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
         {
             'williamboman/mason-lspconfig.nvim',
@@ -37,6 +42,15 @@ return {
         'hrsh7th/cmp-nvim-lsp',
         'b0o/schemastore.nvim',
         'Hoffs/omnisharp-extended-lsp.nvim',
+        {
+            'ray-x/lsp_signature.nvim',
+            opts = { select_signature_key = '<M-n>' },
+        },
+        {
+            'seblyng/roslyn.nvim',
+            cond = csharp_server == 'roslyn',
+            opts = {},
+        },
     },
     config = function()
         local opts = { noremap = true, silent = true }
@@ -100,7 +114,7 @@ return {
 
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-            vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+            vim.keymap.set('n', '<C-k>', require('lsp_signature').toggle_float_win, bufopts)
             vim.keymap.set('n', '<F18>', vim.lsp.buf.rename, bufopts)
             vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
             vim.keymap.set('x', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
@@ -146,6 +160,9 @@ return {
         end
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
+        if csharp_server == 'roslyn' then
+            vim.lsp.config('roslyn', { on_attach = on_attach, capabilities = capabilities })
+        end
         local omnisharp_extended = require('omnisharp_extended')
         local omnisharp_status = { started = false, ready = false }
 
@@ -290,7 +307,15 @@ return {
             local base = vim.lsp.config[server] or {}
 
             local conf = vim.tbl_deep_extend('force', base, common)
-            if server == 'omnisharp' then
+            if server == 'astro' then
+                conf.before_init = function(_, config)
+                    local tsdk = require('lspconfig.util').get_typescript_server_path(config.root_dir)
+                    if tsdk == '' then
+                        tsdk = vim.fn.stdpath('data') .. '/mason/packages/astro-language-server/node_modules/typescript/lib'
+                    end
+                    config.init_options.typescript.tsdk = tsdk
+                end
+            elseif server == 'omnisharp' then
                 local exec = get_omnisharp_exec()
                 if exec then
                     conf.cmd = omnisharp_cmd(exec)
@@ -300,7 +325,9 @@ return {
                 conf.cmd = { 'faketime', '2026-06-04', 'intellij-server', '--stdio' }
             end
             vim.lsp.config(server, conf)
-            vim.lsp.enable(server)
+            if server ~= 'omnisharp' or csharp_server == 'omnisharp' then
+                vim.lsp.enable(server)
+            end
         end
     end,
 }
