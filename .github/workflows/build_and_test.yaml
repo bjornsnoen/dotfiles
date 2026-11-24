@@ -41,6 +41,7 @@ jobs:
         shell: bash
         env:
           NONINTERACTIVE: "1"
+          PYTHONUNBUFFERED: "1"
         run: |
           # Avoid conflicts with the runner's existing dotfiles.
           export HOME="$RUNNER_TEMP/dotfiles-home"
